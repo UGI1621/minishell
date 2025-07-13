@@ -1,0 +1,44 @@
+NAME = minishell
+
+CC = cc
+
+# CFLAGS = -wall -werror -wextra
+CFLAGS =
+
+LIBFT_DIR = libft
+LIBFT_LIB = $(LIBFT_DIR)/libft.a
+LIBFT_H = libft/include
+
+SRC_DIR = src
+OBJ_DIR = obj
+INC_DIR = include
+
+SRCS = $(wildcard $(SRC_DIR)/*.c)
+
+OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+
+INCLUDES = -I$(LIBFT_H) -I$(INC_DIR)
+
+all: $(NAME)
+
+$(NAME): $(OBJS)
+	@$(MAKE) -C $(LIBFT_DIR)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LIBFT_LIB)
+
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+clean:
+	rm -rf $(OBJ_DIR)
+	@$(MAKE) clean -C $(LIBFT_DIR)
+
+fclean: clean
+	rm -f $(NAME)
+	@$(MAKE) -C $(LIBFT_DIR) fclean
+
+re : fclean all
+
+.PHONY: all clean fclean re
