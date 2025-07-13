@@ -23,7 +23,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	@$(MAKE) -C $(LIBFT_DIR)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LIBFT_LIB)
+	$(CC) $(CFLAGS) $(OBJS) -lreadline -o $(NAME) $(LIBFT_LIB)
 
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)

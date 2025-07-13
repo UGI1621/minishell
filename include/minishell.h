@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:19:24 by saan              #+#    #+#             */
-/*   Updated: 2025/07/13 15:30:26 by saan             ###   ########.fr       */
+/*   Updated: 2025/07/13 16:05:35 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,8 @@
 
 #include "libft.h"
 #include <stdio.h>
+#include <readline/readline.h>
+#include <readline/history.h>
+
 
 #endif
