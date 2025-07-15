@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:30:30 by saan              #+#    #+#             */
-/*   Updated: 2025/07/13 17:37:07 by saan             ###   ########.fr       */
+/*   Updated: 2025/07/15 21:05:00 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,16 @@ int	main(void)
 {
 	char *line;
 
+	init_sigs();
 	while (1)
 	{
 		line = ft_readline();
-		char *temp = ft_strdup(line);
 		if (!line)
 			break ;
-		printf("you entered : %s\n", line);
+		char *temp = ft_strdup(line);
 		free(line);
+		printf("you entered : %s\n", temp);
+		free(temp);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 18:39:13 by saan              #+#    #+#             */
-/*   Updated: 2024/11/30 07:54:17 by saan             ###   ########.fr       */
+/*   Updated: 2025/07/15 17:44:02 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ size_t	ft_strlen(const char *s)
 	char	*temp;
 
 	len = 0;
-	if (!*s)
+	if (!s || !*s)
 		return (len);
 	temp = (char *)s;
 	while (temp[len])
