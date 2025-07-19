@@ -6,15 +6,16 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:30:30 by saan              #+#    #+#             */
-/*   Updated: 2025/07/15 21:05:00 by saan             ###   ########.fr       */
+/*   Updated: 2025/07/19 17:40:20 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+t_sigs g_sigs;
 // valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp ./minishell
 
-char	*ft_readline()
+static char	*ft_readline()
 {
 	char *line;
 
@@ -32,9 +33,25 @@ char	*ft_readline()
 	return (line);
 }
 
+static int	mini_process(char *line)
+{
+	char *cmd;
+
+	if (open_quote(line))
+	{
+		write(1, "minishell: syntax error with open quotes\n", 42);
+		g_sigs.exit_code = 1;
+		return (1);
+	}
+	cmd = normalize_cmd(line);
+	printf("cmd : %s\n", cmd);
+	return (0);
+}
+
 int	main(void)
 {
-	char *line;
+	char	*line;
+	char	*temp;
 
 	init_sigs();
 	while (1)
@@ -42,8 +59,10 @@ int	main(void)
 		line = ft_readline();
 		if (!line)
 			break ;
-		char *temp = ft_strdup(line);
+		temp = ft_strdup(line);
 		free(line);
+		if (mini_process(temp))
+			continue ;
 		printf("you entered : %s\n", temp);
 		free(temp);
 	}

@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:19:24 by saan              #+#    #+#             */
-/*   Updated: 2025/07/15 21:06:44 by saan             ###   ########.fr       */
+/*   Updated: 2025/07/19 17:49:31 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 typedef struct s_cmd_node
 {
 	struct s_cmd_node	*prev;
+	char				type;
 	char				**cmd_args;
 	int					pipe[2];
 	struct s_cmd_node	*next;
@@ -43,10 +44,32 @@ typedef struct s_dllist
 	t_cmd_node			*tail;
 }	t_dllist;
 
+typedef struct s_stack
+{
+	char *stack;
+	int	top;
+}	t_stack;
+
+typedef struct s_sigs
+{
+	int	sigterm;
+	int	exit_code;
+}	t_sigs;
+
+
 // initialize.c
 void	init_sigs(void);
 
-// sa_handler.c
-void	sa_sigint_handler(int signum);
+// quote.c
+int	open_quote(char *line);
 
+// parsing.c
+char	*normalize_cmd(char *line);
+
+// sa_handler.c
+void	s_sigint_handler(int signum);
+void	s_sigquit_handler(int signum);
+void	s_sigterm_handler(int signum);
+
+extern t_sigs g_sigs;
 #endif
