@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:19:24 by saan              #+#    #+#             */
-/*   Updated: 2025/07/24 16:20:24 by saan             ###   ########.fr       */
+/*   Updated: 2025/07/24 18:14:03 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ typedef struct s_sigs
 
 
 // util.c
-int	is_escape(char c);
+int	is_wspace(char c);
 int	is_quote(char c);
 char	*ft_join_fa(char *s1, char *s2);
 
