@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:30:30 by saan              #+#    #+#             */
-/*   Updated: 2025/07/19 17:40:20 by saan             ###   ########.fr       */
+/*   Updated: 2025/07/24 14:00:46 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ static int	mini_process(char *line)
 
 	if (open_quote(line))
 	{
-		write(1, "minishell: syntax error with open quotes\n", 42);
+		write(1, "minishell: syntax error with open quotes or backslash\n", 55);
 		g_sigs.exit_code = 1;
 		return (1);
 	}
 	cmd = normalize_cmd(line);
-	printf("cmd : %s\n", cmd);
+	printf("normalized line : %s\n", cmd);
 	return (0);
 }
 

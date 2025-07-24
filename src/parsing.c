@@ -6,46 +6,50 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:18:03 by saan              #+#    #+#             */
-/*   Updated: 2025/07/19 16:55:21 by saan             ###   ########.fr       */
+/*   Updated: 2025/07/24 16:26:32 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	get_quote(char **res, char *line, int *start, int *end)
+char	*get_quotes(char *line, int *idx)
 {
-	char	*temp;
-	char	*substr;
+	char	quote;
+	int		start;
 
-	*end = *start + 1;
-	while(line[*end] != '\'')
-		(*end)++;
-	temp = *res;
-	substr = ft_substr(line, *start, *end - *start + 1);
-	*res = ft_strjoin(temp, substr);
-	free(temp);
-	free(substr);
+	quote = *line;
+	start = ++(*idx);
+	while (line[*idx])
+	{
+		if (line[*idx] == quote)
+			return (ft_substr(&line[start], start, *idx - start - 1));
+		else
+		{
+			++(*idx);
+			continue ;
+		}
+	}
 }
 
 char	*normalize_cmd(char *line)
 {
-	char	*res;
+	int	i;
 	int	start;
-	int	end;
+	char	*res;
 
-	start = 0;
-	end = 0;
 	res = ft_strdup("");
-	while (line[start] == ' ')
-		start++;
-	while (line[start])
+	i = -1;
+	while (line[++i])
 	{
-		if (line[start] == '\'')
+		if (is_quote(line[i]))
 		{
-			get_quote(&res, line, &start, &end);
-			start = end;
+			res = ft_join_fa(res, get_quotes(line, &i));
+			continue ;
 		}
-		start++;
+		if (is_escape(line[i]))
+			continue ;
+		start = i;
+
 	}
 	return (res);
 }

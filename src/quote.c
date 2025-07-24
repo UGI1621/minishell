@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 17:39:53 by saan              #+#    #+#             */
-/*   Updated: 2025/07/19 17:56:52 by saan             ###   ########.fr       */
+/*   Updated: 2025/07/24 13:59:53 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	open_quote(char *line)
 	quote.stack[ft_strlen(line)] = 0;
 	while (*line)
 	{
+		if (*line == '\\')
+			return (1);
 		if(!quote.stack[quote.top] && (*line == '\'' || *line == '\"') && *(line - 1) != '\\')
 			ft_push(&quote, *line);
 		else if(quote.stack[quote.top] && (*line == '\'' || *line == '\"') && *(line - 1) != '\\')

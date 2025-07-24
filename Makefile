@@ -10,12 +10,13 @@ LIBFT_LIB = $(LIBFT_DIR)/libft.a
 LIBFT_H = libft/include
 
 SRC_DIR = src
+SIGNAL_DIR = src/signal
 OBJ_DIR = obj
 INC_DIR = include
 
-SRCS = $(wildcard $(SRC_DIR)/*.c)
+SRCS = $(wildcard $(SRC_DIR)/*.c) $(wildcard $(SIGNAL_DIR)/*.c)
 
-OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+OBJS = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
 
 INCLUDES = -I$(LIBFT_H) -I$(INC_DIR)
 
@@ -29,6 +30,7 @@ $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
