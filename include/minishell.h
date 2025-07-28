@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:19:24 by saan              #+#    #+#             */
-/*   Updated: 2025/07/28 17:24:23 by saan             ###   ########.fr       */
+/*   Updated: 2025/07/28 20:31:55 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	ft_lexing_proc(t_lexer_list *res, char *line, int *i, int *flag);
 
 // get_word.c
 int	flag_0_get_word(t_lexer_list *list, char *line, int *idx, int *flag);
+int	flag_1_get_word(t_lexer_list *list, char *line, int *idx, int *start);
 
 // util.c
 int	is_wspace(char c);
