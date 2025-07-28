@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 02:22:29 by saan              #+#    #+#             */
-/*   Updated: 2025/07/27 02:30:32 by saan             ###   ########.fr       */
+/*   Updated: 2025/07/28 16:56:22 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,19 @@ void	add_lexer_node(t_lexer_list *list, char *str)
 	}
 }
 
-void	init_lexer_list(t_lexer_list *list)
+t_lexer_list	*ft_lexing(char *line)
 {
-	list = (t_lexer_list *)ft_calloc(1, sizeof(t_lexer_list));
-	list->head = NULL;
-	list->tail = NULL;
+	t_lexer_list	*res;
+	int				i;
+	int				start;
+	int				flag;
+
+	i = -1;
+	flag = 0;
+	res = init_lexer_list(res);
+	while(line[++i])
+	{
+		ft_lexing_proc(res, line, &i, &flag);
+	}
+	return (res);
 }
