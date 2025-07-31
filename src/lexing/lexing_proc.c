@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 00:26:09 by saan              #+#    #+#             */
-/*   Updated: 2025/07/28 20:52:58 by saan             ###   ########.fr       */
+/*   Updated: 2025/07/30 17:01:58 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static char	*get_quotes(char *line, int *idx)
 	return (NULL);
 }
 
-static void	get_iredir(t_lexer_list *res, char *line, int *idx)
+static void	get_iredir(t_lexer_list *res, char *line, int *idx, int *flag)
 {
 	int	s;
 
@@ -40,12 +40,15 @@ static void	get_iredir(t_lexer_list *res, char *line, int *idx)
 	{
 		add_lexer_node(res, ft_strdup("<<"));
 		*idx += 2;
+		while (is_wspace(line[*idx]))
+			++(*idx);
 		s = *idx;
 		while(line[*idx] && !is_cutsign(line[*idx]))
 		{
 			if (is_quote(line[*idx]))
 			{
 				free(get_quotes(line, idx));
+				*flag = 1;
 				break ;
 			}
 			++(*idx);
@@ -54,7 +57,7 @@ static void	get_iredir(t_lexer_list *res, char *line, int *idx)
 	}
 }
 
-static void	get_oredir(t_lexer_list *res, char *line, int *idx)
+static void	get_oredir(t_lexer_list *res, char *line, int *idx, int *flag)
 {
 	int	s;
 
@@ -64,12 +67,15 @@ static void	get_oredir(t_lexer_list *res, char *line, int *idx)
 	{
 		add_lexer_node(res, ft_strdup(">>"));
 		*idx += 2;
+		while (is_wspace(line[*idx]))
+			++(*idx);
 		s = *idx;
 		while(line[*idx] && !is_cutsign(line[*idx]))
 		{
 			if (is_quote(line[*idx]))
 			{
 				free(get_quotes(line, idx));
+				*flag = 1;
 				break ;
 			}
 			++(*idx);
@@ -190,13 +196,11 @@ void	ft_lexing_proc(t_lexer_list *res, char *line, int *i, int *flag)
 	}
 	else if (line[*i] == '<')
 	{
-		get_iredir(res, line, i);
-		*flag = 0;
+		get_iredir(res, line, i, flag);
 	}
 	else if (line[*i] == '>')
 	{
-		get_oredir(res, line, i);
-		*flag = 0;
+		get_oredir(res, line, i, flag);
 	}
 	else if (line[*i] != ' ')
 		get_word(res, line, i, flag);

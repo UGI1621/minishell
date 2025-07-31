@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:19:24 by saan              #+#    #+#             */
-/*   Updated: 2025/07/28 20:31:55 by saan             ###   ########.fr       */
+/*   Updated: 2025/07/30 16:29:47 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,15 @@ typedef struct s_sigs
 	int	exit_code;
 }	t_sigs;
 
+//
+void	ft_quoting(t_lexer_list *list);
+
+// siganl
+// sa_handler.c
+void	s_sigint_handler(int signum);
+void	s_sigquit_handler(int signum);
+
+// lexing
 // lexing_list.c
 void	add_lexer_node(t_lexer_list *list, char *str);
 t_lexer_list	*ft_lexing(char *line);
@@ -76,8 +85,7 @@ int	flag_1_get_word(t_lexer_list *list, char *line, int *idx, int *start);
 int	is_wspace(char c);
 int	is_quote(char c);
 int	is_cutsign(char c);
-char	*ft_join_fa(char *s1, char *s2);
-char	*ft_join_fs1(char *s1, char *s2);
+
 
 // initialize.c
 void	init_sigs(void);
@@ -86,9 +94,6 @@ t_lexer_list	*init_lexer_list(t_lexer_list *list);
 // valid.c
 int	is_invalid_line(char *line);
 
-// sa_handler.c
-void	s_sigint_handler(int signum);
-void	s_sigquit_handler(int signum);
-
 extern t_sigs g_sigs;
+
 #endif

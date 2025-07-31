@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:30:30 by saan              #+#    #+#             */
-/*   Updated: 2025/07/27 06:25:35 by saan             ###   ########.fr       */
+/*   Updated: 2025/07/30 15:51:37 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ static int	mini_process(char *line)
 		return (1);
 	}
 	lexing_list = ft_lexing(line);
+	ft_quoting(lexing_list);
 	print_lexing_list(lexing_list);
 	return (0);
 }

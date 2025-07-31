@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 16:48:58 by saan              #+#    #+#             */
-/*   Updated: 2025/07/28 16:35:14 by saan             ###   ########.fr       */
+/*   Updated: 2025/07/30 16:29:43 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,29 +26,4 @@ int	is_quote(char c)
 int	is_cutsign(char c)
 {
 	return (c == '|' || c == '<' || c == '>');
-}
-
-char	*ft_join_fa(char *s1, char *s2)
-{
-	char	*res;
-	char	*temp1;
-	char	*temp2;
-
-	temp1 = s1;
-	temp2 = s2;
-	res = ft_strjoin(temp1, temp2);
-	free(temp1);
-	free(temp2);
-	return (res);
-}
-
-char	*ft_join_fs1(char *s1, char *s2)
-{
-	char	*res;
-	char	*temp1;
-
-	temp1 = s1;
-	res = ft_strjoin(temp1, s2);
-	free(temp1);
-	return (res);
 }

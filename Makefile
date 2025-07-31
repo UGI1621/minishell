@@ -12,10 +12,11 @@ LIBFT_H = libft/include
 SRC_DIR = src
 SIGNAL_DIR = src/signal
 LEXING_DIR = src/lexing
+QUOTING_DIR = src/quoting
 OBJ_DIR = obj
 INC_DIR = include
 
-SRCS = $(wildcard $(SRC_DIR)/*.c) $(wildcard $(SIGNAL_DIR)/*.c) $(wildcard $(LEXING_DIR)/*.c)
+SRCS = $(wildcard $(SRC_DIR)/*.c) $(wildcard $(SIGNAL_DIR)/*.c) $(wildcard $(LEXING_DIR)/*.c) $(wildcard $(QUOTING_DIR)/*.c)
 
 OBJS = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
 
