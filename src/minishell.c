@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:30:30 by saan              #+#    #+#             */
-/*   Updated: 2025/07/30 15:51:37 by saan             ###   ########.fr       */
+/*   Updated: 2025/07/31 11:17:30 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,13 @@ void	print_lexing_list(t_lexer_list *list)
 	t_lexer_node	*node;
 
 	node = list->head;
+	printf("node : ");
 	while(node)
 	{
-		printf("node->str : %s\n", node->str);
+		printf("[%s]->", node->str);
 		node = node->next;
 	}
+	printf("\n");
 }
 
 static char	*ft_readline()
