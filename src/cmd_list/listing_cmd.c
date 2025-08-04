@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quoting.c                                          :+:      :+:    :+:   */
+/*   listing_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:19:22 by saan              #+#    #+#             */
-/*   Updated: 2025/07/30 16:32:18 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/05 05:07:50 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_quoting(t_lexer_list *list)
+t_dllist	*listing_cmd(t_lexer_list *list)
 {
-	t_lexer_node *node;
-	char	quote;
+	t_dllist	*res;
+	t_lexer_node	*l_node;
 
-	node = list->head;
-	// while(node)
-	// {
+	res = init_cmd_list(res);
+	l_node = list->head;
+	while (l_node)
+	{
 
-	// }
+	}
+	return (res);
 }

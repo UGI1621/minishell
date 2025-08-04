@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 17:39:53 by saan              #+#    #+#             */
-/*   Updated: 2025/07/28 17:07:34 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/05 03:52:42 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ int	is_open_quote(char *line)
 
 	while (*line)
 	{
-		if (*line == '\\')
-			return (write(2, "minishell: syntax error with \'\\\'\n", 33));
 		if(is_quote(*line))
 		{
 			c = *(line++);
@@ -39,9 +37,24 @@ int	is_open_quote(char *line)
 	return (0);
 }
 
+int	is_bs_sc(char *line)
+{
+	while(*line)
+	{
+		if (*line == '\\')
+			return (write(2, "minishell: syntax error with \'\\\'\n", 33));
+		if (*line == ';')
+			return (write(2, "minishell: syntax error with \';\'\n", 33));
+		line++;
+	}
+	return (0);
+}
+
 int	is_invalid_line(char *line)
 {
 	if (is_open_quote(line))
+		return (1);
+	if (is_bs_sc(line))
 		return (1);
 	return (0);
 }

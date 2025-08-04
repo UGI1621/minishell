@@ -6,13 +6,13 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 00:26:09 by saan              #+#    #+#             */
-/*   Updated: 2025/07/30 17:01:58 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/05 04:54:00 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*get_quotes(char *line, int *idx)
+char	*get_quotes(char *line, int *idx)
 {
 	char	quote;
 	int		start;
@@ -30,7 +30,7 @@ static char	*get_quotes(char *line, int *idx)
 	return (NULL);
 }
 
-static void	get_iredir(t_lexer_list *res, char *line, int *idx, int *flag)
+static int	get_iredir(t_lexer_list *res, char *line, int *idx, int *flag)
 {
 	int	s;
 
@@ -38,6 +38,8 @@ static void	get_iredir(t_lexer_list *res, char *line, int *idx, int *flag)
 		add_lexer_node(res, ft_strdup("<"));
 	else if (line[*idx + 1] == '<')
 	{
+		if (line[*idx + 2] == '<')
+			return (invalid_token(res, '<'));
 		add_lexer_node(res, ft_strdup("<<"));
 		*idx += 2;
 		while (is_wspace(line[*idx]))
@@ -45,19 +47,19 @@ static void	get_iredir(t_lexer_list *res, char *line, int *idx, int *flag)
 		s = *idx;
 		while(line[*idx] && !is_cutsign(line[*idx]))
 		{
-			if (is_quote(line[*idx]))
+			if (is_wspace(line[*idx]))
 			{
-				free(get_quotes(line, idx));
-				*flag = 1;
-				break ;
+				add_lexer_node(res, ft_substr(line, s, *idx - s));
+				return (0);
 			}
 			++(*idx);
 		}
 		add_lexer_node(res, ft_substr(line, s, *idx - s + 1));
 	}
+	return (0);
 }
 
-static void	get_oredir(t_lexer_list *res, char *line, int *idx, int *flag)
+static int	get_oredir(t_lexer_list *res, char *line, int *idx, int *flag)
 {
 	int	s;
 
@@ -65,6 +67,8 @@ static void	get_oredir(t_lexer_list *res, char *line, int *idx, int *flag)
 		add_lexer_node(res, ft_strdup(">"));
 	else if (line[*idx + 1] == '>')
 	{
+		if (line[*idx + 2] == '>')
+			return (invalid_token(res, '>'));
 		add_lexer_node(res, ft_strdup(">>"));
 		*idx += 2;
 		while (is_wspace(line[*idx]))
@@ -72,83 +76,40 @@ static void	get_oredir(t_lexer_list *res, char *line, int *idx, int *flag)
 		s = *idx;
 		while(line[*idx] && !is_cutsign(line[*idx]))
 		{
-			if (is_quote(line[*idx]))
+			if (is_wspace(line[*idx]))
 			{
-				free(get_quotes(line, idx));
-				*flag = 1;
-				break ;
+				add_lexer_node(res, ft_substr(line, s, *idx - s));
+				return (0);
 			}
 			++(*idx);
 		}
 		add_lexer_node(res, ft_substr(line, s, *idx - s + 1));
 	}
+	return (0);
 }
 
 // static void	get_word(t_lexer_list *list, char *line, int *idx, int *flag)
 // {
 // 	int	start;
-// 	char	c;
-
-// 	start = (*idx);
-// 	while (line[++(*idx)])
-// 	{
-// 		if (*flag == 0)
-// 		{
-// 			if (is_quote(line[*idx]))
-// 			{
-// 				char temp = line[(*idx)++];
-// 				while (line[*idx] != temp)
-// 					++(*idx);
-// 			}
-// 			if (is_cutsign(line[*idx]) || is_wspace(line[*idx]))
-// 			{
-// 				if (is_wspace(line[*idx]))
-// 					*flag = 1;
-// 				add_lexer_node(list, ft_substr(line, start, --(*idx) - start + 1));
-// 				break ;
-// 			}
-// 		}
-// 		else
-// 		{
-// 			if (is_cutsign(line[*idx]) || is_wspace(line[*idx]) || is_quote(line[*idx]))
-// 			{
-// 				*flag = 0;
-// 				add_lexer_node(list, ft_substr(line, start, --(*idx) - start + 1));
-// 				break ;
-// 			}
-// 		}
-// 	}
-// 	if (!line[*idx])
-// 		add_lexer_node(list, ft_substr(line, start, *idx - start + 1));
-// }
-
-// static void	get_word(t_lexer_list *list, char *line, int *idx, int *flag)
-// {
-// 	int	start;
 // 	int	word_flag;
-// 	char	c;
 
-// 	start = (*idx);
+// 	start = *idx;
 // 	while (line[++(*idx)])
 // 	{
 // 		if (*flag == 0)
 // 		{
 // 			word_flag = flag_0_get_word(list, line, idx, &start);
-// 			if (word_flag == 1)
+// 			if (word_flag != 2)
 // 			{
-// 				*flag = 1;
+// 				if (word_flag == 1)
+// 					*flag = 1;
 // 				break ;
 // 			}
-// 			else if (word_flag == 0)
-// 				break ;
 // 		}
-// 		else
+// 		else if (flag_1_get_word(list, line, idx, &start))
 // 		{
-// 			if (flag_1_get_word(list, line, idx, &start))
-// 			{
-// 				*flag = 0;
-// 				break ;
-// 			}
+// 			*flag = 0;
+// 			break ;
 // 		}
 // 	}
 // 	if (!line[*idx])
@@ -158,24 +119,13 @@ static void	get_oredir(t_lexer_list *res, char *line, int *idx, int *flag)
 static void	get_word(t_lexer_list *list, char *line, int *idx, int *flag)
 {
 	int	start;
-	int	word_flag;
 
-	start = *idx;
+	start = (*idx);
 	while (line[++(*idx)])
 	{
-		if (*flag == 0)
+		if (is_cutsign(line[*idx]) || is_wspace(line[*idx]) || is_cutsign(line[*idx]))
 		{
-			word_flag = flag_0_get_word(list, line, idx, &start);
-			if (word_flag != 2)
-			{
-				if (word_flag == 1)
-					*flag = 1;
-				break ;
-			}
-		}
-		else if (flag_1_get_word(list, line, idx, &start))
-		{
-			*flag = 0;
+			add_lexer_node(list, ft_substr(line, start, *idx - start));
 			break ;
 		}
 	}
@@ -183,25 +133,27 @@ static void	get_word(t_lexer_list *list, char *line, int *idx, int *flag)
 		add_lexer_node(list, ft_substr(line, start, *idx - start + 1));
 }
 
-void	ft_lexing_proc(t_lexer_list *res, char *line, int *i, int *flag)
+int	ft_lexing_proc(t_lexer_list *res, char *line, int *i, int *flag)
 {
-	if (is_quote(line[*i]))
-	{
-		add_lexer_node(res, get_quotes(line, i));
-	}
-	else if (line[*i] == '|')
+	// if (is_quote(line[*i]))
+	// {
+	// 	add_lexer_node(res, get_quotes(line, i));
+	// }
+	// else
+	if (line[*i] == '|')
 	{
 		add_lexer_node(res, ft_strdup("|"));
 		*flag = 0;
 	}
 	else if (line[*i] == '<')
 	{
-		get_iredir(res, line, i, flag);
+		return (get_iredir(res, line, i, flag));
 	}
 	else if (line[*i] == '>')
 	{
-		get_oredir(res, line, i, flag);
+		return (get_oredir(res, line, i, flag));
 	}
 	else if (line[*i] != ' ')
 		get_word(res, line, i, flag);
+	return (0);
 }

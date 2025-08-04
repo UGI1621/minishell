@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:30:30 by saan              #+#    #+#             */
-/*   Updated: 2025/07/31 11:17:30 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/05 02:27:44 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,10 @@ static char	*ft_readline()
 	return (line);
 }
 
-static int	mini_process(char *line)
+static int	lexing_listing(char *line)
 {
 	t_lexer_list	*lexing_list;
+	t_dllist	*cmd_list;
 
 	if (is_invalid_line(line))
 	{
@@ -62,8 +63,14 @@ static int	mini_process(char *line)
 		return (1);
 	}
 	lexing_list = ft_lexing(line);
-	ft_quoting(lexing_list);
+	if (!lexing_list)
+	{
+		g_sigs.exit_code = 2;
+		return (1);
+	}
 	print_lexing_list(lexing_list);
+	// cmd_list = listing_cmd(lexing_list);
+	free_lexer_list(lexing_list);
 	return (0);
 }
 
@@ -80,7 +87,7 @@ int	main(void)
 			break ;
 		temp = ft_strdup(line);
 		free(line);
-		if (mini_process(temp))
+		if (lexing_listing(temp))
 			continue ;
 		printf("you entered : %s\n", temp);
 		free(temp);

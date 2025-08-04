@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 20:35:17 by saan              #+#    #+#             */
-/*   Updated: 2025/07/28 15:36:04 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/05 01:48:52 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,14 @@ void	init_sigs(void)
 t_lexer_list	*init_lexer_list(t_lexer_list *list)
 {
 	list = (t_lexer_list *)ft_calloc(1, sizeof(t_lexer_list));
+	list->head = NULL;
+	list->tail = NULL;
+	return (list);
+}
+
+t_dllist	*init_cmd_list(t_dllist *list)
+{
+	list = (t_dllist *)ft_calloc(1, sizeof(t_dllist));
 	list->head = NULL;
 	list->tail = NULL;
 	return (list);
