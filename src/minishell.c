@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:30:30 by saan              #+#    #+#             */
-/*   Updated: 2025/08/05 02:27:44 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/09 14:58:08 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,28 @@ void	print_lexing_list(t_lexer_list *list)
 		node = node->next;
 	}
 	printf("\n");
+}
+
+void	print_cmd_list(t_dllist *list)
+{
+	t_cmd_node *node;
+
+	node = list->head;
+	printf("\nCMD NODES\n");
+	while(node)
+	{
+		printf("node info \n");
+		printf("node->argv :");
+		int i = -1;
+		while (node->argv && node->argv[++i])
+			printf(" %s", node->argv[i]);
+		printf("\nnode->infile : %s\n", node->infile);
+		printf("node->append_out : %d\n", node->append_out);
+		printf("node->outfile : %s\n", node->outfile);
+		printf("node->heredoc_delim : %s\n", node->heredoc_delim);
+		printf("pipe[0] : %d\npipe[1] : %d\n",node->pipe[0], node->pipe[1]);
+		node = node->next;
+	}
 }
 
 static char	*ft_readline()
@@ -69,7 +91,8 @@ static int	lexing_listing(char *line)
 		return (1);
 	}
 	print_lexing_list(lexing_list);
-	// cmd_list = listing_cmd(lexing_list);
+	cmd_list = listing_cmd(lexing_list);
+	print_cmd_list(cmd_list);
 	free_lexer_list(lexing_list);
 	return (0);
 }

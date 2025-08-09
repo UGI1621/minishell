@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:19:24 by saan              #+#    #+#             */
-/*   Updated: 2025/08/05 04:54:26 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/09 16:40:01 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ typedef struct s_cmd_node
 	struct s_cmd_node	*prev;
 	char				**argv;
 	char				*infile;
+	int					append_out;
 	char				*outfile;
-	char				append_out;
 	char				*heredoc_delim;
 	int					pipe[2];
 	struct s_cmd_node	*next;
@@ -63,7 +63,12 @@ typedef struct s_sigs
 }	t_sigs;
 
 // cmd_list
+// listing_cmd.c
 t_dllist	*listing_cmd(t_lexer_list *list);
+
+// listing_util.c
+int	is_redir_node(char *s);
+int	is_heredoc_node(char *s);
 
 // siganl
 // sa_handler.c
@@ -77,8 +82,8 @@ t_lexer_list	*ft_lexing(char *line);
 void	free_lexer_list(t_lexer_list *list);
 
 // lexing_proc.c
-char	*get_quotes(char *line, int *idx);
-int	ft_lexing_proc(t_lexer_list *res, char *line, int *i, int *flag);
+// char	*get_quotes(char *line, int *idx);
+int	ft_lexing_proc(t_lexer_list *res, char *line, int *i);
 
 // get_word.c
 int	flag_0_get_word(t_lexer_list *list, char *line, int *idx, int *flag);
@@ -88,12 +93,14 @@ int	flag_1_get_word(t_lexer_list *list, char *line, int *idx, int *start);
 int	is_wspace(char c);
 int	is_quote(char c);
 int	is_cutsign(char c);
+void	free_2ptr(char **ptr);
 int	invalid_token(t_lexer_list *res, char c);
 
 // initialize.c
 void	init_sigs(void);
-t_lexer_list	*init_lexer_list(t_lexer_list *list);
-t_dllist	*init_cmd_list(t_dllist *list);
+void	init_lexer_list(t_lexer_list **list);
+void	init_cmd_list(t_dllist **list);
+void	init_cmd_node(t_cmd_node **node);
 
 // valid.c
 int	is_invalid_line(char *line);

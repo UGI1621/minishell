@@ -1,2 +1,1 @@
-hello
-hello
+/home/saan/minishell_git

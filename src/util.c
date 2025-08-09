@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 16:48:58 by saan              #+#    #+#             */
-/*   Updated: 2025/08/05 04:54:20 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/09 12:06:52 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,18 @@ int	is_quote(char c)
 int	is_cutsign(char c)
 {
 	return (c == '|' || c == '<' || c == '>');
+}
+
+void	free_2ptr(char **ptr)
+{
+	int	i;
+
+	i = -1;
+	while (ptr[++i])
+		free(ptr[i]);
+	if (ptr)
+		free(ptr);
+	ptr = NULL;
 }
 
 int	invalid_token(t_lexer_list *res, char c)

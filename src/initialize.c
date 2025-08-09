@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 20:35:17 by saan              #+#    #+#             */
-/*   Updated: 2025/08/05 01:48:52 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/09 15:42:21 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,32 @@ void	init_sigs(void)
 	}
 }
 
-t_lexer_list	*init_lexer_list(t_lexer_list *list)
+void	init_lexer_list(t_lexer_list **list)
 {
-	list = (t_lexer_list *)ft_calloc(1, sizeof(t_lexer_list));
-	list->head = NULL;
-	list->tail = NULL;
-	return (list);
+	*list = (t_lexer_list *)ft_calloc(1, sizeof(t_lexer_list));
+	(*list)->head = NULL;
+	(*list)->tail = NULL;
 }
 
-t_dllist	*init_cmd_list(t_dllist *list)
+void	init_cmd_list(t_dllist **list)
 {
-	list = (t_dllist *)ft_calloc(1, sizeof(t_dllist));
-	list->head = NULL;
-	list->tail = NULL;
-	return (list);
+	*list = (t_dllist *)ft_calloc(1, sizeof(t_dllist));
+	(*list)->head = NULL;
+	(*list)->tail = NULL;
+}
+
+void	init_cmd_node(t_cmd_node **node)
+{
+	*node = (t_cmd_node *)ft_calloc(1, sizeof(t_cmd_node));
+	(*node)->prev = NULL;
+	(*node)->argv = (char **)ft_calloc(1, sizeof(char *));
+	(*node)->argv[0] = NULL;
+	(*node)->infile = NULL;
+	(*node)->outfile = NULL;
+	(*node)->append_out = 0;
+	(*node)->outfile = NULL;
+	(*node)->heredoc_delim = NULL;
+	(*node)->pipe[0] = -1;
+	(*node)->pipe[1] = -1;
+	(*node)->next = NULL;
 }
