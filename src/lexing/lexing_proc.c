@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 00:26:09 by saan              #+#    #+#             */
-/*   Updated: 2025/08/09 18:43:33 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/09 18:48:10 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ static char	*append_char(char *str, char c)
 	return (res);
 }
 
-static void	get_word(t_lexer_list *list, char *line, int *idx, char flag)
+static void	get_word(t_lexer_list *list, char *line, int *idx)
 {
 	char	*temp;
 	char	quote;
@@ -178,9 +178,6 @@ static void	get_word(t_lexer_list *list, char *line, int *idx, char flag)
 
 int	ft_lexing_proc(t_lexer_list *res, char *line, int *i)
 {
-	char	flag;
-
-	flag = 0;
 	if (line[*i] == '|')
 		add_lexer_node(res, ft_strdup("|"));
 	else if (line[*i] == '<')
@@ -188,10 +185,6 @@ int	ft_lexing_proc(t_lexer_list *res, char *line, int *i)
 	else if (line[*i] == '>')
 		return (get_oredir(res, line, i));
 	else if (!is_wspace(line[*i]))
-	{
-		if (is_quote(line[*i]))
-			flag = line[*i];
-		get_word(res, line, i, flag);
-	}
+		get_word(res, line, i);
 	return (0);
 }
