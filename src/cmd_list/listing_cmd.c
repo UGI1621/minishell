@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:19:22 by saan              #+#    #+#             */
-/*   Updated: 2025/08/09 15:56:30 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/09 19:19:34 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,14 @@ void	setting_node(t_cmd_node *c_node, t_lexer_node **l_node)
 {
 	if (is_heredoc_node((*l_node)->str))
 	{
+		// heredoc ==> quoting but no extending
 		(*l_node) = (*l_node)->next;
 		c_node->heredoc_delim = ft_strdup((*l_node)->str);
 		return ;
 	}
 	while (*l_node && ft_strncmp((*l_node)->str, "|", ft_strlen((*l_node)->str)))
 	{
+		// quoting and extending
 		if(is_redir_node((*l_node)->str))
 			update_iofile(c_node, l_node);
 		else
