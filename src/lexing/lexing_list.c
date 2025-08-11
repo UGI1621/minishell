@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 02:22:29 by saan              #+#    #+#             */
-/*   Updated: 2025/08/09 16:39:48 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/11 10:47:50 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ void	add_lexer_node(t_lexer_list *list, char *str)
 {
 	t_lexer_node	*node;
 
+	node = (t_lexer_node *)ft_calloc(1, sizeof(t_lexer_node));
 	if (!str || !str[0])
 		return ;
-	node = (t_lexer_node *)ft_calloc(1, sizeof(t_lexer_node));
 	node->str = str;
 	if (!list->head && !list->tail)
 	{

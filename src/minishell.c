@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:30:30 by saan              #+#    #+#             */
-/*   Updated: 2025/08/09 18:49:19 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/11 10:29:34 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,17 @@ void	print_cmd_list(t_dllist *list)
 	while(node)
 	{
 		printf("node info \n");
-		printf("node->argv :");
+		printf("node->argv : ");
 		int i = -1;
 		while (node->argv && node->argv[++i])
 			printf(" %s", node->argv[i]);
 		printf("\nnode->infile : %s\n", node->infile);
+		printf("node->in_fd : %d\n", node->in_fd);
 		printf("node->append_out : %d\n", node->append_out);
 		printf("node->outfile : %s\n", node->outfile);
+		printf("node->out_fd : %d\n", node->out_fd);
 		printf("node->heredoc_delim : %s\n", node->heredoc_delim);
-		printf("pipe[0] : %d\npipe[1] : %d\n",node->pipe[0], node->pipe[1]);
+		printf("pipe[0] : %d\npipe[1] : %d\n\n",node->pipe[0], node->pipe[1]);
 		node = node->next;
 	}
 }

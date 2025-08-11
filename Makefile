@@ -3,7 +3,7 @@ NAME = minishell
 CC = cc
 
 # CFLAGS = -wall -werror -wextra
-CFLAGS =
+CFLAGS = -g
 
 LIBFT_DIR = libft
 LIBFT_LIB = $(LIBFT_DIR)/libft.a
