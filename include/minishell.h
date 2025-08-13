@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:19:24 by saan              #+#    #+#             */
-/*   Updated: 2025/08/13 17:39:11 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/13 18:30:01 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,12 @@ typedef struct s_cmd_node
 {
 	struct s_cmd_node	*prev;
 	char				**argv;
-	char				*infile;
+	char				**infile;
 	int					in_fd;
-	char				*outfile;
+	char				**outfile;
+	char				**out_sig;
 	int					out_fd;
+	int					is_use_heredoc;
 	int					*heredoc_fd;
 	int					pipe[2];
 	struct s_cmd_node	*next;
@@ -86,8 +88,8 @@ void	free_cmd_field(t_cmd_node *node);
 void	open_error_proc(t_dllist *list);
 
 // setting_fds.c
-int		set_in_fd(t_cmd_node *c_node, t_lexer_node **l_node);
-int		set_out_fd(t_cmd_node *c_node, t_lexer_node **l_node, int is_heredoc);
+void		set_in_fd(t_cmd_node *c_node, t_lexer_node **l_node);
+void		set_out_fd(t_cmd_node *c_node, t_lexer_node **l_node, int is_heredoc);
 void	set_heredoc_fd(t_cmd_node *c_node, t_lexer_node **l_node);
 
 // siganl

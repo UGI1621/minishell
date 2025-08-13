@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 20:35:17 by saan              #+#    #+#             */
-/*   Updated: 2025/08/13 17:39:36 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/13 18:31:51 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,15 @@ void	init_cmd_node(t_cmd_node **node, t_dllist *list)
 	(*node)->prev = NULL;
 	(*node)->argv = (char **)ft_calloc(1, sizeof(char *));
 	(*node)->argv[0] = NULL;
-	(*node)->infile = NULL;
+	(*node)->infile = (char **)ft_calloc(1, sizeof(char *));
+	(*node)->infile[0] = NULL;
 	(*node)->in_fd = -1;
-	(*node)->outfile = NULL;
+	(*node)->outfile = (char **)ft_calloc(1, sizeof(char *));
+	(*node)->outfile[0] = NULL;
+	(*node)->out_sig = (char **)ft_calloc(1, sizeof(char *));
+	(*node)->out_sig[0] = NULL;
 	(*node)->out_fd = -1;
-	(*node)->outfile = NULL;
+	(*node)->is_use_heredoc = 0;
 	(*node)->heredoc_fd = &list->heredoc_fd;
 	(*node)->pipe[0] = -1;
 	(*node)->pipe[1] = -1;

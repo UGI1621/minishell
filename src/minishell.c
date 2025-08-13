@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:30:30 by saan              #+#    #+#             */
-/*   Updated: 2025/08/13 17:39:22 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/13 18:34:50 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,22 @@ void	print_cmd_list(t_dllist *list)
 		printf("node->argv : ");
 		int i = -1;
 		while (node->argv && node->argv[++i])
-			printf(" %s", node->argv[i]);
-		printf("\nnode->infile : %s\n", node->infile);
-		printf("node->in_fd : %d\n", node->in_fd);
-		printf("node->outfile : %s\n", node->outfile);
-		printf("node->out_fd : %d\n", node->out_fd);
+			printf("{%s} ", node->argv[i]);
+		i = -1;
+		printf("\nnode->infile : ");
+		while (node->infile && node->infile[++i])
+			printf("{%s} ", node->infile[i]);
+		printf("\nnode->in_fd : %d", node->in_fd);
+		i = -1;
+		printf("\nnode->outfile : ");
+		while (node->outfile && node->outfile[++i])
+			printf("{%s} ", node->outfile[i]);
+		i = -1;
+		printf("\nnode->out_sig : ");
+		while (node->out_sig && node->out_sig[++i])
+			printf("{%s} ", node->out_sig[i]);
+		printf("\nnode->out_fd : %d\n", node->out_fd);
+		printf("node->is_use_heredoc : %d\n", node->is_use_heredoc);
 		printf("node->heredoc_fd : %d\n", *node->heredoc_fd);
 		printf("pipe[0] : %d\npipe[1] : %d\n\n",node->pipe[0], node->pipe[1]);
 		node = node->next;

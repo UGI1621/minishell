@@ -6,54 +6,84 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 11:10:14 by saan              #+#    #+#             */
-/*   Updated: 2025/08/13 17:24:32 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/13 18:51:23 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		set_in_fd(t_cmd_node *c_node, t_lexer_node **l_node)
+void		set_in_fd(t_cmd_node *c_node, t_lexer_node **l_node)
 {
-	if (c_node->infile)
+	int	len;
+	int	i;
+	char	**new;
+
+	len = 0;
+	while (c_node->infile && c_node->infile[len])
+		len++;
+	new = (char **)ft_calloc(len + 2, sizeof(char *));
+	i = 0;
+	while(c_node->infile && c_node->infile[i])
 	{
-		free(c_node->infile);
-		c_node->infile = NULL;
+		new[i] = cal_quotes(ft_strdup(c_node->infile[i]), 0);
+		i++;
 	}
 	(*l_node) = (*l_node)->next;
-	c_node->infile = cal_quotes(ft_strdup((*l_node)->str), 0);
-	if (c_node->in_fd != -1)
-	{
-		close(c_node->in_fd);
-		c_node->in_fd = -1;
-	}
-	c_node->in_fd = open(c_node->infile, O_RDONLY);
-	if (c_node->in_fd == -1)
-	{
-		perror(c_node->infile);
-		return (1);
-	}
-	return (0);
+	new[i] = cal_quotes(ft_strdup((*l_node)->str), 0);
+	new[i + 1] = NULL;
+	free_2ptr(c_node->infile);
+	c_node->infile = new;
 }
 
-int		set_out_fd(t_cmd_node *c_node, t_lexer_node **l_node, int is_append)
+static void	set_out_sig(t_cmd_node *c_node, int is_append)
 {
-	if (c_node->outfile)
+	int	len;
+	int	i;
+	char	**new;
+
+	len = 0;
+	while(c_node->out_sig && c_node->out_sig[len])
+		len++;
+	new = (char **)ft_calloc(len + 2, sizeof(char *));
+	i = 0;
+	while (c_node->out_sig && c_node->out_sig[i])
 	{
-		free(c_node->outfile);
-		c_node->outfile = NULL;
+		new[i] = c_node->out_sig[i];
+		++i;
+	}
+	if (is_append)
+		new[i] = ft_strdup(">>");
+	else
+		new[i] = ft_strdup(">");
+	printf("outsig new[%d] :%s\n",i , new[i]);
+	new[i + 1] = NULL;
+	free_2ptr(c_node->out_sig);
+	c_node->out_sig = new;
+}
+
+void		set_out_fd(t_cmd_node *c_node, t_lexer_node **l_node, int is_append)
+{
+	int	len;
+	int	i;
+	char	**new;
+
+	len = 0;
+	while (c_node->outfile && c_node->outfile[len])
+		len++;
+	new = (char **)ft_calloc(len + 2, sizeof(char *));
+	i = 0;
+	while(c_node->outfile && c_node->outfile[i])
+	{
+		new[i] = cal_quotes(ft_strdup(c_node->outfile[i]), 0);
+		i++;
 	}
 	(*l_node) = (*l_node)->next;
-	c_node->outfile = cal_quotes(ft_strdup((*l_node)->str), 0);
-	if (is_append)
-		c_node->out_fd = open(c_node->outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	else
-		c_node->out_fd = open(c_node->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (c_node->out_fd == -1)
-	{
-		perror(c_node->outfile);
-		return (1);
-	}
-	return (0);
+	new[i] = cal_quotes(ft_strdup((*l_node)->str), 0);
+	printf("outfile new[%d] :%s\n",i , new[i]);
+	new[i + 1] = NULL;
+	set_out_sig(c_node, is_append);
+	free_2ptr(c_node->outfile);
+	c_node->outfile = new;
 }
 
 void	set_heredoc_fd(t_cmd_node *c_node, t_lexer_node **l_node)
@@ -67,9 +97,6 @@ void	set_heredoc_fd(t_cmd_node *c_node, t_lexer_node **l_node)
 	*c_node->heredoc_fd = open("heredoc_temp", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (ft_strchr((*l_node)->str, '\'') || ft_strchr((*l_node)->str, '\"'))
 		quote_flag = 1;
-	free_2ptr(c_node->argv);
-	c_node->argv = (char **)ft_calloc(2, sizeof(char *));
-	c_node->argv[0] = ft_strdup("<<");
-	c_node->argv[1] = NULL;
 	heredoc_proc(cal_quotes(ft_strdup((*l_node)->str), 1),*c_node->heredoc_fd, quote_flag);
+	c_node->is_use_heredoc = 1;
 }
