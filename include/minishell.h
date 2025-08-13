@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:19:24 by saan              #+#    #+#             */
-/*   Updated: 2025/08/11 11:14:49 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/13 12:19:38 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,13 @@ char	*cal_quotes(char *line, int	is_heredoc);
 int	is_redir_node(char *s);
 int	is_heredoc_node(char *s);
 char	*ft_strjoin_af(char *s1, char *s2);
+void	free_cmd_list(t_dllist *list);
+void	free_cmd_field(t_cmd_node *node);
 
 // setting_fds.c
 int		set_in_fd(t_cmd_node *c_node, t_lexer_node **l_node);
 int		set_out_fd(t_cmd_node *c_node, t_lexer_node **l_node, int is_heredoc);
+int	set_heredoc_fd(t_cmd_node *c_node, t_lexer_node **l_node);
 
 // siganl
 // sa_handler.c

@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:19:22 by saan              #+#    #+#             */
-/*   Updated: 2025/08/11 11:14:56 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/13 12:23:55 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,6 @@ static void	append_argv(t_cmd_node *c_node, t_lexer_node **l_node)
 
 static int	setting_node(t_cmd_node *c_node, t_lexer_node **l_node)
 {
-	if (is_heredoc_node((*l_node)->str))
-	{
-		// heredoc ==> quoting but no extending
-		(*l_node) = (*l_node)->next;
-		c_node->heredoc_delim = cal_quotes(ft_strdup((*l_node)->str), 1);
-		return (0);
-	}
 	while (*l_node && ft_strncmp((*l_node)->str, "|", ft_strlen((*l_node)->str)))
 	{
 		if(is_redir_node((*l_node)->str))
@@ -88,12 +81,15 @@ static int	setting_node(t_cmd_node *c_node, t_lexer_node **l_node)
 			if(update_iofile(c_node, l_node))
 				return (1);
 		}
-		else if(is_heredoc_node((*l_node)->str))
+		else if (is_heredoc_node((*l_node)->str))
 		{
-
+			set_heredoc_fd(c_node, l_node);
+			break ;
 		}
 		else
 			append_argv(c_node, l_node);
+		if ((*l_node)->next && is_heredoc_node((*l_node)->next->str))
+			break ;
 		*l_node = (*l_node)->next;
 		// built-in cmd condition (?)
 	}

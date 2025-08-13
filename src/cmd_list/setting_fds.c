@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 11:10:14 by saan              #+#    #+#             */
-/*   Updated: 2025/08/11 11:12:06 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/13 12:16:14 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,12 @@ int		set_out_fd(t_cmd_node *c_node, t_lexer_node **l_node, int is_append)
 	return (0);
 }
 
-void	set_heredoc(t_cmd_node *c_node, t_lexer_node **l_node)
+int	set_heredoc_fd(t_cmd_node *c_node, t_lexer_node **l_node)
 {
 	(*l_node) = (*l_node)->next;
-
+	c_node->heredoc_delim = cal_quotes(ft_strdup((*l_node)->str), 1);
+	if (*c_node->heredoc_fd != -1)
+		close(*c_node->heredoc_fd);
+	*c_node->heredoc_fd = open("heredoc_temp", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	return (0);
 }

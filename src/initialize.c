@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 20:35:17 by saan              #+#    #+#             */
-/*   Updated: 2025/08/11 11:15:05 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/13 10:11:32 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	init_cmd_node(t_cmd_node **node, t_dllist *list)
 	(*node)->out_fd = -1;
 	(*node)->append_out = 0;
 	(*node)->outfile = NULL;
-	(*node)->heredoc_fd = list->heredoc_fd;
+	(*node)->heredoc_fd = &list->heredoc_fd;
 	(*node)->heredoc_delim = NULL;
 	(*node)->pipe[0] = -1;
 	(*node)->pipe[1] = -1;

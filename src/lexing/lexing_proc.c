@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 00:26:09 by saan              #+#    #+#             */
-/*   Updated: 2025/08/09 18:48:10 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/13 10:56:20 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	get_iredir(t_lexer_list *res, char *line, int *idx)
 			return (invalid_token(res, '<'));
 		add_lexer_node(res, ft_strdup("<<"));
 		*idx += 2;
-		while (is_wspace(line[*idx]))
+		while (line[*idx] && is_wspace(line[*idx]))
 			++(*idx);
 		s = *idx;
 		while(line[*idx] && !is_cutsign(line[*idx]))
@@ -173,7 +173,7 @@ static void	get_word(t_lexer_list *list, char *line, int *idx)
 			break ;
 	}
 	add_lexer_node(list, temp);
-	--(*idx);
+	// --(*idx);
 }
 
 int	ft_lexing_proc(t_lexer_list *res, char *line, int *i)

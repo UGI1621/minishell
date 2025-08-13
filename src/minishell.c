@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:30:30 by saan              #+#    #+#             */
-/*   Updated: 2025/08/11 10:29:34 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/13 12:21:47 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 t_sigs g_sigs;
 // valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp ./minishell
+// cat << 1 << 2 | cat djqtsmsvkdlf.txt | echo "'"$HOME
 
 void	print_lexing_list(t_lexer_list *list)
 {
@@ -47,6 +48,7 @@ void	print_cmd_list(t_dllist *list)
 		printf("node->append_out : %d\n", node->append_out);
 		printf("node->outfile : %s\n", node->outfile);
 		printf("node->out_fd : %d\n", node->out_fd);
+		printf("node->heredoc_fd : %d\n", *node->heredoc_fd);
 		printf("node->heredoc_delim : %s\n", node->heredoc_delim);
 		printf("pipe[0] : %d\npipe[1] : %d\n\n",node->pipe[0], node->pipe[1]);
 		node = node->next;
@@ -96,6 +98,8 @@ static int	lexing_listing(char *line)
 	cmd_list = listing_cmd(lexing_list);
 	print_cmd_list(cmd_list);
 	free_lexer_list(lexing_list);
+	// execve part <<
+	free_cmd_list(cmd_list);
 	return (0);
 }
 
