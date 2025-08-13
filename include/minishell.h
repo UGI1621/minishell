@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:19:24 by saan              #+#    #+#             */
-/*   Updated: 2025/08/13 12:19:38 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/13 17:39:11 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,9 @@ typedef struct s_cmd_node
 	char				**argv;
 	char				*infile;
 	int					in_fd;
-	int					append_out;
 	char				*outfile;
 	int					out_fd;
 	int					*heredoc_fd;
-	char				*heredoc_delim;
 	int					pipe[2];
 	struct s_cmd_node	*next;
 }	t_cmd_node;
@@ -66,6 +64,10 @@ typedef struct s_sigs
 	int	exit_code;
 }	t_sigs;
 
+// heredoc
+// heredoc.c
+void	heredoc_proc(char *delimiter, int heredoc_fd, int is_quote);
+
 // cmd_list
 // listing_cmd.c
 t_dllist	*listing_cmd(t_lexer_list *list);
@@ -77,13 +79,16 @@ char	*cal_quotes(char *line, int	is_heredoc);
 int	is_redir_node(char *s);
 int	is_heredoc_node(char *s);
 char	*ft_strjoin_af(char *s1, char *s2);
+
+// cmd_free.c
 void	free_cmd_list(t_dllist *list);
 void	free_cmd_field(t_cmd_node *node);
+void	open_error_proc(t_dllist *list);
 
 // setting_fds.c
 int		set_in_fd(t_cmd_node *c_node, t_lexer_node **l_node);
 int		set_out_fd(t_cmd_node *c_node, t_lexer_node **l_node, int is_heredoc);
-int	set_heredoc_fd(t_cmd_node *c_node, t_lexer_node **l_node);
+void	set_heredoc_fd(t_cmd_node *c_node, t_lexer_node **l_node);
 
 // siganl
 // sa_handler.c

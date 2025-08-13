@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 00:26:09 by saan              #+#    #+#             */
-/*   Updated: 2025/08/13 10:56:20 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/13 17:40:05 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,6 @@ static void	get_word(t_lexer_list *list, char *line, int *idx)
 			break ;
 	}
 	add_lexer_node(list, temp);
-	// --(*idx);
 }
 
 int	ft_lexing_proc(t_lexer_list *res, char *line, int *i)

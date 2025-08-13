@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:19:22 by saan              #+#    #+#             */
-/*   Updated: 2025/08/13 12:23:55 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/13 17:39:49 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ static int	update_iofile(t_cmd_node *c_node, t_lexer_node **l_node)
 	{
 		if (set_out_fd(c_node, l_node, 1))
 			return (1);
-		c_node->append_out = 1;
 	}
 	return (0);
 }
@@ -82,10 +81,7 @@ static int	setting_node(t_cmd_node *c_node, t_lexer_node **l_node)
 				return (1);
 		}
 		else if (is_heredoc_node((*l_node)->str))
-		{
 			set_heredoc_fd(c_node, l_node);
-			break ;
-		}
 		else
 			append_argv(c_node, l_node);
 		if ((*l_node)->next && is_heredoc_node((*l_node)->next->str))
@@ -110,9 +106,11 @@ t_dllist	*listing_cmd(t_lexer_list *list)
 		if (setting_node(c_node, &l_node))
 		{
 			free(c_node);
+			open_error_proc(res);
 			while(l_node && ft_strncmp(l_node->str, "|", ft_strlen(l_node->str)))
 				l_node = l_node->next;
-			l_node = l_node->next;
+			if (l_node && l_node->next)
+				l_node = l_node->next;
 			continue ;
 		}
 		add_cmd_node(res, c_node);
