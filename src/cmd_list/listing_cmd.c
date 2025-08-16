@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:19:22 by saan              #+#    #+#             */
-/*   Updated: 2025/08/13 18:44:04 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/16 14:52:30 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void	append_argv(t_cmd_node *c_node, t_lexer_node **l_node)
 	i = 0;
 	while(c_node->argv && c_node->argv[i])
 	{
-		new[i] = cal_quotes(ft_strdup(c_node->argv[i]), 0);
+		new[i] = ft_strdup(c_node->argv[i]);
 		i++;
 	}
 	new[i] = cal_quotes(ft_strdup((*l_node)->str), 0);
