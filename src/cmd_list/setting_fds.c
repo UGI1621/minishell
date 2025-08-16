@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 11:10:14 by saan              #+#    #+#             */
-/*   Updated: 2025/08/13 18:51:23 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/16 12:39:14 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void		set_in_fd(t_cmd_node *c_node, t_lexer_node **l_node)
 	i = 0;
 	while(c_node->infile && c_node->infile[i])
 	{
-		new[i] = cal_quotes(ft_strdup(c_node->infile[i]), 0);
+		new[i] = ft_strdup(c_node->infile[i]);
 		i++;
 	}
 	(*l_node) = (*l_node)->next;
@@ -48,14 +48,13 @@ static void	set_out_sig(t_cmd_node *c_node, int is_append)
 	i = 0;
 	while (c_node->out_sig && c_node->out_sig[i])
 	{
-		new[i] = c_node->out_sig[i];
+		new[i] = ft_strdup(c_node->out_sig[i]);
 		++i;
 	}
 	if (is_append)
 		new[i] = ft_strdup(">>");
 	else
 		new[i] = ft_strdup(">");
-	printf("outsig new[%d] :%s\n",i , new[i]);
 	new[i + 1] = NULL;
 	free_2ptr(c_node->out_sig);
 	c_node->out_sig = new;
@@ -74,12 +73,11 @@ void		set_out_fd(t_cmd_node *c_node, t_lexer_node **l_node, int is_append)
 	i = 0;
 	while(c_node->outfile && c_node->outfile[i])
 	{
-		new[i] = cal_quotes(ft_strdup(c_node->outfile[i]), 0);
+		new[i] = ft_strdup(c_node->outfile[i]);
 		i++;
 	}
 	(*l_node) = (*l_node)->next;
 	new[i] = cal_quotes(ft_strdup((*l_node)->str), 0);
-	printf("outfile new[%d] :%s\n",i , new[i]);
 	new[i + 1] = NULL;
 	set_out_sig(c_node, is_append);
 	free_2ptr(c_node->outfile);

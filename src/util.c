@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 16:48:58 by saan              #+#    #+#             */
-/*   Updated: 2025/08/09 12:06:52 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/16 10:28:49 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	free_2ptr(char **ptr)
 	int	i;
 
 	i = -1;
-	while (ptr[++i])
+	while (ptr && ptr[++i])
 		free(ptr[i]);
 	if (ptr)
 		free(ptr);

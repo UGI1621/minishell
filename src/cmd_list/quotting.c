@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 10:15:21 by saan              #+#    #+#             */
-/*   Updated: 2025/08/11 08:15:20 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/16 12:53:14 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,7 +224,6 @@ static char	*env_extend(char *s, char quote)
 
 	if (quote == '\'')
 		return (s);
-	// printf("s :%s\n", s);
 	i = -1;
 	res = ft_strdup("");
 	while (s[++i])
@@ -240,10 +239,6 @@ static char	*env_extend(char *s, char quote)
 			break ;
 		}
 	}
-	// printf("i : %d\n", i);
-	// printf("s_len : %d\n", ft_strlen(s));
-	// printf("last substring :%s\n", ft_substr(s, i, ft_strlen(s) - i));
-	// res = ft_strjoin_af(res, ft_substr(s, i, ft_strlen(s) - i));
 	free(s);
 	return (res);
 }
@@ -282,7 +277,7 @@ static char	*get_words(char *line, int *idx, int is_heredoc)
 		(*idx)++;
 	if (is_quote(line[*idx]))
 		(*idx)--;
-	temp = ft_substr(line, start, *idx - start + 1);
+	temp = ft_substr(line, start, *idx - start);
 	if (!is_heredoc && ft_strchr(temp, '$'))
 		return (env_extend(temp, '\"'));
 	return (temp);

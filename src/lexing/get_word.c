@@ -6,41 +6,59 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 17:00:28 by saan              #+#    #+#             */
-/*   Updated: 2025/07/28 20:32:18 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/16 12:43:09 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	flag_0_get_word(t_lexer_list *list, char *line, int *idx, int *start)
+char	*append_char(char *str, char c)
 {
-	char	c;
+	int	len;
+	char	*res;
+	int	i;
 
-	if (is_quote(line[*idx]))
+	len = 0;
+	while(str && str[len])
+		len++;
+	res = (char *)ft_calloc(len + 2, sizeof(char));
+	i = 0;
+	while (str[i])
 	{
-		c = line[(*idx)++];
-		while (line[(*idx)] != c)
-			++(*idx);
+		res[i] = str[i];
+		i++;
 	}
-	if (is_cutsign(line[*idx]))
-	{
-		add_lexer_node(list, ft_substr(line, *start, --(*idx) - *start + 1));
-		return (0);
-	}
-	else if (is_wspace(line[*idx]))
-	{
-		add_lexer_node(list, ft_substr(line, *start, --(*idx) - *start + 1));
-		return (1);
-	}
-	return (2);
+	res[i] = c;
+	res[i + 1] = 0;
+	free(str);
+	return (res);
 }
 
-int	flag_1_get_word(t_lexer_list *list, char *line, int *idx, int *start)
+int	get_word_redir(t_lexer_list *res, char *line, int *idx, char *sig)
 {
-	if (is_cutsign(line[*idx]) || is_wspace(line[*idx]) || is_quote(line[*idx]))
+	char	*temp;
+	char	quote;
+
+	if (line[*idx + 2] == line[*idx + 1])
+		return (invalid_token(res, line[*idx + 1]));
+	add_lexer_node(res, ft_strdup(sig));
+	*idx += 2;
+	while (is_wspace(line[*idx]))
+		++(*idx);
+	temp = ft_strdup("");
+	while (line[(*idx)] && !is_wspace(line[*idx]) && !is_cutsign(line[*idx]))
 	{
-		add_lexer_node(list, ft_substr(line, *start, --(*idx) - *start + 1));
-		return (1);
+		if (is_quote(line[(*idx)]))
+		{
+			quote = line[*idx];
+			temp = append_char(temp, line[(*idx)]);
+			while (line[++(*idx)] != quote)
+				temp = append_char(temp, line[(*idx)]);
+		}
+		temp = append_char(temp, line[(*idx)]);
+		(*idx)++;
 	}
+	add_lexer_node(res, temp);
+	--(*idx);
 	return (0);
 }

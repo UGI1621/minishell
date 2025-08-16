@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:19:24 by saan              #+#    #+#             */
-/*   Updated: 2025/08/13 18:30:01 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/16 12:43:25 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct s_sigs
 // heredoc.c
 void	heredoc_proc(char *delimiter, int heredoc_fd, int is_quote);
 
+
 // cmd_list
 // listing_cmd.c
 t_dllist	*listing_cmd(t_lexer_list *list);
@@ -92,10 +93,12 @@ void		set_in_fd(t_cmd_node *c_node, t_lexer_node **l_node);
 void		set_out_fd(t_cmd_node *c_node, t_lexer_node **l_node, int is_heredoc);
 void	set_heredoc_fd(t_cmd_node *c_node, t_lexer_node **l_node);
 
+
 // siganl
 // sa_handler.c
 void	s_sigint_handler(int signum);
 void	s_sigquit_handler(int signum);
+
 
 // lexing
 // lexing_list.c
@@ -108,9 +111,11 @@ void	free_lexer_list(t_lexer_list *list);
 int	ft_lexing_proc(t_lexer_list *res, char *line, int *i);
 
 // get_word.c
-int	flag_0_get_word(t_lexer_list *list, char *line, int *idx, int *flag);
-int	flag_1_get_word(t_lexer_list *list, char *line, int *idx, int *start);
+char	*append_char(char *str, char c);
+int	get_word_redir(t_lexer_list *res, char *line, int *idx, char *sig);
 
+
+// root
 // util.c
 int	is_wspace(char c);
 int	is_quote(char c);
