@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:30:30 by saan              #+#    #+#             */
-/*   Updated: 2025/08/16 10:28:09 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/16 16:05:20 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ static int	lexing_listing(char *line)
 	cmd_list = listing_cmd(lexing_list);
 	print_cmd_list(cmd_list);
 	free_lexer_list(lexing_list);
-	// execve part <<
+	process_cmd_exe(cmd_list);
 	free_cmd_list(cmd_list);
 	return (0);
 }
