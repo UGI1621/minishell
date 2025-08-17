@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:19:24 by saan              #+#    #+#             */
-/*   Updated: 2025/08/17 09:07:26 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/17 16:14:59 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,19 @@ typedef struct s_sigs
 
 //								execve
 // exe_cmds.c
-void	process_cmd_exe(t_dllist *list);
+void	process_cmd_exe(t_dllist *list, char **env);
 
 // handle_error.c
 void	exit_with_perror(char *str);
+void	write_open_error(char *name);
+void	write_access_error(char *name);
 
 // redirection.c
-int	open_infiles(char **infile);
+int	open_infiles(char **files);
+void	set_node_fds(t_cmd_node *node);
+
+// cmd_path.c
+void	check_and_set_argv(t_cmd_node *node);
 
 // 								heredoc
 // heredoc.c
