@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 15:02:05 by saan              #+#    #+#             */
-/*   Updated: 2025/08/17 08:51:50 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/20 18:48:53 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	free_cmd_field(t_cmd_node *node)
 {
+	if (node->cmd_path)
+		free(node->cmd_path);
 	if (node->argv)
 		free_2ptr(node->argv);
 	if (node->infile)

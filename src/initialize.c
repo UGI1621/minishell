@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 20:35:17 by saan              #+#    #+#             */
-/*   Updated: 2025/08/17 14:18:59 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/20 15:23:14 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	init_cmd_node(t_cmd_node **node, t_dllist *list)
 {
 	*node = (t_cmd_node *)ft_calloc(1, sizeof(t_cmd_node));
 	(*node)->prev = NULL;
+	(*node)->cmd_path = NULL;
 	(*node)->argv = (char **)ft_calloc(1, sizeof(char *));
 	(*node)->argv[0] = NULL;
 	(*node)->infile = (char **)ft_calloc(1, sizeof(char *));

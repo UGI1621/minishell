@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:19:24 by saan              #+#    #+#             */
-/*   Updated: 2025/08/17 16:14:59 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/20 18:07:37 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 typedef struct s_cmd_node
 {
 	struct s_cmd_node	*prev;
+	char				*cmd_path;
 	char				**argv;
 	char				**infile;
 	int					in_fd;
@@ -78,10 +79,19 @@ void	write_access_error(char *name);
 
 // redirection.c
 int	open_infiles(char **files);
+int	open_outfiles(char **files, char **sigs);
 void	set_node_fds(t_cmd_node *node);
 
 // cmd_path.c
 void	check_and_set_argv(t_cmd_node *node);
+
+// util.c
+int	is_builtin(t_cmd_node *node);
+void	do_builtin(t_cmd_node *node);
+
+
+//								built-in
+void	ft_echo(t_cmd_node *node);
 
 // 								heredoc
 // heredoc.c

@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 08:44:59 by saan              #+#    #+#             */
-/*   Updated: 2025/08/17 16:21:45 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/20 15:29:14 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	write_access_error(char *name)
 	int	exit_code;
 
 	exit_code = 1;
-	write(2, name, ft_strlen(name));
+	write(2, name + 1, ft_strlen(name + 1));
 	write(2, ": ", 2);
 	if (errno == ENOENT)
 	{
@@ -47,7 +47,7 @@ void	write_access_error(char *name)
 		g_sigs.exit_code = 126;
 		exit_code = 126;
 	}
-	free(--name);
+	free(name);
 	exit(exit_code);
 }
 

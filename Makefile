@@ -19,7 +19,7 @@ EXECMD_DIR = src/execve
 OBJ_DIR = obj
 INC_DIR = include
 
-SRCS = $(wildcard $(SRC_DIR)/*.c) $(wildcard $(SIGNAL_DIR)/*.c) $(wildcard $(LEXING_DIR)/*.c) $(wildcard $(QUOTING_DIR)/*.c) $(wildcard $(CMD_LIST_DIR)/*.c) $(wildcard $(HEREDOC_DIR)/*.c) $(wildcard $(EXECMD_DIR)/*.c)
+SRCS = $(wildcard $(SRC_DIR)/*.c) $(wildcard $(SIGNAL_DIR)/*.c) $(wildcard $(LEXING_DIR)/*.c) $(wildcard $(QUOTING_DIR)/*.c) $(wildcard $(CMD_LIST_DIR)/*.c) $(wildcard $(HEREDOC_DIR)/*.c) $(wildcard $(EXECMD_DIR)/*.c) $(wildcard src/built-in/*.c)
 
 OBJS = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
 

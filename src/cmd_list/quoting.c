@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 10:15:21 by saan              #+#    #+#             */
-/*   Updated: 2025/08/17 08:51:38 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/20 16:01:51 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static char	*env_extend(char *s, char quote)
 		if (s[i] == '$')
 		{
 			res = ft_strjoin_af(res, ft_substr(s, 0, i));
-			printf("res :%s\n",res);
+			// printf("res :%s\n",res);
 			j = 0;
 			while (s[++i] && !is_wspace(s[i]) && !is_quote(s[i]))
 				j++;

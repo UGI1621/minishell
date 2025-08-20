@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 09:06:39 by saan              #+#    #+#             */
-/*   Updated: 2025/08/17 16:13:55 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/20 19:00:32 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,9 @@ void	set_node_fds(t_cmd_node *node)
 	else
 		node->in_fd = open_infiles(node->infile);
 	if (node->in_fd != -1)
+	{
 		dup2(node->in_fd, STDIN_FILENO);
+	}
 	node->out_fd = open_outfiles(node->outfile, node->out_sig);
 	if (node->out_fd != -1)
 		dup2(node->out_fd, STDOUT_FILENO);
