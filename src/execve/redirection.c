@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 09:06:39 by saan              #+#    #+#             */
-/*   Updated: 2025/08/20 19:00:32 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/25 09:22:48 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	open_infiles(char **files)
 	int	fd;
 
 	i = -1;
+
 	fd = STDIN_FILENO;
 	while (files[++i])
 	{
@@ -51,27 +52,25 @@ int	open_outfiles(char **files, char **sigs)
 	return (fd);
 }
 
-void	set_node_fds(t_cmd_node *node)
-{
-	if (node->prev)
-	{
-		close(node->prev->pipe[1]);
-		dup2(node->prev->pipe[0], STDIN_FILENO);
-	}
-	if (node->next)
-	{
-		close(node->pipe[0]);
-		dup2(node->pipe[1], STDOUT_FILENO);
-	}
-	if (node->is_use_heredoc)
-		node->in_fd = *node->heredoc_fd;
-	else
-		node->in_fd = open_infiles(node->infile);
-	if (node->in_fd != -1)
-	{
-		dup2(node->in_fd, STDIN_FILENO);
-	}
-	node->out_fd = open_outfiles(node->outfile, node->out_sig);
-	if (node->out_fd != -1)
-		dup2(node->out_fd, STDOUT_FILENO);
-}
+// void	set_node_fds(t_cmd_node *node)
+// {
+// 	if (node->prev)
+// 	{
+// 		close(node->prev->pipe[1]);
+// 		dup2(node->prev->pipe[0], STDIN_FILENO);
+// 	}
+// 	if (node->next)
+// 	{
+// 		close(node->pipe[0]);
+// 		dup2(node->pipe[1], STDOUT_FILENO);
+// 	}
+// 	if (node->is_use_heredoc)
+// 		node->in_fd = *node->heredoc_fd;
+// 	else
+// 		node->in_fd = open_infiles(node->infile);
+// 	if (node->in_fd != -1)
+// 		dup2(node->in_fd, STDIN_FILENO);
+// 	node->out_fd = open_outfiles(node->outfile, node->out_sig);
+// 	if (node->out_fd != -1)
+// 		dup2(node->out_fd, STDOUT_FILENO);
+// }

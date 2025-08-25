@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 15:02:05 by saan              #+#    #+#             */
-/*   Updated: 2025/08/20 18:48:53 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/25 08:44:40 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ void	free_cmd_list(t_dllist *list)
 	t_cmd_node	*node;
 	t_cmd_node	*temp;
 
-	if (list->heredoc_fd != -1)
-		close(list->heredoc_fd);
-	unlink("heredoc_temp");
+	// if (list->heredoc_fd != -1)
+	// 	close(list->heredoc_fd);
+	// unlink("heredoc_temp");
 	node = list->head;
 	while(node)
 	{
