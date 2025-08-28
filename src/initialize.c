@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 20:35:17 by saan              #+#    #+#             */
-/*   Updated: 2025/08/20 15:23:14 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/28 16:24:36 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,15 @@ void	init_lexer_list(t_lexer_list **list)
 	(*list)->tail = NULL;
 }
 
-void	init_cmd_list(t_dllist **list)
+void	init_cmd_list(t_cmd_list **list)
 {
-	*list = (t_dllist *)ft_calloc(1, sizeof(t_dllist));
+	*list = (t_cmd_list *)ft_calloc(1, sizeof(t_cmd_list));
 	(*list)->head = NULL;
-	(*list)->heredoc_fd = -1;
+	// (*list)->heredoc_fd = -1;
 	(*list)->tail = NULL;
 }
 
-void	init_cmd_node(t_cmd_node **node, t_dllist *list)
+void	init_cmd_node(t_cmd_node **node, t_cmd_list *list)
 {
 	*node = (t_cmd_node *)ft_calloc(1, sizeof(t_cmd_node));
 	(*node)->prev = NULL;
@@ -57,7 +57,7 @@ void	init_cmd_node(t_cmd_node **node, t_dllist *list)
 	(*node)->out_sig[0] = NULL;
 	(*node)->out_fd = STDOUT_FILENO;
 	(*node)->is_use_heredoc = 0;
-	(*node)->heredoc_fd = &list->heredoc_fd;
+	(*node)->heredoc_fd = -1;
 	(*node)->pipe[0] = -1;
 	(*node)->pipe[1] = -1;
 	(*node)->next = NULL;

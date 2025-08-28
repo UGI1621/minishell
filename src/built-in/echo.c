@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 15:40:15 by saan              #+#    #+#             */
-/*   Updated: 2025/08/20 18:23:00 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/27 12:20:16 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ void	ft_echo(t_cmd_node *node)
 	}
 	while (node->argv[i])
 	{
-		ft_putstr_fd(node->argv[i], node->out_fd);
+		ft_putstr_fd(node->argv[i], STDOUT_FILENO);
 		if (node->argv[i + 1])
-			write(node->out_fd, " ", 1);
+			write(STDOUT_FILENO, " ", 1);
 		i++;
 	}
 	if (flag)
-		write(node->out_fd, "\n", 1);
+		write(STDOUT_FILENO, "\n", 1);
 }

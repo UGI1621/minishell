@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:30:30 by saan              #+#    #+#             */
-/*   Updated: 2025/08/25 08:44:57 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/28 17:21:52 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	print_lexing_list(t_lexer_list *list)
 	printf("\n");
 }
 
-void	print_cmd_list(t_dllist *list)
+void	print_cmd_list(t_cmd_list *list)
 {
 	t_cmd_node *node;
 
@@ -58,7 +58,7 @@ void	print_cmd_list(t_dllist *list)
 			printf("{%s} ", node->out_sig[i]);
 		printf("\nnode->out_fd : %d\n", node->out_fd);
 		printf("node->is_use_heredoc : %d\n", node->is_use_heredoc);
-		printf("node->heredoc_fd : %d\n", *node->heredoc_fd);
+		// printf("node->heredoc_fd : %d\n", *node->heredoc_fd);
 		printf("pipe[0] : %d\npipe[1] : %d\n\n",node->pipe[0], node->pipe[1]);
 		node = node->next;
 	}
@@ -90,7 +90,7 @@ static char	*ft_readline()
 static int	lexing_listing(char *line, char **env)
 {
 	t_lexer_list	*lexing_list;
-	t_dllist	*cmd_list;
+	t_cmd_list	*cmd_list;
 
 	if (is_invalid_line(line))
 	{
@@ -116,8 +116,12 @@ int	main(int _ac, char **_av, char **env)
 {
 	char	*line;
 	char	*temp;
+	t_env_list	*my_env;
 
+	envp_to_env(&my_env, env);
+	print_env_list(my_env);
 	init_sigs();
+	g_sigs.exit_code = 0;
 	while (1)
 	{
 		line = ft_readline();

@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 15:02:05 by saan              #+#    #+#             */
-/*   Updated: 2025/08/25 08:44:40 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/28 16:24:52 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,15 @@ void	free_cmd_field(t_cmd_node *node)
 		free_2ptr(node->out_sig);
 }
 
-void	free_cmd_list(t_dllist *list)
+void	free_cmd_list(t_cmd_list *list)
 {
 	t_cmd_node	*node;
 	t_cmd_node	*temp;
 
-	// if (list->heredoc_fd != -1)
-	// 	close(list->heredoc_fd);
-	// unlink("heredoc_temp");
 	node = list->head;
+	if (node->heredoc_fd != -1)
+		close(node->heredoc_fd);
+	unlink("heredoc_temp");
 	while(node)
 	{
 		free_cmd_field(node);
@@ -45,7 +45,7 @@ void	free_cmd_list(t_dllist *list)
 	free(list);
 }
 
-void	open_error_proc(t_dllist *list)
+void	open_error_proc(t_cmd_list *list)
 {
 	t_cmd_node	*node;
 	t_cmd_node	*temp;

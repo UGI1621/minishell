@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 10:15:21 by saan              #+#    #+#             */
-/*   Updated: 2025/08/20 16:01:51 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/28 15:05:52 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ static char	*extending(char *s)
 	char	*res;
 	char	*temp;
 
+	if (ft_strlen(s) == 1 && !ft_strncmp(s, "?", 1))
+	{
+		free(s);
+		return(ft_itoa(g_sigs.exit_code));
+	}
 	temp = getenv(s);
 	if (!temp)
 	{

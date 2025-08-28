@@ -6,16 +6,14 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:19:22 by saan              #+#    #+#             */
-/*   Updated: 2025/08/16 14:52:30 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/28 16:49:34 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	add_cmd_node(t_dllist *list, t_cmd_node *node)
+void	add_cmd_node(t_cmd_list *list, t_cmd_node *node)
 {
-	t_cmd_node	*temp;
-
 	if(!list->head && !list->tail)
 	{
 		list->head = node;
@@ -83,9 +81,9 @@ static void	setting_node(t_cmd_node *c_node, t_lexer_node **l_node)
 	}
 }
 
-t_dllist	*listing_cmd(t_lexer_list *list)
+t_cmd_list	*listing_cmd(t_lexer_list *list)
 {
-	t_dllist	*res;
+	t_cmd_list	*res;
 	t_cmd_node	*c_node;
 	t_lexer_node	*l_node;
 

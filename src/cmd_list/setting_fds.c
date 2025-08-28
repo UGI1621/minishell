@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 11:10:14 by saan              #+#    #+#             */
-/*   Updated: 2025/08/16 12:39:14 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/25 16:05:36 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,11 @@ void	set_heredoc_fd(t_cmd_node *c_node, t_lexer_node **l_node)
 
 	quote_flag = 0;
 	(*l_node) = (*l_node)->next;
-	if (*c_node->heredoc_fd != -1)
-		close(*c_node->heredoc_fd);
-	*c_node->heredoc_fd = open("heredoc_temp", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (c_node->heredoc_fd != -1)
+		close(c_node->heredoc_fd);
+	c_node->heredoc_fd = open("heredoc_temp", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (ft_strchr((*l_node)->str, '\'') || ft_strchr((*l_node)->str, '\"'))
 		quote_flag = 1;
-	heredoc_proc(cal_quotes(ft_strdup((*l_node)->str), 1),*c_node->heredoc_fd, quote_flag);
+	heredoc_proc(cal_quotes(ft_strdup((*l_node)->str), 1),c_node->heredoc_fd, quote_flag);
 	c_node->is_use_heredoc = 1;
 }

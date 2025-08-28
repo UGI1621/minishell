@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:19:24 by saan              #+#    #+#             */
-/*   Updated: 2025/08/20 18:07:37 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/28 17:22:23 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,17 @@ typedef struct s_cmd_node
 	char				**out_sig;
 	int					out_fd;
 	int					is_use_heredoc;
-	int					*heredoc_fd;
+	int					heredoc_fd;
 	int					pipe[2];
 	struct s_cmd_node	*next;
 }	t_cmd_node;
 
-typedef struct s_dllist
+typedef struct s_cmd_list
 {
 	t_cmd_node			*head;
-	int					heredoc_fd;
+	// int					heredoc_fd;
 	t_cmd_node			*tail;
-}	t_dllist;
+}	t_cmd_list;
 
 typedef struct s_lexer_node
 {
@@ -61,6 +61,20 @@ typedef struct s_lexer_list
 	t_lexer_node	*tail;
 } t_lexer_list;
 
+typedef struct s_env_node
+{
+	struct s_env_node *prev;
+	char *key;
+	char *val;
+	struct s_env_node *next;
+} t_env_node;
+
+typedef struct s_env_list
+{
+	t_env_node *head;
+	t_env_node *tail;
+} t_env_list;
+
 typedef struct s_sigs
 {
 	int	sigterm;
@@ -70,7 +84,7 @@ typedef struct s_sigs
 
 //								execve
 // exe_cmds.c
-void	process_cmd_exe(t_dllist *list, char **env);
+void	process_cmd_exe(t_cmd_list *list, char **env);
 
 // handle_error.c
 void	exit_with_perror(char *str);
@@ -87,11 +101,12 @@ void	check_and_set_argv(t_cmd_node *node);
 
 // util.c
 int	is_builtin(t_cmd_node *node);
-void	do_builtin(t_cmd_node *node);
+void	do_builtin(t_cmd_node *node, int is_p);
 
 
 //								built-in
 void	ft_echo(t_cmd_node *node);
+void	ft_pwd(t_cmd_node *node);
 
 // 								heredoc
 // heredoc.c
@@ -100,7 +115,7 @@ void	heredoc_proc(char *delimiter, int heredoc_fd, int is_quote);
 
 // 								cmd_list
 // listing_cmd.c
-t_dllist	*listing_cmd(t_lexer_list *list);
+t_cmd_list	*listing_cmd(t_lexer_list *list);
 
 // quotting.c
 char	*cal_quotes(char *line, int	is_heredoc);
@@ -111,9 +126,9 @@ int	is_heredoc_node(char *s);
 char	*ft_strjoin_af(char *s1, char *s2);
 
 // cmd_free.c
-void	free_cmd_list(t_dllist *list);
+void	free_cmd_list(t_cmd_list *list);
 void	free_cmd_field(t_cmd_node *node);
-void	open_error_proc(t_dllist *list);
+void	open_error_proc(t_cmd_list *list);
 
 // setting_fds.c
 void		set_in_fd(t_cmd_node *c_node, t_lexer_node **l_node);
@@ -152,11 +167,15 @@ int	invalid_token(t_lexer_list *res, char c);
 // initialize.c
 void	init_sigs(void);
 void	init_lexer_list(t_lexer_list **list);
-void	init_cmd_list(t_dllist **list);
-void	init_cmd_node(t_cmd_node **node, t_dllist *list);
+void	init_cmd_list(t_cmd_list **list);
+void	init_cmd_node(t_cmd_node **node, t_cmd_list *list);
 
 // valid.c
 int	is_invalid_line(char *line);
+
+// env_process.c
+void	envp_to_env(t_env_list **my_env, char **env);
+void	print_env_list(t_env_list *list);			// <<< testcode
 
 extern t_sigs g_sigs;
 
