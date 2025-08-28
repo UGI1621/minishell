@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 10:15:21 by saan              #+#    #+#             */
-/*   Updated: 2025/08/28 15:05:52 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/29 00:59:01 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,8 @@ static char	*env_extend(char *s, char quote)
 		if (s[i] == '$')
 		{
 			res = ft_strjoin_af(res, ft_substr(s, 0, i));
-			// printf("res :%s\n",res);
 			j = 0;
-			while (s[++i] && !is_wspace(s[i]) && !is_quote(s[i]))
+			while (s[++i] && !is_wspace(s[i]) && s[i] != quote)
 				j++;
 			res = ft_strjoin_af(res, extending(ft_substr(s, i - j, j)));
 			break ;
@@ -91,12 +90,15 @@ static char	*get_words(char *line, int *idx, int is_heredoc)
 	int	end;
 	char	*temp;
 
-	start = (*idx)++;
+	start = (*idx);
 	while(line[*idx] && !is_quote(line[*idx]))
 		(*idx)++;
 	if (is_quote(line[*idx]))
 		(*idx)--;
-	temp = ft_substr(line, start, *idx - start);
+	if (!line[*idx])
+		temp = ft_substr(line, start, *idx - start);
+	else
+		temp = ft_substr(line, start, *idx - start + 1);
 	if (!is_heredoc && ft_strchr(temp, '$'))
 		return (env_extend(temp, '\"'));
 	return (temp);

@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 15:43:14 by saan              #+#    #+#             */
-/*   Updated: 2025/08/28 15:28:16 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/29 07:08:07 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,15 @@ int	is_builtin(t_cmd_node *node)
 	return (0);
 }
 
-void	do_builtin(t_cmd_node *node, int is_p)
+void	set_iofds(int s_stdin, int s_stdout)
+{
+	dup2(s_stdin, STDIN_FILENO);
+	dup2(s_stdout, STDOUT_FILENO);
+	close(s_stdin);
+	close(s_stdout);
+}
+
+void	do_builtin(t_cmd_node *node, int is_p, t_env_list *my_env)
 {
 	int	save_stdin;
 	int	save_stdout;
@@ -60,11 +68,11 @@ void	do_builtin(t_cmd_node *node, int is_p)
 	if (is_p)
 		builtin_set_fd(node);
 	if (!ft_strncmp(node->argv[0], "echo", ft_strlen(node->argv[0])))
-		ft_echo(node);
+		ft_echo(node, my_env);
 	else if (!ft_strncmp(node->argv[0], "pwd", ft_strlen(node->argv[0])))
-		ft_pwd(node);
+		ft_pwd(node, my_env);
 	else if (!ft_strncmp(node->argv[0], "env", ft_strlen(node->argv[0])))
-		return ;
+		ft_env(node, my_env);
 	else if (!ft_strncmp(node->argv[0], "cd", ft_strlen(node->argv[0])))
 		return ;
 	else if (!ft_strncmp(node->argv[0], "export", ft_strlen(node->argv[0])))
@@ -73,8 +81,5 @@ void	do_builtin(t_cmd_node *node, int is_p)
 		return ;
 	// if (!ft_strncmp(node->argv[0], "exit", ft_strlen(node->argv[0])))
 	// 	return ;
-	dup2(save_stdin, STDIN_FILENO);
-	dup2(save_stdout, STDOUT_FILENO);
-	close(save_stdin);
-	close(save_stdout);
+	set_iofds(save_stdin, save_stdout);
 }

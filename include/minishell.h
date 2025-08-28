@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:19:24 by saan              #+#    #+#             */
-/*   Updated: 2025/08/28 17:54:03 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/29 07:18:20 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,12 +102,12 @@ void	check_and_set_argv(t_cmd_node *node);
 
 // util.c
 int	is_builtin(t_cmd_node *node);
-void	do_builtin(t_cmd_node *node, int is_p);
+void	do_builtin(t_cmd_node *node, int is_p, t_env_list *my_env);
 
 
 //								built-in
-void	ft_echo(t_cmd_node *node);
-void	ft_pwd(t_cmd_node *node);
+void	ft_echo(t_cmd_node *node, t_env_list *my_env);
+void	ft_pwd(t_cmd_node *node, t_env_list *my_env);
 
 // 								heredoc
 // heredoc.c
@@ -166,6 +166,12 @@ void	print_env_list(t_env_list *list);			// <<< testcode
 
 // env_to_envp.c
 char	**env_to_envp(t_env_list *my_env);
+
+// env.c
+void	check_cmd_env(t_env_list *my_env);			// <<< testcode
+void	update_cur_cmd(t_env_list *my_env, char **args);
+void	env_free(t_env_list *my_env);
+void	ft_env(t_cmd_node *node, t_env_list *my_env);
 
 
 // 								root

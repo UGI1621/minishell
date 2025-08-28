@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:19:22 by saan              #+#    #+#             */
-/*   Updated: 2025/08/28 16:49:34 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/29 06:31:20 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ static void	setting_node(t_cmd_node *c_node, t_lexer_node **l_node)
 		else
 			append_argv(c_node, l_node);
 		*l_node = (*l_node)->next;
-		// built-in cmd condition (?)
 	}
 }
 

@@ -6,13 +6,13 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 15:40:15 by saan              #+#    #+#             */
-/*   Updated: 2025/08/27 12:20:16 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/29 07:18:29 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_echo(t_cmd_node *node)
+void	ft_echo(t_cmd_node *node, t_env_list *my_env)
 {
 	int	i;
 	int	flag;
@@ -33,4 +33,6 @@ void	ft_echo(t_cmd_node *node)
 	}
 	if (flag)
 		write(STDOUT_FILENO, "\n", 1);
+	update_cur_cmd(my_env, node->argv);
+	check_cmd_env(my_env);
 }

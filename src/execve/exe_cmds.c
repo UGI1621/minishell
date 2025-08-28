@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 16:02:02 by saan              #+#    #+#             */
-/*   Updated: 2025/08/28 17:40:56 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/29 06:59:58 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	child_process(t_cmd_node *node, pid_t *pid, t_env_list *my_env)
 	set_node_fds(node);
 	if (is_builtin(node))
 	{
-		do_builtin(node, 0);
+		do_builtin(node, 0, my_env);
 		exit(1);
 	}
 	check_and_set_argv(node);
@@ -69,8 +69,6 @@ static void	do_cmd(pid_t *pid, t_cmd_node *node, int size, t_env_list *my_env)
 	i = -1;
 	while (++i < size)
 	{
-		// if (is_builtin(node->argv[0]))
-		// 	continue ;
 		if (pipe(node->pipe) == -1)
 			exit_with_perror("pipe");
 		pid[i] = fork();
@@ -96,7 +94,7 @@ void	process_cmd_exe(t_cmd_list *list, t_env_list *my_env)
 		return ;
 	pid = (pid_t *)ft_calloc(size, sizeof(pid_t));
 	if (size == 1 && is_builtin(list->head))
-		do_builtin(list->head, 1);
+		do_builtin(list->head, 1, my_env);
 	else
 		do_cmd(pid, list->head, size, my_env);
 	free(pid);

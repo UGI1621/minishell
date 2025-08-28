@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 16:20:02 by saan              #+#    #+#             */
-/*   Updated: 2025/08/28 17:52:55 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/29 05:51:36 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ void	envp_to_env(t_env_list **my_env, char **env)
 	while (env[++i])
 	{
 		node = (t_env_node *)ft_calloc(1, sizeof(t_env_node));
+		node->key = NULL;
+		node->val = NULL;
 		init_env_node(node, env[i]);
 		add_env_node(*my_env, node);
 	}

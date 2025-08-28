@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:30:30 by saan              #+#    #+#             */
-/*   Updated: 2025/08/28 17:59:33 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/29 07:58:40 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ static int	lexing_listing(char *line, t_env_list *my_env)
 	}
 	// print_lexing_list(lexing_list);
 	cmd_list = listing_cmd(lexing_list);
-	// print_cmd_list(cmd_list);
+	print_cmd_list(cmd_list);
 	free_lexer_list(lexing_list);
 	process_cmd_exe(cmd_list, my_env);
 	free_cmd_list(cmd_list);
@@ -133,11 +133,11 @@ int	main(int _ac, char **_av, char **env)
 
 	// =============== Princess!! here!! ===============
 	envp_to_env(&my_env, env);
-	print_env_list(my_env);
+	// print_env_list(my_env);
 	// t_env_list *sorted_env;
 	// sorting_env = sorting_env(my_env);
 	// print_env_list(my_env); // A~z
-	return (0); // << break point!
+	// return (0); // << break point!
 	// =============== Princess!! here!! ===============
 	init_sigs();
 	g_sigs.exit_code = 0;
@@ -152,5 +152,6 @@ int	main(int _ac, char **_av, char **env)
 			continue ;
 		free(temp);
 	}
+	env_free(my_env);
 	return (0);
 }
