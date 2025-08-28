@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:19:24 by saan              #+#    #+#             */
-/*   Updated: 2025/08/28 17:42:10 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/28 17:54:03 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,10 +157,16 @@ char	*append_char(char *str, char c);
 int	get_word_redir(t_lexer_list *res, char *line, int *idx, char *sig);
 
 //								env
-// env_process.c
+// envp_to_env.c
 void	envp_to_env(t_env_list **my_env, char **env);
-char	**env_to_envp(t_env_list *my_env);
+void	init_env_list(t_env_list **my_env);
+void	init_env_node(t_env_node *node, char *env);
+void	add_env_node(t_env_list *list, t_env_node *node);
 void	print_env_list(t_env_list *list);			// <<< testcode
+
+// env_to_envp.c
+char	**env_to_envp(t_env_list *my_env);
+
 
 // 								root
 // util.c

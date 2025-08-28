@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:30:30 by saan              #+#    #+#             */
-/*   Updated: 2025/08/28 17:47:37 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/28 17:59:33 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,13 @@ static int	lexing_listing(char *line, t_env_list *my_env)
 // =============== Princess!! here!! ===============
 t_env_list	*sorting_env(t_env_list *my_env)
 {
+	t_env_list	*sorted;
+	t_env_node	*node;
 
+	init_env_list(&sorted); // init_list
+	// something sorting algo
+
+	return (sorted);
 }
 // =============== Princess!! here!! ===============
 
@@ -131,7 +137,7 @@ int	main(int _ac, char **_av, char **env)
 	// t_env_list *sorted_env;
 	// sorting_env = sorting_env(my_env);
 	// print_env_list(my_env); // A~z
-	// return (0);
+	return (0); // << break point!
 	// =============== Princess!! here!! ===============
 	init_sigs();
 	g_sigs.exit_code = 0;

@@ -6,13 +6,13 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 16:20:02 by saan              #+#    #+#             */
-/*   Updated: 2025/08/28 17:34:14 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/28 17:52:55 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	init_env_list(t_env_list **my_env)
+void	init_env_list(t_env_list **my_env)
 {
 	*my_env = (t_env_list *)ft_calloc(1, sizeof(t_env_list));
 	(*my_env)->head = NULL;
@@ -20,7 +20,7 @@ static void	init_env_list(t_env_list **my_env)
 	(*my_env)->tail = NULL;
 }
 
-static void	init_env_node(t_env_node *node, char *env)
+void	init_env_node(t_env_node *node, char *env)
 {
 	int	i;
 
@@ -38,7 +38,7 @@ static void	init_env_node(t_env_node *node, char *env)
 	node->next = NULL;
 }
 
-static void	add_env_node(t_env_list *list, t_env_node *node)
+void	add_env_node(t_env_list *list, t_env_node *node)
 {
 	if(!list->head && !list->tail)
 	{
