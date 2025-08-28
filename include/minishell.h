@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:19:24 by saan              #+#    #+#             */
-/*   Updated: 2025/08/28 17:22:23 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/28 17:42:10 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct s_env_node
 typedef struct s_env_list
 {
 	t_env_node *head;
+	int	size;
 	t_env_node *tail;
 } t_env_list;
 
@@ -84,7 +85,7 @@ typedef struct s_sigs
 
 //								execve
 // exe_cmds.c
-void	process_cmd_exe(t_cmd_list *list, char **env);
+void	process_cmd_exe(t_cmd_list *list, t_env_list *my_env);
 
 // handle_error.c
 void	exit_with_perror(char *str);
@@ -155,6 +156,11 @@ int	ft_lexing_proc(t_lexer_list *res, char *line, int *i);
 char	*append_char(char *str, char c);
 int	get_word_redir(t_lexer_list *res, char *line, int *idx, char *sig);
 
+//								env
+// env_process.c
+void	envp_to_env(t_env_list **my_env, char **env);
+char	**env_to_envp(t_env_list *my_env);
+void	print_env_list(t_env_list *list);			// <<< testcode
 
 // 								root
 // util.c
@@ -172,10 +178,6 @@ void	init_cmd_node(t_cmd_node **node, t_cmd_list *list);
 
 // valid.c
 int	is_invalid_line(char *line);
-
-// env_process.c
-void	envp_to_env(t_env_list **my_env, char **env);
-void	print_env_list(t_env_list *list);			// <<< testcode
 
 extern t_sigs g_sigs;
 

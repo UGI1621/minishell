@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_process.c                                      :+:      :+:    :+:   */
+/*   envp_to_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 16:20:02 by saan              #+#    #+#             */
-/*   Updated: 2025/08/28 17:22:35 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/28 17:34:14 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static void	init_env_list(t_env_list **my_env)
 {
 	*my_env = (t_env_list *)ft_calloc(1, sizeof(t_env_list));
 	(*my_env)->head = NULL;
+	(*my_env)->size = 0;
 	(*my_env)->tail = NULL;
 }
 
@@ -76,5 +77,5 @@ void	envp_to_env(t_env_list **my_env, char **env)
 		init_env_node(node, env[i]);
 		add_env_node(*my_env, node);
 	}
-	// print_env_list(my_env);
+	(*my_env)->size = i;
 }

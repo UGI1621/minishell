@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:30:30 by saan              #+#    #+#             */
-/*   Updated: 2025/08/28 17:21:52 by saan             ###   ########.fr       */
+/*   Updated: 2025/08/28 17:47:37 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ static char	*ft_readline()
 	return (line);
 }
 
-static int	lexing_listing(char *line, char **env)
+static int	lexing_listing(char *line, t_env_list *my_env)
 {
 	t_lexer_list	*lexing_list;
 	t_cmd_list	*cmd_list;
@@ -107,10 +107,17 @@ static int	lexing_listing(char *line, char **env)
 	cmd_list = listing_cmd(lexing_list);
 	// print_cmd_list(cmd_list);
 	free_lexer_list(lexing_list);
-	process_cmd_exe(cmd_list, env);
+	process_cmd_exe(cmd_list, my_env);
 	free_cmd_list(cmd_list);
 	return (0);
 }
+
+// =============== Princess!! here!! ===============
+t_env_list	*sorting_env(t_env_list *my_env)
+{
+
+}
+// =============== Princess!! here!! ===============
 
 int	main(int _ac, char **_av, char **env)
 {
@@ -118,8 +125,14 @@ int	main(int _ac, char **_av, char **env)
 	char	*temp;
 	t_env_list	*my_env;
 
+	// =============== Princess!! here!! ===============
 	envp_to_env(&my_env, env);
 	print_env_list(my_env);
+	// t_env_list *sorted_env;
+	// sorting_env = sorting_env(my_env);
+	// print_env_list(my_env); // A~z
+	// return (0);
+	// =============== Princess!! here!! ===============
 	init_sigs();
 	g_sigs.exit_code = 0;
 	while (1)
@@ -129,9 +142,8 @@ int	main(int _ac, char **_av, char **env)
 			break ;
 		temp = ft_strdup(line);
 		free(line);
-		if (lexing_listing(temp, env))
+		if (lexing_listing(temp, my_env))
 			continue ;
-		// printf("you entered : %s\n", temp);
 		free(temp);
 	}
 	return (0);
