@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 16:20:02 by saan              #+#    #+#             */
-/*   Updated: 2025/08/29 05:51:36 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/04 05:09:38 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	add_env_node(t_env_list *list, t_env_node *node)
 		list->head = node;
 		list->tail = node;
 	}
-	else if (!list->tail->next)
+	else
 	{
 		list->tail->next = node;
 		node->prev = list->tail;

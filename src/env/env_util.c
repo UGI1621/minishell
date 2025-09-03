@@ -1,23 +1,62 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_free.c                                         :+:      :+:    :+:   */
+/*   env_util.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 05:51:40 by saan              #+#    #+#             */
-/*   Updated: 2025/09/02 05:52:38 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/04 05:29:01 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*get_env(char *key, t_env_list *my_env)
+{
+	t_env_node	*node;
+
+	node = my_env->head;
+	while (node)
+	{
+		if (!ft_strcmp(node->key, key))
+			return (node->val);
+		node = node->next;
+	}
+	return (NULL);
+}
+
+void	set_env(char *key, char *val, t_env_list *my_env)
+{
+	t_env_node	*node;
+
+	node = my_env->head;
+	while(node)
+	{
+		if (!ft_strcmp(node->key, key))
+		{
+			if (val[0] == 0)
+				return ;
+			free(node->val);
+			node->val = ft_strdup(val);
+			return ;
+		}
+		node = node->next;
+	}
+	node = (t_env_node *)ft_calloc(1, sizeof (t_env_node));
+	node->prev = NULL;
+	node->key = ft_strdup(key);
+	node->val = ft_strdup(val);
+	node->next = NULL;
+	add_env_node(my_env, node);
+}
 
 void	check_cmd_env(t_env_list *my_env)
 {
 	t_env_node *en = my_env->head;
 	while (en)
 	{
-		if (!ft_strncmp(en->key, "_", ft_strlen(en->key)))
+		if (!ft_strcmp(en->key, "_"))
 			break ;
 		en = en->next;
 	}

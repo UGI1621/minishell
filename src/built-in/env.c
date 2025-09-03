@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 05:45:38 by saan              #+#    #+#             */
-/*   Updated: 2025/09/02 06:00:12 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/04 01:43:38 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_env(t_cmd_node *node, t_env_list *my_env, int save_stdin, int save_stdout
 	}
 	while(e_node)
 	{
-		if (e_node->val)
+		if (e_node->val && e_node->val[0])
 		{
 			ft_putstr_fd(e_node->key, STDOUT_FILENO);
 			ft_putstr_fd("=", STDOUT_FILENO);

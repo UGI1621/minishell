@@ -6,55 +6,11 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 16:07:22 by saan              #+#    #+#             */
-/*   Updated: 2025/08/13 17:27:54 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/04 05:04:32 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// #include <fcntl.h>
-// #include <stdlib.h>
-// #include <readline/readline.h>
-// #include <readline/history.h>
-// #include <unistd.h>
-
-// size_t	ft_strlen(const char *s)
-// {
-// 	size_t	len;
-// 	char	*temp;
-
-// 	len = 0;
-// 	if (!s || !*s)
-// 		return (len);
-// 	temp = (char *)s;
-// 	while (temp[len])
-// 		len++;
-// 	return (len);
-// }
-
-// int	ft_strncmp(const char *s1, const char *s2, size_t len)
-// {
-// 	unsigned char	*temp1;
-// 	unsigned char	*temp2;
-// 	size_t			i;
-
-// 	temp1 = (unsigned char *)s1;
-// 	temp2 = (unsigned char *)s2;
-// 	i = 0;
-// 	while (i < len && *temp1 && *temp2)
-// 	{
-// 		if (*temp1 != *temp2)
-// 			return (*temp1 - *temp2);
-// 		i++;
-// 		temp1++;
-// 		temp2++;
-// 	}
-// 	if (i < len)
-// 		return (*temp1 - *temp2);
-// 	return (0);
-// }
-
-/*===============================*/
 
 static void	write_no_extend(char *line, int heredoc_fd)
 {
@@ -100,7 +56,7 @@ void	heredoc_proc(char *delimiter, int heredoc_fd, int quote_flag)
 	while (1)
 	{
 		line = readline("> ");
-		if (!ft_strncmp(line, delimiter, ft_strlen(delimiter)))
+		if (!ft_strcmp(line, delimiter))
 		{
 			free(line);
 			break ;
@@ -113,9 +69,3 @@ void	heredoc_proc(char *delimiter, int heredoc_fd, int quote_flag)
 	}
 	free(delimiter);
 }
-
-// int	main(void)
-// {
-// 	heredoc_proc("2");
-// 	return (0);
-// }

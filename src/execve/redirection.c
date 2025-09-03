@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 09:06:39 by saan              #+#    #+#             */
-/*   Updated: 2025/08/25 16:43:03 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/04 05:03:29 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	open_outfiles(char **files, char **sigs)
 	{
 		if (fd != -1)
 			close(fd);
-		if (!ft_strncmp(sigs[i], ">", ft_strlen(sigs[i])))
+		if (!ft_strcmp(sigs[i], ">"))
 			fd = open(files[i], O_RDWR | O_CREAT | O_TRUNC, 0664);
 		else
 			fd = open(files[i], O_RDWR | O_CREAT | O_APPEND, 0664);

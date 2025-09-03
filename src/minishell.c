@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:30:30 by saan              #+#    #+#             */
-/*   Updated: 2025/09/02 18:08:37 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/04 05:00:22 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static char	*ft_readline()
 		write(1,"exit\n", 5);
 		return (0);
 	}
-	if (!ft_strncmp(line, "exit", ft_strlen(line)))
+	if (!ft_strcmp(line, "exit"))
 	{
 		ft_putendl_fd("Exiting minishell...", 1);
 		free(line);
@@ -104,7 +104,7 @@ static int	lexing_listing(char *line, t_env_list *my_env)
 		return (1);
 	}
 	// print_lexing_list(lexing_list);
-	cmd_list = listing_cmd(lexing_list);
+	cmd_list = listing_cmd(lexing_list, my_env);
 	// print_cmd_list(cmd_list);
 	free_lexer_list(lexing_list);
 	process_cmd_exe(cmd_list, my_env);

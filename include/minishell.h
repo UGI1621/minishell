@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:19:24 by saan              #+#    #+#             */
-/*   Updated: 2025/09/03 23:55:06 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/04 04:39:25 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,8 @@ int	ft_echo(t_cmd_node *node, t_env_list *my_env, int save_stdin, int save_stdou
 int	ft_pwd(t_cmd_node *node, t_env_list *my_env, int save_stdin, int save_stdout);
 int	ft_env(t_cmd_node *node, t_env_list *my_env, int save_stdin, int save_stdout);
 int	ft_exit(t_cmd_node *node, int save_stdin, int save_stdout);
+int	ft_export(t_cmd_node *node, int save_stdin, int save_stdout, t_env_list *my_env);
+
 
 // 								heredoc
 // heredoc.c
@@ -122,10 +124,10 @@ void	heredoc_proc(char *delimiter, int heredoc_fd, int is_quote);
 
 // 								cmd_list
 // listing_cmd.c
-t_cmd_list	*listing_cmd(t_lexer_list *list);
+t_cmd_list	*listing_cmd(t_lexer_list *list, t_env_list *my_env);
 
 // quotting.c
-char	*cal_quotes(char *line, int	is_heredoc);
+char	*cal_quotes(char *line, int	is_heredoc, t_env_list *my_env);
 
 // listing_util.c
 int	is_redir_node(char *s);
@@ -138,9 +140,9 @@ void	free_cmd_field(t_cmd_node *node);
 void	open_error_proc(t_cmd_list *list);
 
 // setting_fds.c
-void		set_in_fd(t_cmd_node *c_node, t_lexer_node **l_node);
-void		set_out_fd(t_cmd_node *c_node, t_lexer_node **l_node, int is_heredoc);
-void	set_heredoc_fd(t_cmd_node *c_node, t_lexer_node **l_node);
+void		set_in_fd(t_cmd_node *c_node, t_lexer_node **l_node, t_env_list *my_env);
+void		set_out_fd(t_cmd_node *c_node, t_lexer_node **l_node, int is_heredoc, t_env_list *my_env);
+void	set_heredoc_fd(t_cmd_node *c_node, t_lexer_node **l_node, t_env_list *my_env);
 
 
 // 								siganl
@@ -175,6 +177,8 @@ void	print_env_list(t_env_list *list);			// <<< testcode
 char	**env_to_envp(t_env_list *my_env);
 
 // env_util.c
+char	*get_env(char *key, t_env_list *my_env);
+void	set_env(char *key, char *val, t_env_list *my_env);
 void	check_cmd_env(t_env_list *my_env);			// <<< testcode
 void	env_free(t_env_list *my_env);
 

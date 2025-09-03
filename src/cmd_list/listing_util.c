@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 15:56:16 by saan              #+#    #+#             */
-/*   Updated: 2025/08/13 15:02:30 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/04 05:02:43 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 int	is_redir_node(char *s)
 {
-	if (!ft_strncmp(s, "<", ft_strlen(s)) ||
-	!ft_strncmp(s, ">", ft_strlen(s)) || !ft_strncmp(s, ">>", ft_strlen(s)))
+	if (!ft_strcmp(s, "<") ||
+	!ft_strcmp(s, ">") || !ft_strcmp(s, ">>"))
 		return (1);
 	return (0);
 }
 
 int	is_heredoc_node(char *s)
 {
-	if (!ft_strncmp(s, "<<", ft_strlen(s)))
+	if (!ft_strcmp(s, "<<"))
 		return (1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:19:22 by saan              #+#    #+#             */
-/*   Updated: 2025/08/29 06:31:20 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/04 05:02:22 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,24 @@ void	add_cmd_node(t_cmd_list *list, t_cmd_node *node)
 	}
 }
 
-static void	update_iofile(t_cmd_node *c_node, t_lexer_node **l_node)
+static void	update_iofile(t_cmd_node *c_node, t_lexer_node **l_node, t_env_list *my_env)
 {
-	if (!ft_strncmp((*l_node)->str, "<", ft_strlen((*l_node)->str)))
+	if (!ft_strcmp((*l_node)->str, "<"))
 	{
-		set_in_fd(c_node, l_node);
+		set_in_fd(c_node, l_node, my_env);
 		c_node->is_use_heredoc = 0;
 	}
-	else if(!ft_strncmp((*l_node)->str, ">", ft_strlen((*l_node)->str)))
+	else if(!ft_strcmp((*l_node)->str, ">"))
 	{
-		set_out_fd(c_node, l_node, 0);
+		set_out_fd(c_node, l_node, 0, my_env);
 	}
-	else if(!ft_strncmp((*l_node)->str, ">>", ft_strlen((*l_node)->str)))
+	else if(!ft_strcmp((*l_node)->str, ">>"))
 	{
-		set_out_fd(c_node, l_node, 1);
+		set_out_fd(c_node, l_node, 1, my_env);
 	}
 }
 
-static void	append_argv(t_cmd_node *c_node, t_lexer_node **l_node)
+static void	append_argv(t_cmd_node *c_node, t_lexer_node **l_node, t_env_list *my_env)
 {
 	int	len;
 	int	i;
@@ -60,27 +60,27 @@ static void	append_argv(t_cmd_node *c_node, t_lexer_node **l_node)
 		new[i] = ft_strdup(c_node->argv[i]);
 		i++;
 	}
-	new[i] = cal_quotes(ft_strdup((*l_node)->str), 0);
+	new[i] = cal_quotes(ft_strdup((*l_node)->str), 0, my_env);
 	new[i + 1] = NULL;
 	free_2ptr(c_node->argv);
 	c_node->argv = new;
 }
 
-static void	setting_node(t_cmd_node *c_node, t_lexer_node **l_node)
+static void	setting_node(t_cmd_node *c_node, t_lexer_node **l_node, t_env_list *my_env)
 {
-	while (*l_node && ft_strncmp((*l_node)->str, "|", ft_strlen((*l_node)->str)))
+	while (*l_node && ft_strcmp((*l_node)->str, "|"))
 	{
 		if(is_redir_node((*l_node)->str))
-			update_iofile(c_node, l_node);
+			update_iofile(c_node, l_node, my_env);
 		else if (is_heredoc_node((*l_node)->str))
-			set_heredoc_fd(c_node, l_node);
+			set_heredoc_fd(c_node, l_node, my_env);
 		else
-			append_argv(c_node, l_node);
+			append_argv(c_node, l_node, my_env);
 		*l_node = (*l_node)->next;
 	}
 }
 
-t_cmd_list	*listing_cmd(t_lexer_list *list)
+t_cmd_list	*listing_cmd(t_lexer_list *list, t_env_list *my_env)
 {
 	t_cmd_list	*res;
 	t_cmd_node	*c_node;
@@ -91,7 +91,7 @@ t_cmd_list	*listing_cmd(t_lexer_list *list)
 	while (l_node)
 	{
 		init_cmd_node(&c_node, res);
-		setting_node(c_node, &l_node);
+		setting_node(c_node, &l_node, my_env);
 		add_cmd_node(res, c_node);
 		if (!l_node)
 			break ;
