@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:19:24 by saan              #+#    #+#             */
-/*   Updated: 2025/08/29 07:18:20 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/03 23:55:06 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ typedef struct s_env_list
 typedef struct s_sigs
 {
 	int	sigterm;
-	int	exit_code;
+	unsigned char	exit_code;
 }	t_sigs;
 
 
@@ -102,12 +102,18 @@ void	check_and_set_argv(t_cmd_node *node);
 
 // util.c
 int	is_builtin(t_cmd_node *node);
-void	do_builtin(t_cmd_node *node, int is_p, t_env_list *my_env);
+int	do_builtin(t_cmd_node *node, int is_p, t_env_list *my_env);
+void	set_iofds(int s_stdin, int s_stdout);
+
+// handle_status.c
+void	set_status(int status);
 
 
 //								built-in
-void	ft_echo(t_cmd_node *node, t_env_list *my_env);
-void	ft_pwd(t_cmd_node *node, t_env_list *my_env);
+int	ft_echo(t_cmd_node *node, t_env_list *my_env, int save_stdin, int save_stdout);
+int	ft_pwd(t_cmd_node *node, t_env_list *my_env, int save_stdin, int save_stdout);
+int	ft_env(t_cmd_node *node, t_env_list *my_env, int save_stdin, int save_stdout);
+int	ft_exit(t_cmd_node *node, int save_stdin, int save_stdout);
 
 // 								heredoc
 // heredoc.c
@@ -156,6 +162,7 @@ int	ft_lexing_proc(t_lexer_list *res, char *line, int *i);
 char	*append_char(char *str, char c);
 int	get_word_redir(t_lexer_list *res, char *line, int *idx, char *sig);
 
+
 //								env
 // envp_to_env.c
 void	envp_to_env(t_env_list **my_env, char **env);
@@ -167,11 +174,9 @@ void	print_env_list(t_env_list *list);			// <<< testcode
 // env_to_envp.c
 char	**env_to_envp(t_env_list *my_env);
 
-// env.c
+// env_util.c
 void	check_cmd_env(t_env_list *my_env);			// <<< testcode
-void	update_cur_cmd(t_env_list *my_env, char **args);
 void	env_free(t_env_list *my_env);
-void	ft_env(t_cmd_node *node, t_env_list *my_env);
 
 
 // 								root

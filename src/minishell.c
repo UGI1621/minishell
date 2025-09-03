@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:30:30 by saan              #+#    #+#             */
-/*   Updated: 2025/08/29 07:58:40 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/02 18:08:37 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,9 @@ static char	*ft_readline()
 		write(1,"exit\n", 5);
 		return (0);
 	}
-	if (ft_strncmp(line, "exit", 4) == 0)
+	if (!ft_strncmp(line, "exit", ft_strlen(line)))
 	{
-		ft_putendl_fd("Exiting minishell...\n", 1);
+		ft_putendl_fd("Exiting minishell...", 1);
 		free(line);
 		rl_clear_history();
 		return (NULL);
@@ -105,25 +105,12 @@ static int	lexing_listing(char *line, t_env_list *my_env)
 	}
 	// print_lexing_list(lexing_list);
 	cmd_list = listing_cmd(lexing_list);
-	print_cmd_list(cmd_list);
+	// print_cmd_list(cmd_list);
 	free_lexer_list(lexing_list);
 	process_cmd_exe(cmd_list, my_env);
 	free_cmd_list(cmd_list);
 	return (0);
 }
-
-// =============== Princess!! here!! ===============
-t_env_list	*sorting_env(t_env_list *my_env)
-{
-	t_env_list	*sorted;
-	t_env_node	*node;
-
-	init_env_list(&sorted); // init_list
-	// something sorting algo
-
-	return (sorted);
-}
-// =============== Princess!! here!! ===============
 
 int	main(int _ac, char **_av, char **env)
 {
@@ -131,14 +118,7 @@ int	main(int _ac, char **_av, char **env)
 	char	*temp;
 	t_env_list	*my_env;
 
-	// =============== Princess!! here!! ===============
 	envp_to_env(&my_env, env);
-	// print_env_list(my_env);
-	// t_env_list *sorted_env;
-	// sorting_env = sorting_env(my_env);
-	// print_env_list(my_env); // A~z
-	// return (0); // << break point!
-	// =============== Princess!! here!! ===============
 	init_sigs();
 	g_sigs.exit_code = 0;
 	while (1)
@@ -153,5 +133,5 @@ int	main(int _ac, char **_av, char **env)
 		free(temp);
 	}
 	env_free(my_env);
-	return (0);
+	return (g_sigs.exit_code);
 }

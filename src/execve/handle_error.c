@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 08:44:59 by saan              #+#    #+#             */
-/*   Updated: 2025/08/20 15:29:14 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/02 05:11:10 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ void	write_open_error(char *name)
 	write(2, "bash: ", 6);
 	write(2, name, ft_strlen(name));
 	write(2, ": ", 2);
-	strerror(errno);
+	write(2, strerror(errno), ft_strlen(strerror(errno)));
+	write(2, "\n", 1);
 	g_sigs.exit_code = EXIT_FAILURE;
 	exit(EXIT_FAILURE);
 }
