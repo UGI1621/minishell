@@ -6,13 +6,13 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 17:39:53 by saan              #+#    #+#             */
-/*   Updated: 2025/08/05 03:52:42 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/04 05:57:37 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_open_quote(char *line)
+static int	is_open_quote(char *line)
 {
 	char	c;
 
@@ -37,7 +37,7 @@ int	is_open_quote(char *line)
 	return (0);
 }
 
-int	is_bs_sc(char *line)
+static int	is_bs_sc(char *line)
 {
 	while(*line)
 	{
@@ -55,6 +55,19 @@ int	is_invalid_line(char *line)
 	if (is_open_quote(line))
 		return (1);
 	if (is_bs_sc(line))
+		return (1);
+	return (0);
+}
+
+int	is_invalid_env_naming_rule(char *str)
+{
+	if (str[0] == '_')
+		return (0);
+	if (!ft_isalpha(str[0]))
+		return (1);
+	if (str[0] == '=')
+		return (1);
+	if (ft_isdigit(str[0]))
 		return (1);
 	return (0);
 }

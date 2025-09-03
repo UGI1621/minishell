@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 10:15:21 by saan              #+#    #+#             */
-/*   Updated: 2025/09/04 05:02:51 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/04 07:48:16 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,14 +91,16 @@ static char	*get_words(char *line, int *idx, int is_heredoc, t_env_list *my_env)
 	char	*temp;
 
 	start = (*idx);
-	while(line[*idx] && !is_quote(line[*idx]))
+	while(line[*idx] && !is_quote(line[*idx]) && line[*idx] != '=')
 		(*idx)++;
 	if (is_quote(line[*idx]))
 		(*idx)--;
-	if (!line[*idx])
+	if (!line[*idx] || line[*idx] == '=')
 		temp = ft_substr(line, start, *idx - start);
 	else
 		temp = ft_substr(line, start, *idx - start + 1);
+	if (line[*idx] == '=')
+		(*idx)--;
 	if (!is_heredoc && ft_strchr(temp, '$'))
 		return (env_extend(temp, '\"', my_env));
 	return (temp);
@@ -116,6 +118,8 @@ char	*cal_quotes(char *line, int	is_heredoc, t_env_list *my_env)
 	{
 		if (is_quote(line[i]))
 			temp = get_quotes(line, &i, is_heredoc, my_env);
+		else if (line[i] == '=')
+			temp = ft_strdup("=");
 		else
 			temp = get_words(line, &i, is_heredoc, my_env);
 		res = ft_strjoin_af(res, temp);

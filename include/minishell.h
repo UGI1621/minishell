@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:19:24 by saan              #+#    #+#             */
-/*   Updated: 2025/09/04 04:39:25 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/04 06:06:21 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ typedef struct s_cmd_node
 typedef struct s_cmd_list
 {
 	t_cmd_node			*head;
-	// int					heredoc_fd;
 	t_cmd_node			*tail;
 }	t_cmd_list;
 
@@ -199,6 +198,7 @@ void	init_cmd_node(t_cmd_node **node, t_cmd_list *list);
 
 // valid.c
 int	is_invalid_line(char *line);
+int	is_invalid_env_naming_rule(char *str);
 
 extern t_sigs g_sigs;
 

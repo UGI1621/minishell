@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:30:30 by saan              #+#    #+#             */
-/*   Updated: 2025/09/04 05:00:22 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/04 07:51:31 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	print_cmd_list(t_cmd_list *list)
 			printf("{%s} ", node->out_sig[i]);
 		printf("\nnode->out_fd : %d\n", node->out_fd);
 		printf("node->is_use_heredoc : %d\n", node->is_use_heredoc);
-		// printf("node->heredoc_fd : %d\n", *node->heredoc_fd);
 		printf("pipe[0] : %d\npipe[1] : %d\n\n",node->pipe[0], node->pipe[1]);
 		node = node->next;
 	}

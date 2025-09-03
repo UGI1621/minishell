@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 16:07:08 by saan              #+#    #+#             */
-/*   Updated: 2025/09/04 05:25:11 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/04 06:04:08 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,14 @@ int	ft_export(t_cmd_node *node, int save_stdin, int save_stdout, t_env_list *my_
 	i = 0;
 	while (node->argv[++i])
 	{
-		if (node->argv[i][0] == '=')
+		if (is_invalid_env_naming_rule(node->argv[i]))
 		{
 			print_invalid_export(node->argv[i], &flag);
 			continue ;
 		}
 		temp_key = get_argv_key(node->argv[i]);
 		temp_val = get_argv_val(node->argv[i]);
+		printf("temp_k : %s\ntemp_v : %s\n",temp_key, temp_val);
 		set_env(temp_key, temp_val, my_env);
 		free(temp_key);
 		free(temp_val);
