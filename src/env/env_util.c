@@ -6,11 +6,35 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 05:51:40 by saan              #+#    #+#             */
-/*   Updated: 2025/09/04 05:29:01 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/04 09:06:17 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	del_env(char *key, t_env_list *my_env)
+{
+	t_env_node	*node;
+
+	node = my_env->head;
+	while (node)
+	{
+		if (!ft_strcmp(node->key, key))
+		{
+			if (node->prev)
+				node->prev->next = node->next;
+			else
+				my_env->head = node->next;
+			if (node->next)
+				node->next->prev = node->prev;
+			free(node->key);
+			free(node->val);
+			free(node);
+			break ;
+		}
+		node = node->next;
+	}
+}
 
 char	*get_env(char *key, t_env_list *my_env)
 {

@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 16:07:08 by saan              #+#    #+#             */
-/*   Updated: 2025/09/04 06:04:08 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/04 09:22:03 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	is_invalid_export(char **argv)
 	return (0);
 }
 
-static void	print_invalid_export(char *arg, int *flag)
+void	print_invalid_export(char *arg, int *flag)
 {
 	ft_putstr_fd("minishell: export: `", 2);
 	ft_putstr_fd(arg, 2);
@@ -89,7 +89,6 @@ int	ft_export(t_cmd_node *node, int save_stdin, int save_stdout, t_env_list *my_
 		}
 		temp_key = get_argv_key(node->argv[i]);
 		temp_val = get_argv_val(node->argv[i]);
-		printf("temp_k : %s\ntemp_v : %s\n",temp_key, temp_val);
 		set_env(temp_key, temp_val, my_env);
 		free(temp_key);
 		free(temp_val);

@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:19:24 by saan              #+#    #+#             */
-/*   Updated: 2025/09/04 06:06:21 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/04 10:33:06 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,13 @@ int	ft_pwd(t_cmd_node *node, t_env_list *my_env, int save_stdin, int save_stdout
 int	ft_env(t_cmd_node *node, t_env_list *my_env, int save_stdin, int save_stdout);
 int	ft_exit(t_cmd_node *node, int save_stdin, int save_stdout);
 int	ft_export(t_cmd_node *node, int save_stdin, int save_stdout, t_env_list *my_env);
+void	print_invalid_export(char *arg, int *flag);
+int	ft_unset(t_cmd_node *node, int save_stdin, int save_stdout, t_env_list *my_env);
+int	ft_cd(t_cmd_node *node, int save_stdin, int save_stdout, t_env_list *my_env);
 
+char	*parsing_path(char *str, t_env_list *my_env);
+void	update_pwds(char *cur, char *old, t_env_list *my_env);
+int	print_error_path(char *path, int save_stdin, int save_stdout);
 
 // 								heredoc
 // heredoc.c
@@ -176,6 +182,7 @@ void	print_env_list(t_env_list *list);			// <<< testcode
 char	**env_to_envp(t_env_list *my_env);
 
 // env_util.c
+void	del_env(char *key, t_env_list *my_env);
 char	*get_env(char *key, t_env_list *my_env);
 void	set_env(char *key, char *val, t_env_list *my_env);
 void	check_cmd_env(t_env_list *my_env);			// <<< testcode

@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 15:43:14 by saan              #+#    #+#             */
-/*   Updated: 2025/09/04 05:04:04 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/04 09:24:46 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,11 @@ int	do_builtin(t_cmd_node *node, int is_p, t_env_list *my_env)
 	else if (!ft_strcmp(node->argv[0], "env"))
 		return (ft_env(node, my_env, save_stdin, save_stdout));
 	else if (!ft_strcmp(node->argv[0], "cd"))
-		return (0);
+		return (ft_cd(node, save_stdin, save_stdout, my_env));
 	else if (!ft_strcmp(node->argv[0], "export"))
 		return (ft_export(node, save_stdin, save_stdout, my_env));
 	else if (!ft_strcmp(node->argv[0], "unset"))
-		return (0);
+		return (ft_unset(node, save_stdin, save_stdout, my_env));
 	else if (!ft_strcmp(node->argv[0], "exit"))
 		return (ft_exit(node, save_stdin, save_stdout));
 	// set_iofds(save_stdin, save_stdout);
