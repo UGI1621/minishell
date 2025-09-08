@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:19:22 by saan              #+#    #+#             */
-/*   Updated: 2025/09/04 05:02:22 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/08 14:24:50 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void	append_argv(t_cmd_node *c_node, t_lexer_node **l_node, t_env_list *m
 		new[i] = ft_strdup(c_node->argv[i]);
 		i++;
 	}
-	new[i] = cal_quotes(ft_strdup((*l_node)->str), 0, my_env);
+	new[i] = cal_quotes(ft_strdup((*l_node)->str), 1, my_env);
 	new[i + 1] = NULL;
 	free_2ptr(c_node->argv);
 	c_node->argv = new;

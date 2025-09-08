@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 16:02:02 by saan              #+#    #+#             */
-/*   Updated: 2025/09/03 23:44:06 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/08 06:21:01 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static void	child_process(t_cmd_node *node, pid_t *pid, t_env_list *my_env)
 {
 	char	**envp;
 
+	set_sigs_dfl();
 	envp = env_to_envp(my_env);
 	free(pid);
 	set_node_fds(node);
@@ -79,9 +80,12 @@ static void	do_cmd(pid_t *pid, t_cmd_node *node, int size, t_env_list *my_env)
 	i = -1;
 	while (++i < size)
 	{
+		set_sigs_ign();
 		waitpid(pid[i], &status, 0);
+		set_sigs();
 		set_status(status);
 	}
+	check_status(status);
 }
 
 void	process_cmd_exe(t_cmd_list *list, t_env_list *my_env)

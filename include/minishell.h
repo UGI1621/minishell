@@ -6,14 +6,19 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:19:24 by saan              #+#    #+#             */
-/*   Updated: 2025/09/04 10:33:06 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/08 14:18:22 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+#ifndef ECHOCTL
+# define ECHOCTL 0001000
+#endif
+
 #include "libft.h"
+# include <termios.h>
 # include <errno.h>
 # include <fcntl.h>
 # include <stdio.h>
@@ -106,6 +111,7 @@ void	set_iofds(int s_stdin, int s_stdout);
 
 // handle_status.c
 void	set_status(int status);
+void	check_status(int status);
 
 
 //								built-in
@@ -124,7 +130,7 @@ int	print_error_path(char *path, int save_stdin, int save_stdout);
 
 // 								heredoc
 // heredoc.c
-void	heredoc_proc(char *delimiter, int heredoc_fd, int is_quote);
+void	heredoc_proc(char *delimiter, int heredoc_fd, int is_quote, t_env_list *my_env);
 
 
 // 								cmd_list
@@ -132,7 +138,11 @@ void	heredoc_proc(char *delimiter, int heredoc_fd, int is_quote);
 t_cmd_list	*listing_cmd(t_lexer_list *list, t_env_list *my_env);
 
 // quotting.c
-char	*cal_quotes(char *line, int	is_heredoc, t_env_list *my_env);
+char	*cal_quotes(char *line, int	is_extend, t_env_list *my_env);
+
+// quotting_util.c
+char	*get_quotes_env_key(char *line, int *idx);
+char	*get_extra_sign(char *str, char *line, int *idx);
 
 // listing_util.c
 int	is_redir_node(char *s);
@@ -146,14 +156,38 @@ void	open_error_proc(t_cmd_list *list);
 
 // setting_fds.c
 void		set_in_fd(t_cmd_node *c_node, t_lexer_node **l_node, t_env_list *my_env);
-void		set_out_fd(t_cmd_node *c_node, t_lexer_node **l_node, int is_heredoc, t_env_list *my_env);
+void		set_out_fd(t_cmd_node *c_node, t_lexer_node **l_node, int is_append, t_env_list *my_env);
 void	set_heredoc_fd(t_cmd_node *c_node, t_lexer_node **l_node, t_env_list *my_env);
 
 
 // 								siganl
-// sa_handler.c
-void	s_sigint_handler(int signum);
-void	s_sigquit_handler(int signum);
+// sig_handler.c
+// void	init_sigs(void);
+// void	s_sigint_handler(int signum);
+
+// set_signal.c
+void	set_sigs(void);
+void	set_sigs_ign(void);
+void	set_sigs_dfl(void);
+
+// sig_handler.c
+void	sigint_handler(int signum);
+
+// set_sig_handler.c
+void	set_sigint_handler(void);
+void	set_sigquit_handler(void);
+
+// set_sig_ign.c
+void	set_sigint_ign(void);
+void	set_sigquit_ign(void);
+
+// set_sig_dfl.c
+void	set_sigint_dfl(void);
+void	set_sigquit_dfl(void);
+
+// set_terminal.c
+void	set_techo_on(void);
+void	set_techo_off(void);
 
 
 // 								lexing
@@ -198,7 +232,6 @@ void	free_2ptr(char **ptr);
 int	invalid_token(t_lexer_list *res, char c);
 
 // initialize.c
-void	init_sigs(void);
 void	init_lexer_list(t_lexer_list **list);
 void	init_cmd_list(t_cmd_list **list);
 void	init_cmd_node(t_cmd_node **node, t_cmd_list *list);

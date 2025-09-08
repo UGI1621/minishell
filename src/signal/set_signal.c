@@ -1,34 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   s_handler.c                                        :+:      :+:    :+:   */
+/*   set_signal.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/15 20:19:56 by saan              #+#    #+#             */
-/*   Updated: 2025/08/05 02:08:46 by saan             ###   ########.fr       */
+/*   Created: 2025/09/08 04:47:49 by saan              #+#    #+#             */
+/*   Updated: 2025/09/08 05:52:00 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	s_sigint_handler(int signum)
+void	set_sigs(void)
 {
-	(void)signum;
-
-	write(STDOUT_FILENO, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 1);
-	rl_redisplay();
+	set_techo_off();
+	set_sigint_handler();
+	set_sigquit_handler();
 }
 
-void	s_sigquit_handler(int signum)
+void	set_sigs_ign(void)
 {
-	(void)signum;
+	set_sigint_ign();
+	set_sigquit_ign();
+}
 
-	write(STDOUT_FILENO, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 1);
-	rl_redisplay();
-	write(1,"hi!\n", 4);
+void	set_sigs_dfl(void)
+{
+	set_techo_on();
+	set_sigint_dfl();
+	set_sigquit_dfl();
 }

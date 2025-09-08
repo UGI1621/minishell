@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 16:07:22 by saan              #+#    #+#             */
-/*   Updated: 2025/09/04 05:04:32 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/08 15:48:07 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,36 +19,48 @@ static void	write_no_extend(char *line, int heredoc_fd)
 	i = -1;
 	while (line[++i])
 		write(heredoc_fd, &line[i], 1);
-	write(heredoc_fd, "\n",1);
+	write(heredoc_fd, "\n", 1);
 }
 
-static void	write_extend(char *line, int heredoc_fd)
+void	write_extra_sigs(char *line, int *i, int heredoc_fd)
 {
-	char	*res;
+	(*i)++;
+	if (!line[(*i)])
+		write(heredoc_fd, "$", 1);
+	else if (line[(*i)] == '$')
+		(*i)++;
+}
+
+static void	write_extend(char *line, int heredoc_fd, t_env_list *my_env)
+{
 	char	*temp;
 	int		i;
-	int		s;
+	int		start;
 
-	i = -1;
-	s = 0;
-	while(line[++i])
+	i = 0;
+	while (line[i])
 	{
-		if (line[i] != '$')
-			write(heredoc_fd, &line[i], 1);
-		else
+		if (line[i] == '$')
 		{
-			s = i;
-			while(line[i] && !is_quote(line[i]) && !is_wspace(line[i]))
+			if (line[i + 1] == '$' || !line[i + 1])
+			{
+				write_extra_sigs(line, &i, heredoc_fd);
+				continue ;
+			}
+			start = i++;
+			while (line[i] && !is_wspace(line[i]) && !is_quote(line[i]) && line[i] != '$' && line[i] != '=')
 				i++;
-			temp = ft_substr(line, s + 1, i -s);
-			write(heredoc_fd, getenv(temp), ft_strlen(getenv(temp)));
-			free(temp);
+			ft_putstr_fd(cal_quotes(ft_substr(line, start, i - start), 1, my_env), heredoc_fd);
+			i--;
 		}
+		else
+			write(heredoc_fd, &line[i], 1);
+		i++;
 	}
 	write(heredoc_fd, "\n", 1);
 }
 
-void	heredoc_proc(char *delimiter, int heredoc_fd, int quote_flag)
+void	heredoc_proc(char *delimiter, int heredoc_fd, int is_quote, t_env_list *my_env)
 {
 	char	*line;
 	char	*temp;
@@ -61,10 +73,10 @@ void	heredoc_proc(char *delimiter, int heredoc_fd, int quote_flag)
 			free(line);
 			break ;
 		}
-		if (quote_flag)
+		if (is_quote)
 			write_no_extend(line, heredoc_fd);
 		else
-			write_extend(line, heredoc_fd);
+			write_extend(line, heredoc_fd, my_env);
 		free(line);
 	}
 	free(delimiter);

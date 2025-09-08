@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 11:10:14 by saan              #+#    #+#             */
-/*   Updated: 2025/09/04 03:58:31 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/08 14:25:36 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void		set_in_fd(t_cmd_node *c_node, t_lexer_node **l_node, t_env_list *my_env)
 		i++;
 	}
 	(*l_node) = (*l_node)->next;
-	new[i] = cal_quotes(ft_strdup((*l_node)->str), 0, my_env);
+	new[i] = cal_quotes(ft_strdup((*l_node)->str), 1, my_env);
 	new[i + 1] = NULL;
 	free_2ptr(c_node->infile);
 	c_node->infile = new;
@@ -77,7 +77,7 @@ void		set_out_fd(t_cmd_node *c_node, t_lexer_node **l_node, int is_append, t_env
 		i++;
 	}
 	(*l_node) = (*l_node)->next;
-	new[i] = cal_quotes(ft_strdup((*l_node)->str), 0, my_env);
+	new[i] = cal_quotes(ft_strdup((*l_node)->str), 1, my_env);
 	new[i + 1] = NULL;
 	set_out_sig(c_node, is_append);
 	free_2ptr(c_node->outfile);
@@ -95,6 +95,6 @@ void	set_heredoc_fd(t_cmd_node *c_node, t_lexer_node **l_node, t_env_list *my_en
 	c_node->heredoc_fd = open("heredoc_temp", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (ft_strchr((*l_node)->str, '\'') || ft_strchr((*l_node)->str, '\"'))
 		quote_flag = 1;
-	heredoc_proc(cal_quotes(ft_strdup((*l_node)->str), 1, my_env),c_node->heredoc_fd, quote_flag);
+	heredoc_proc(cal_quotes(ft_strdup((*l_node)->str), 0, my_env),c_node->heredoc_fd, quote_flag, my_env);
 	c_node->is_use_heredoc = 1;
 }

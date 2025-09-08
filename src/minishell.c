@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:30:30 by saan              #+#    #+#             */
-/*   Updated: 2025/09/04 07:51:31 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/08 14:14:13 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ static char	*ft_readline()
 	if (!line)
 	{
 		write(1,"exit\n", 5);
+		g_sigs.exit_code = 0;
 		return (0);
 	}
 	if (!ft_strcmp(line, "exit"))
@@ -78,7 +79,8 @@ static char	*ft_readline()
 		ft_putendl_fd("Exiting minishell...", 1);
 		free(line);
 		rl_clear_history();
-		return (NULL);
+		g_sigs.exit_code = 0;
+		return (0);
 	}
 	if (ft_strlen(line) == 0)
 		return (line);
@@ -117,14 +119,18 @@ int	main(int _ac, char **_av, char **env)
 	char	*temp;
 	t_env_list	*my_env;
 
-	envp_to_env(&my_env, env);
-	init_sigs();
 	g_sigs.exit_code = 0;
+	// init_sigs();
+	set_sigs();
+	envp_to_env(&my_env, env);
+	// printf("envp : %p\n", my_env);
 	while (1)
 	{
 		line = ft_readline();
 		if (!line)
 			break ;
+		if (line && line[0] == 0)
+			continue ;
 		temp = ft_strdup(line);
 		free(line);
 		if (lexing_listing(temp, my_env))
