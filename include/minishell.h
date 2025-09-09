@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:19:24 by saan              #+#    #+#             */
-/*   Updated: 2025/09/08 14:18:22 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/09 10:13:19 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ typedef struct s_env_list
 
 typedef struct s_sigs
 {
-	int	sigterm;
+	int	heredoc_sigint;
 	unsigned char	exit_code;
 }	t_sigs;
 
@@ -112,6 +112,7 @@ void	set_iofds(int s_stdin, int s_stdout);
 // handle_status.c
 void	set_status(int status);
 void	check_status(int status);
+void	set_heredoc_status(int status);
 
 
 //								built-in
@@ -169,13 +170,16 @@ void	set_heredoc_fd(t_cmd_node *c_node, t_lexer_node **l_node, t_env_list *my_en
 void	set_sigs(void);
 void	set_sigs_ign(void);
 void	set_sigs_dfl(void);
+void	set_sigs_heredoc(void);
 
 // sig_handler.c
 void	sigint_handler(int signum);
+void	sigint_handler_heredoc(int signum);
 
 // set_sig_handler.c
 void	set_sigint_handler(void);
 void	set_sigquit_handler(void);
+void	set_sigint_handler_heredoc(void);
 
 // set_sig_ign.c
 void	set_sigint_ign(void);

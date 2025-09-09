@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:19:22 by saan              #+#    #+#             */
-/*   Updated: 2025/09/08 14:24:50 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/09 10:40:06 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,12 @@ t_cmd_list	*listing_cmd(t_lexer_list *list, t_env_list *my_env)
 	{
 		init_cmd_node(&c_node, res);
 		setting_node(c_node, &l_node, my_env);
+		if (g_sigs.heredoc_sigint)
+		{
+			free_cmd_list(res);
+			unlink("heredoc_temp");
+			return (NULL);
+		}
 		add_cmd_node(res, c_node);
 		if (!l_node)
 			break ;

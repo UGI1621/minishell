@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 16:07:22 by saan              #+#    #+#             */
-/*   Updated: 2025/09/08 15:48:07 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/09 10:19:04 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,32 @@ static void	write_extend(char *line, int heredoc_fd, t_env_list *my_env)
 	write(heredoc_fd, "\n", 1);
 }
 
+static void	print_warning(char *delimiter)
+{
+	if (g_sigs.exit_code == 130)
+	{
+		free(delimiter);
+		set_sigs();
+		exit(130);
+	}
+	ft_putstr_fd("minishell: warning: here-document delimited by end-of-file (wanted `", 2);
+	ft_putstr_fd(delimiter, 2);
+	ft_putendl_fd("')", 2);
+}
+
 void	heredoc_proc(char *delimiter, int heredoc_fd, int is_quote, t_env_list *my_env)
 {
 	char	*line;
-	char	*temp;
 
+	set_sigs_heredoc();
 	while (1)
 	{
 		line = readline("> ");
+		if (!line)
+		{
+			print_warning(delimiter);
+			break ;
+		}
 		if (!ft_strcmp(line, delimiter))
 		{
 			free(line);
@@ -79,5 +97,7 @@ void	heredoc_proc(char *delimiter, int heredoc_fd, int is_quote, t_env_list *my_
 			write_extend(line, heredoc_fd, my_env);
 		free(line);
 	}
+	set_sigs();
 	free(delimiter);
+	exit(EXIT_SUCCESS);
 }

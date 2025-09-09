@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 05:17:45 by saan              #+#    #+#             */
-/*   Updated: 2025/09/08 05:40:50 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/08 17:14:15 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,15 @@ void	set_sigquit_handler(void)
 	if (signal(SIGQUIT, SIG_IGN) == SIG_ERR)
 	{
 		perror("signal SIGQUIT SIG_IGN");
+		exit(EXIT_FAILURE);
+	}
+}
+
+void	set_sigint_handler_heredoc(void)
+{
+	if (signal(SIGINT, sigint_handler_heredoc) == SIG_ERR)
+	{
+		perror("signal SIGINT handler_heredoc");
 		exit(EXIT_FAILURE);
 	}
 }

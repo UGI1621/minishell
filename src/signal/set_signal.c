@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 04:47:49 by saan              #+#    #+#             */
-/*   Updated: 2025/09/08 05:52:00 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/08 17:40:44 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,11 @@ void	set_sigs_dfl(void)
 	set_techo_on();
 	set_sigint_dfl();
 	set_sigquit_dfl();
+}
+
+void	set_sigs_heredoc(void)
+{
+	set_sigint_handler_heredoc();
+	// set_sigint_handler();
+	set_sigquit_ign();
 }

@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 05:03:22 by saan              #+#    #+#             */
-/*   Updated: 2025/09/08 06:49:44 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/09 10:27:00 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,16 @@ void	set_status(int status)
 		g_sigs.exit_code = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
 		g_sigs.exit_code = 128 + WTERMSIG(status);
+}
+
+void	set_heredoc_status(int status)
+{
+	if (WIFEXITED(status))
+	{
+		g_sigs.exit_code = WEXITSTATUS(status);
+		if (WEXITSTATUS(status) == 130)
+			g_sigs.heredoc_sigint = 1;
+	}
 }
 
 void	check_status(int status)

@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:30:30 by saan              #+#    #+#             */
-/*   Updated: 2025/09/08 14:14:13 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/09 10:35:29 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static char	*ft_readline()
 	return (line);
 }
 
-static int	lexing_listing(char *line, t_env_list *my_env)
+static void	lexing_listing(char *line, t_env_list *my_env)
 {
 	t_lexer_list	*lexing_list;
 	t_cmd_list	*cmd_list;
@@ -96,21 +96,26 @@ static int	lexing_listing(char *line, t_env_list *my_env)
 	if (is_invalid_line(line))
 	{
 		g_sigs.exit_code = 2;
-		return (1);
+		return ;
 	}
 	lexing_list = ft_lexing(line);
 	if (!lexing_list)
 	{
 		g_sigs.exit_code = 2;
-		return (1);
+		return ;
 	}
 	// print_lexing_list(lexing_list);
 	cmd_list = listing_cmd(lexing_list, my_env);
 	// print_cmd_list(cmd_list);
 	free_lexer_list(lexing_list);
+	if (g_sigs.heredoc_sigint)
+	{
+		printf("heredoc sigint\n");
+		g_sigs.heredoc_sigint = 0;
+		return ;
+	}
 	process_cmd_exe(cmd_list, my_env);
 	free_cmd_list(cmd_list);
-	return (0);
 }
 
 int	main(int _ac, char **_av, char **env)
@@ -120,10 +125,9 @@ int	main(int _ac, char **_av, char **env)
 	t_env_list	*my_env;
 
 	g_sigs.exit_code = 0;
-	// init_sigs();
+	g_sigs.heredoc_sigint = 0;
 	set_sigs();
 	envp_to_env(&my_env, env);
-	// printf("envp : %p\n", my_env);
 	while (1)
 	{
 		line = ft_readline();
@@ -133,8 +137,9 @@ int	main(int _ac, char **_av, char **env)
 			continue ;
 		temp = ft_strdup(line);
 		free(line);
-		if (lexing_listing(temp, my_env))
-			continue ;
+		// if (lexing_listing(temp, my_env))
+		// 	continue ;
+		lexing_listing(temp, my_env);
 		free(temp);
 	}
 	env_free(my_env);
