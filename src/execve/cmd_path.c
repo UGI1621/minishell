@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 15:15:39 by saan              #+#    #+#             */
-/*   Updated: 2025/08/20 15:25:27 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/10 01:32:38 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*extract_cmd_name(char *cmd)
 		return (ft_strdup(cmd));
 }
 
-static char	*access_absolut_paths(char **paths, char *cmd)
+static char	*access_absolut_paths(char *cmd)
 {
 	if (access(cmd, X_OK) == 0)
 		return(ft_strdup(cmd));
@@ -62,7 +62,7 @@ void	check_and_set_argv(t_cmd_node *node)
 		temp = access_paths(paths, cmd);
 	}
 	else
-		temp = access_absolut_paths(paths, cmd);
+		temp = access_absolut_paths(cmd);
 	free_2ptr(paths);
 	free(cmd);
 	node->cmd_path = temp;

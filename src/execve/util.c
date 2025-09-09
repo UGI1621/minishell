@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 15:43:14 by saan              #+#    #+#             */
-/*   Updated: 2025/09/04 09:24:46 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/10 07:03:57 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,19 @@ static void	builtin_set_fd(t_cmd_node *node)
 
 int	is_builtin(t_cmd_node *node)
 {
-	if (!ft_strcmp(node->argv[0], "echo"))
+	if (node->argv[0] && !ft_strcmp(node->argv[0], "echo"))
 		return (1);
-	if (!ft_strcmp(node->argv[0], "pwd"))
+	if (node->argv[0] && !ft_strcmp(node->argv[0], "pwd"))
 		return (1);
-	if (!ft_strcmp(node->argv[0], "env"))
+	if (node->argv[0] && !ft_strcmp(node->argv[0], "env"))
 		return (1);
-	if (!ft_strcmp(node->argv[0], "cd"))
+	if (node->argv[0] && !ft_strcmp(node->argv[0], "cd"))
 		return (1);
-	if (!ft_strcmp(node->argv[0], "export"))
+	if (node->argv[0] && !ft_strcmp(node->argv[0], "export"))
 		return (1);
-	if (!ft_strcmp(node->argv[0], "unset"))
+	if (node->argv[0] && !ft_strcmp(node->argv[0], "unset"))
 		return (1);
-	if (!ft_strcmp(node->argv[0], "exit"))
+	if (node->argv[0] && !ft_strcmp(node->argv[0], "exit"))
 		return (1);
 	return (0);
 }
@@ -68,9 +68,9 @@ int	do_builtin(t_cmd_node *node, int is_p, t_env_list *my_env)
 	if (is_p)
 		builtin_set_fd(node);
 	if (!ft_strcmp(node->argv[0], "echo"))
-		return (ft_echo(node, my_env, save_stdin, save_stdout));
+		return (ft_echo(node, save_stdin, save_stdout));
 	else if (!ft_strcmp(node->argv[0], "pwd"))
-		return (ft_pwd(node, my_env, save_stdin, save_stdout));
+		return (ft_pwd(node, save_stdin, save_stdout));
 	else if (!ft_strcmp(node->argv[0], "env"))
 		return (ft_env(node, my_env, save_stdin, save_stdout));
 	else if (!ft_strcmp(node->argv[0], "cd"))

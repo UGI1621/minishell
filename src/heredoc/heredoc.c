@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 16:07:22 by saan              #+#    #+#             */
-/*   Updated: 2025/09/09 10:19:04 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/10 01:31:54 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	write_extra_sigs(char *line, int *i, int heredoc_fd)
 
 static void	write_extend(char *line, int heredoc_fd, t_env_list *my_env)
 {
-	char	*temp;
 	int		i;
 	int		start;
 

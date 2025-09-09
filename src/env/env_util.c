@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 05:51:40 by saan              #+#    #+#             */
-/*   Updated: 2025/09/08 08:01:50 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/10 05:21:32 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,4 +103,5 @@ void	env_free(t_env_list *my_env)
 		node = node->next;
 		free(temp);
 	}
+	free(my_env);
 }

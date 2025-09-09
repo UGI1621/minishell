@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 20:35:17 by saan              #+#    #+#             */
-/*   Updated: 2025/09/08 04:32:56 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/10 01:28:16 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	init_cmd_list(t_cmd_list **list)
 	(*list)->tail = NULL;
 }
 
-void	init_cmd_node(t_cmd_node **node, t_cmd_list *list)
+void	init_cmd_node(t_cmd_node **node)
 {
 	*node = (t_cmd_node *)ft_calloc(1, sizeof(t_cmd_node));
 	(*node)->prev = NULL;

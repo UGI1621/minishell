@@ -6,13 +6,13 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 15:40:15 by saan              #+#    #+#             */
-/*   Updated: 2025/09/04 05:00:38 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/10 01:36:29 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_echo(t_cmd_node *node, t_env_list *my_env, int save_stdin, int save_stdout)
+int	ft_echo(t_cmd_node *node, int save_stdin, int save_stdout)
 {
 	int	i;
 	int	flag;

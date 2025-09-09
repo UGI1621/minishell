@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:19:22 by saan              #+#    #+#             */
-/*   Updated: 2025/09/09 10:40:06 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/10 01:28:40 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ t_cmd_list	*listing_cmd(t_lexer_list *list, t_env_list *my_env)
 	l_node = list->head;
 	while (l_node)
 	{
-		init_cmd_node(&c_node, res);
+		init_cmd_node(&c_node);
 		setting_node(c_node, &l_node, my_env);
 		if (g_sigs.heredoc_sigint)
 		{

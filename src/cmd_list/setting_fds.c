@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 11:10:14 by saan              #+#    #+#             */
-/*   Updated: 2025/09/09 10:35:46 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/10 05:41:30 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ void	set_heredoc_fd(t_cmd_node *c_node, t_lexer_node **l_node, t_env_list *my_en
 	set_sigs_ign();
 	waitpid(pid, &status, 0);
 	set_heredoc_status(status);
-	// printf("status raw=%d, exit_code=%d, heredoc_sigint=%d\n", status, g_sigs.exit_code, g_sigs.heredoc_sigint);
 	set_sigs();
 	c_node->is_use_heredoc = 1;
 }

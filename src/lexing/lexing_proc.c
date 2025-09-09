@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 00:26:09 by saan              #+#    #+#             */
-/*   Updated: 2025/08/16 12:45:05 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/10 01:30:51 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 static int	get_iredir(t_lexer_list *res, char *line, int *idx)
 {
-	int	s;
-
 	if (line[*idx + 1] != '<')
 		add_lexer_node(res, ft_strdup("<"));
 	else if (line[*idx + 1] == '<')
@@ -25,8 +23,6 @@ static int	get_iredir(t_lexer_list *res, char *line, int *idx)
 
 static int	get_oredir(t_lexer_list *res, char *line, int *idx)
 {
-	int	s;
-
 	if (line[*idx + 1] != '>')
 		add_lexer_node(res, ft_strdup(">"));
 	else if (line[*idx + 1] == '>')

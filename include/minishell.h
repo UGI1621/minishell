@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:19:24 by saan              #+#    #+#             */
-/*   Updated: 2025/09/09 10:13:19 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/10 06:59:28 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,8 +116,8 @@ void	set_heredoc_status(int status);
 
 
 //								built-in
-int	ft_echo(t_cmd_node *node, t_env_list *my_env, int save_stdin, int save_stdout);
-int	ft_pwd(t_cmd_node *node, t_env_list *my_env, int save_stdin, int save_stdout);
+int	ft_echo(t_cmd_node *node, int save_stdin, int save_stdout);
+int	ft_pwd(t_cmd_node *node, int save_stdin, int save_stdout);
 int	ft_env(t_cmd_node *node, t_env_list *my_env, int save_stdin, int save_stdout);
 int	ft_exit(t_cmd_node *node, int save_stdin, int save_stdout);
 int	ft_export(t_cmd_node *node, int save_stdin, int save_stdout, t_env_list *my_env);
@@ -238,7 +238,7 @@ int	invalid_token(t_lexer_list *res, char c);
 // initialize.c
 void	init_lexer_list(t_lexer_list **list);
 void	init_cmd_list(t_cmd_list **list);
-void	init_cmd_node(t_cmd_node **node, t_cmd_list *list);
+void	init_cmd_node(t_cmd_node **node);
 
 // valid.c
 int	is_invalid_line(char *line);

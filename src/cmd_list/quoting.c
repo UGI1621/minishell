@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 10:15:21 by saan              #+#    #+#             */
-/*   Updated: 2025/09/08 14:25:10 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/10 01:31:32 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ static char	*extending(char *s, t_env_list *my_env)
 static char	*env_extend(char *s, char quote, t_env_list *my_env)
 {
 	char	*res;
-	char	*temp;
 	int		i;
 	int		j;
 
@@ -64,7 +63,6 @@ static char	*env_extend(char *s, char quote, t_env_list *my_env)
 static char	*get_quotes(char *line, int *idx, int is_extend, t_env_list *my_env)
 {
 	char	quote;
-	int		start;
 	char	*temp;
 	char	*res;
 
@@ -91,7 +89,6 @@ static char	*get_quotes(char *line, int *idx, int is_extend, t_env_list *my_env)
 static char	*get_words(char *line, int *idx, int is_extend, t_env_list *my_env)
 {
 	int	start;
-	int	end;
 	char	*temp;
 
 	if (line[*idx] == '$' && line[*idx + 1] == '$')

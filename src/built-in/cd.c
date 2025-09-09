@@ -6,13 +6,13 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 23:52:09 by saan              #+#    #+#             */
-/*   Updated: 2025/09/04 10:41:43 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/10 01:34:25 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	ft_cd_home(t_cmd_node *node, int save_stdin, int save_stdout, t_env_list *my_env)
+static int	ft_cd_home(int save_stdin, int save_stdout, t_env_list *my_env)
 {
 	char	*old;
 
@@ -42,7 +42,6 @@ static int	ft_cd_path(t_cmd_node *node, int save_stdin, int save_stdout, t_env_l
 {
 	char	*old;
 	char	*path;
-	int		i;
 
 	path = parsing_path(node->argv[1], my_env);
 	if (!path)
@@ -66,7 +65,7 @@ static int	ft_cd_path(t_cmd_node *node, int save_stdin, int save_stdout, t_env_l
 	}
 }
 
-static int	ft_cd_back(t_cmd_node *node, int save_stdin, int save_stdout, t_env_list *my_env)
+static int	ft_cd_back(int save_stdin, int save_stdout, t_env_list *my_env)
 {
 	char	*old;
 
@@ -99,13 +98,13 @@ int	ft_cd(t_cmd_node *node, int save_stdin, int save_stdout, t_env_list *my_env)
 		return (1);
 	}
 	if (i == 1)
-		return (ft_cd_home(node, save_stdin, save_stdout, my_env));
+		return (ft_cd_home(save_stdin, save_stdout, my_env));
 	if (i == 2)
 	{
 		if (!ft_strcmp(node->argv[1], "~"))
-			return (ft_cd_home(node, save_stdin, save_stdout, my_env));
+			return (ft_cd_home(save_stdin, save_stdout, my_env));
 		else if (!ft_strcmp(node-> argv[1], "-"))
-			return (ft_cd_back(node, save_stdin, save_stdout, my_env));
+			return (ft_cd_back(save_stdin, save_stdout, my_env));
 		else
 			return (ft_cd_path(node, save_stdin, save_stdout, my_env));
 	}

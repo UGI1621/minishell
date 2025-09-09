@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 09:06:39 by saan              #+#    #+#             */
-/*   Updated: 2025/09/04 05:03:29 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/10 07:03:40 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,7 @@ void	set_node_fds(t_cmd_node *node)
 		dup2(node->pipe[1], STDOUT_FILENO);
 	}
 	if (node->is_use_heredoc)
-	{
-		// node->in_fd = node->heredoc_fd;
 		node->in_fd = open("heredoc_temp", O_RDONLY);
-	}
 	else
 		node->in_fd = open_infiles(node->infile);
 	if (node->in_fd != -1)

@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 02:22:29 by saan              #+#    #+#             */
-/*   Updated: 2025/08/13 12:02:19 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/10 05:55:23 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ void	add_lexer_node(t_lexer_list *list, char *str)
 {
 	t_lexer_node	*node;
 
-	node = (t_lexer_node *)ft_calloc(1, sizeof(t_lexer_node));
 	if (!str || !str[0])
 		return ;
+	node = (t_lexer_node *)ft_calloc(1, sizeof(t_lexer_node));
 	node->str = str;
 	if (!list->head && !list->tail)
 	{
@@ -42,7 +42,11 @@ static int	is_invalid_lexer(t_lexer_list *res)
 	{
 		if (is_cutsign(node->str[0]))
 		{
-			if (!node->next || is_cutsign(node->next->str[0]))
+			// if (!node->next || is_cutsign(node->next->str[0]))
+			// 	return(invalid_token(res, node->str[0]));
+			if (node->str[0] != '|' && (!node->next || node->next->str[0] == '>' || node->next->str[0] == '<'))
+				return(invalid_token(res, node->str[0]));
+			if (node->str[0] == '|' && !node->next)
 				return(invalid_token(res, node->str[0]));
 		}
 		node = node->next;
