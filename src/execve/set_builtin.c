@@ -1,34 +1,63 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   util.c                                             :+:      :+:    :+:   */
+/*   set_builtin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 15:43:14 by saan              #+#    #+#             */
-/*   Updated: 2025/09/10 07:03:57 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/10 08:12:48 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	builtin_set_fd(t_cmd_node *node)
+static int	builtin_set_fd(t_cmd_node *node)
 {
 	if (node->is_use_heredoc)
 		node->in_fd = open("heredoc_temp", O_RDONLY);
-	else
-		node->in_fd = open_infiles(node->infile);
-	if (node->in_fd != -1)
+	else if (node->infile && node->infile[0])
 	{
-		dup2(node->in_fd , STDIN_FILENO);
-		close(node->in_fd);
+		node->in_fd = b_open_infiles(node->infile);
+		if (node->in_fd != -1)
+		{
+			dup2(node->in_fd , STDIN_FILENO);
+			close(node->in_fd);
+		}
+		else
+			return (1);
 	}
-	node->out_fd = open_outfiles(node->outfile, node->out_sig);
-	if (node->out_fd != -1)
+	if (node->outfile && node->outfile[0])
 	{
-		dup2(node->out_fd, STDOUT_FILENO);
-		close(node->out_fd);
+		node->out_fd = b_open_outfiles(node->outfile, node->out_sig);
+		if (node->out_fd != -1)
+		{
+			dup2(node->out_fd, STDOUT_FILENO);
+			close(node->out_fd);
+		}
+		else
+			return (1);
 	}
+	return (0);
+}
+
+static	int	builtin_exe(t_cmd_node *node, int save_stdin, int save_stdout, t_env_list *my_env)
+{
+	if (!ft_strcmp(node->argv[0], "echo"))
+		return (ft_echo(node, save_stdin, save_stdout));
+	else if (!ft_strcmp(node->argv[0], "pwd"))
+		return (ft_pwd(node, save_stdin, save_stdout));
+	else if (!ft_strcmp(node->argv[0], "env"))
+		return (ft_env(node, my_env, save_stdin, save_stdout));
+	else if (!ft_strcmp(node->argv[0], "cd"))
+		return (ft_cd(node, save_stdin, save_stdout, my_env));
+	else if (!ft_strcmp(node->argv[0], "export"))
+		return (ft_export(node, save_stdin, save_stdout, my_env));
+	else if (!ft_strcmp(node->argv[0], "unset"))
+		return (ft_unset(node, save_stdin, save_stdout, my_env));
+	else if (!ft_strcmp(node->argv[0], "exit"))
+		return (ft_exit(node, save_stdin, save_stdout));
+	return (1);
 }
 
 int	is_builtin(t_cmd_node *node)
@@ -66,21 +95,13 @@ int	do_builtin(t_cmd_node *node, int is_p, t_env_list *my_env)
 	save_stdin = dup(STDIN_FILENO);
 	save_stdout = dup(STDOUT_FILENO);
 	if (is_p)
-		builtin_set_fd(node);
-	if (!ft_strcmp(node->argv[0], "echo"))
-		return (ft_echo(node, save_stdin, save_stdout));
-	else if (!ft_strcmp(node->argv[0], "pwd"))
-		return (ft_pwd(node, save_stdin, save_stdout));
-	else if (!ft_strcmp(node->argv[0], "env"))
-		return (ft_env(node, my_env, save_stdin, save_stdout));
-	else if (!ft_strcmp(node->argv[0], "cd"))
-		return (ft_cd(node, save_stdin, save_stdout, my_env));
-	else if (!ft_strcmp(node->argv[0], "export"))
-		return (ft_export(node, save_stdin, save_stdout, my_env));
-	else if (!ft_strcmp(node->argv[0], "unset"))
-		return (ft_unset(node, save_stdin, save_stdout, my_env));
-	else if (!ft_strcmp(node->argv[0], "exit"))
-		return (ft_exit(node, save_stdin, save_stdout));
-	// set_iofds(save_stdin, save_stdout);
-	return (0);
+	{
+		if (builtin_set_fd(node))
+		{
+			close(save_stdin);
+			close(save_stdout);
+			return (2);
+		}
+	}
+	return (builtin_exe(node, save_stdin, save_stdout, my_env));
 }

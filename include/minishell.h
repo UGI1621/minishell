@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:19:24 by saan              #+#    #+#             */
-/*   Updated: 2025/09/10 06:59:28 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/10 07:50:57 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,10 +104,14 @@ void	set_node_fds(t_cmd_node *node);
 // cmd_path.c
 void	check_and_set_argv(t_cmd_node *node);
 
-// util.c
+// set_builtin.c
 int	is_builtin(t_cmd_node *node);
 int	do_builtin(t_cmd_node *node, int is_p, t_env_list *my_env);
 void	set_iofds(int s_stdin, int s_stdout);
+
+// util_builtin.c
+int	b_open_infiles(char **files);
+int	b_open_outfiles(char **files, char **sigs);
 
 // handle_status.c
 void	set_status(int status);
