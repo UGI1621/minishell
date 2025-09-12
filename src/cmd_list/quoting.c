@@ -6,32 +6,24 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 10:15:21 by saan              #+#    #+#             */
-/*   Updated: 2025/09/10 01:31:32 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/12 08:41:43 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*extending(char *s, t_env_list *my_env)
+char	*extending(char *s, t_env_list *my_env)
 {
-	char	*res;
-	char	*temp;
-
-	if (ft_strlen(s) == 1 && !ft_strcmp(s, "?"))
+	if (s && !s[0])
 	{
 		free(s);
-		return(ft_itoa(g_sigs.exit_code));
+		return (ft_strdup("$"));
 	}
-	temp = get_env(s, my_env);
-	if (!temp)
-	{
-		temp = ft_strdup("");
-		free(s);
-		return (temp);
-	}
-	res = ft_strdup(temp);
-	free(s);
-	return (res);
+	if (is_expandable(s))
+		return (extend_res(s, my_env));
+	else
+		return (no_extend_res(s));
+	return (ft_strdup(""));
 }
 
 static char	*env_extend(char *s, char quote, t_env_list *my_env)

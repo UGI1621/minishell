@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 23:52:09 by saan              #+#    #+#             */
-/*   Updated: 2025/09/10 01:34:25 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/12 09:50:53 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,12 @@ static int	ft_cd_back(int save_stdin, int save_stdout, t_env_list *my_env)
 {
 	char	*old;
 
+	old = get_env("OLDPWD", my_env);
+	if (!old || !old[0])
+	{
+		ft_putendl_fd("minishell: cd: OLDPWD not set", 2);
+		return (1);
+	}
 	old = getcwd(NULL, 0);
 	if (chdir(get_env("OLDPWD", my_env)) == -1)
 	{

@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 16:07:22 by saan              #+#    #+#             */
-/*   Updated: 2025/09/10 01:31:54 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/12 11:20:04 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ static void	print_warning(char *delimiter)
 {
 	if (g_sigs.exit_code == 130)
 	{
-		free(delimiter);
 		set_sigs();
 		exit(130);
 	}
@@ -97,6 +96,5 @@ void	heredoc_proc(char *delimiter, int heredoc_fd, int is_quote, t_env_list *my_
 		free(line);
 	}
 	set_sigs();
-	free(delimiter);
 	exit(EXIT_SUCCESS);
 }

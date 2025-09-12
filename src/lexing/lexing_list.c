@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 02:22:29 by saan              #+#    #+#             */
-/*   Updated: 2025/09/10 05:55:23 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/12 04:53:56 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	is_invalid_lexer(t_lexer_list *res)
 	return (0);
 }
 
-t_lexer_list	*ft_lexing(char *line)
+t_lexer_list	*ft_lexing(char *line, t_env_list *my_env)
 {
 	t_lexer_list	*res;
 	int				i;
@@ -77,6 +77,8 @@ t_lexer_list	*ft_lexing(char *line)
 		free_lexer_list(res);
 		return (NULL);
 	}
+	extending_lexer_list(&res, my_env);
+	quotting_lexer_list(&res);
 	return (res);
 }
 

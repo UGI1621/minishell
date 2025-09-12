@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:19:24 by saan              #+#    #+#             */
-/*   Updated: 2025/09/10 07:50:57 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/12 08:41:11 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,7 @@ void	heredoc_proc(char *delimiter, int heredoc_fd, int is_quote, t_env_list *my_
 t_cmd_list	*listing_cmd(t_lexer_list *list, t_env_list *my_env);
 
 // quotting.c
+char	*extending(char *s, t_env_list *my_env);
 char	*cal_quotes(char *line, int	is_extend, t_env_list *my_env);
 
 // quotting_util.c
@@ -160,10 +161,27 @@ void	free_cmd_field(t_cmd_node *node);
 void	open_error_proc(t_cmd_list *list);
 
 // setting_fds.c
-void		set_in_fd(t_cmd_node *c_node, t_lexer_node **l_node, t_env_list *my_env);
-void		set_out_fd(t_cmd_node *c_node, t_lexer_node **l_node, int is_append, t_env_list *my_env);
+void		set_in_fd(t_cmd_node *c_node, t_lexer_node **l_node);
+void		set_out_fd(t_cmd_node *c_node, t_lexer_node **l_node, int is_append);
 void	set_heredoc_fd(t_cmd_node *c_node, t_lexer_node **l_node, t_env_list *my_env);
 
+
+//								cmd_quoting
+
+// extending_lexer_list.c
+void	extending_lexer_list(t_lexer_list **list, t_env_list *my_env);
+
+// env_extend.c
+char	*extending_env(char *str, t_env_list *my_env);
+
+// extending_util.c
+int	is_expandable(char *str);
+char	*extend_res(char *s, t_env_list *my_env);
+char	*no_extend_res(char *s);
+
+// quoting_lexer_list.c
+void	quotting_lexer_list(t_lexer_list **list);
+char	*remove_quotes(char *str);
 
 // 								siganl
 // sig_handler.c
@@ -201,7 +219,7 @@ void	set_techo_off(void);
 // 								lexing
 // lexing_list.c
 void	add_lexer_node(t_lexer_list *list, char *str);
-t_lexer_list	*ft_lexing(char *line);
+t_lexer_list	*ft_lexing(char *line, t_env_list *my_env);
 void	free_lexer_list(t_lexer_list *list);
 
 // lexing_proc.c
@@ -247,6 +265,8 @@ void	init_cmd_node(t_cmd_node **node);
 // valid.c
 int	is_invalid_line(char *line);
 int	is_invalid_env_naming_rule(char *str);
+
+void	print_lexing_list(t_lexer_list *list);
 
 extern t_sigs g_sigs;
 

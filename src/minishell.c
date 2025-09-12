@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:30:30 by saan              #+#    #+#             */
-/*   Updated: 2025/09/10 08:22:19 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/12 11:23:47 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static char	*ft_readline()
 	if (!line)
 	{
 		write(1,"exit\n", 5);
-		g_sigs.exit_code = 0;
+		// g_sigs.exit_code = 0;
 		return (0);
 	}
 	if (!ft_strcmp(line, "exit"))
@@ -80,7 +80,7 @@ static char	*ft_readline()
 		ft_putendl_fd("Exiting minishell...", 1);
 		free(line);
 		rl_clear_history();
-		g_sigs.exit_code = 0;
+		// g_sigs.exit_code = 0;
 		return (0);
 	}
 	if (ft_strlen(line) == 0)
@@ -99,33 +99,42 @@ static void	lexing_listing(char *line, t_env_list *my_env)
 		g_sigs.exit_code = 2;
 		return ;
 	}
-	lexing_list = ft_lexing(line);
+	lexing_list = ft_lexing(line, my_env);
 	if (!lexing_list)
 	{
 		g_sigs.exit_code = 2;
 		return ;
 	}
-	print_lexing_list(lexing_list);
+	// print_lexing_list(lexing_list);
 	cmd_list = listing_cmd(lexing_list, my_env);
-	print_cmd_list(cmd_list);
+	// print_cmd_list(cmd_list);
 	free_lexer_list(lexing_list);
 	if (g_sigs.heredoc_sigint)
 	{
 		g_sigs.heredoc_sigint = 0;
+		free_cmd_list(cmd_list);
 		return ;
 	}
 	process_cmd_exe(cmd_list, my_env);
 	free_cmd_list(cmd_list);
 }
 
-int	main(int _ac, char **_av, char **env)
+int	invalid_ac(void)
+{
+	ft_putendl_fd("Invalid argc", 2);
+	ft_putendl_fd("Usage: ./minishell", 2);
+	return (1);
+}
+
+int	main(int ac, char **av, char **env)
 {
 	char	*line;
 	char	*temp;
-	(void)_ac;
-	(void)_av;
+	(void)av;
 	t_env_list	*my_env;
 
+	if (ac != 1)
+		return (invalid_ac());
 	g_sigs.exit_code = 0;
 	g_sigs.heredoc_sigint = 0;
 	set_sigs();
