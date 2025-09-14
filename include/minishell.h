@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:19:24 by saan              #+#    #+#             */
-/*   Updated: 2025/09/12 08:41:11 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/14 15:15:57 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	process_cmd_exe(t_cmd_list *list, t_env_list *my_env);
 // handle_error.c
 void	exit_with_perror(char *str);
 void	write_open_error(char *name);
-void	write_access_error(char *name);
+void	write_access_error(char *name, int err);
 
 // redirection.c
 int	open_infiles(char **files);
@@ -102,7 +102,7 @@ int	open_outfiles(char **files, char **sigs);
 void	set_node_fds(t_cmd_node *node);
 
 // cmd_path.c
-void	check_and_set_argv(t_cmd_node *node);
+void	check_and_set_argv(t_cmd_node *node, t_env_list *my_env);
 
 // set_builtin.c
 int	is_builtin(t_cmd_node *node);

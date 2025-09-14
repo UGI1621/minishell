@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 15:15:39 by saan              #+#    #+#             */
-/*   Updated: 2025/09/10 01:32:38 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/14 15:17:47 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,36 +25,38 @@ static char	*access_absolut_paths(char *cmd)
 	if (access(cmd, X_OK) == 0)
 		return(ft_strdup(cmd));
 	else
-		write_access_error(cmd);
+		write_access_error(cmd, errno);
 	return (NULL);
 }
 
 static char	*access_paths(char **paths, char *cmd)
 {
 	int	i;
+	int	err;
 	char	*temp;
 
 	i = -1;
 	while (paths[++i])
 	{
 		temp = ft_strjoin_af(ft_strdup(paths[i]), ft_strdup(cmd));
-		if(access(temp, X_OK)== 0)
+		if(access(temp, X_OK) == 0)
 			break ;
+		err = errno;
 		free(temp);
 		temp = NULL;
 	}
 	if (!temp)
-		write_access_error(cmd);
+		write_access_error(cmd, err);
 	return (temp);
 }
 
-void	check_and_set_argv(t_cmd_node *node)
+void	check_and_set_argv(t_cmd_node *node, t_env_list *my_env)
 {
 	char	*cmd;
 	char	*temp;
 	char	**paths;
 
-	paths = ft_split(getenv("PATH"), ':');
+	paths = ft_split(get_env("PATH", my_env), ':');
 	cmd = ft_strdup(node->argv[0]);
 	if (!ft_strchr(cmd, '/'))
 	{

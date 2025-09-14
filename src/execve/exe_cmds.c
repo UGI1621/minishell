@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 16:02:02 by saan              #+#    #+#             */
-/*   Updated: 2025/09/10 07:26:40 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/14 15:09:31 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	child_process(t_cmd_node *node, pid_t *pid, t_env_list *my_env)
 	set_node_fds(node);
 	if (is_builtin(node))
 		exit(do_builtin(node, 0, my_env));
-	check_and_set_argv(node);
+	check_and_set_argv(node, my_env);
 	if (execve(node->cmd_path, node->argv, envp) == -1)
 	{
 		perror(node->argv[0]);
