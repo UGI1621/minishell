@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:19:24 by saan              #+#    #+#             */
-/*   Updated: 2025/09/14 15:15:57 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/16 12:21:22 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ void	process_cmd_exe(t_cmd_list *list, t_env_list *my_env);
 void	exit_with_perror(char *str);
 void	write_open_error(char *name);
 void	write_access_error(char *name, int err);
+void	write_cmd_nf(char *name);
 
 // redirection.c
 int	open_infiles(char **files);

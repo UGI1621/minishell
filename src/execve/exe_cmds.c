@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 16:02:02 by saan              #+#    #+#             */
-/*   Updated: 2025/09/14 15:09:31 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/16 12:01:19 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	child_process(t_cmd_node *node, pid_t *pid, t_env_list *my_env)
 	if (execve(node->cmd_path, node->argv, envp) == -1)
 	{
 		perror(node->argv[0]);
-		exit(126);
+		exit(errno);
 	}
 }
 

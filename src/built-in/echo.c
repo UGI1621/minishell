@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 15:40:15 by saan              #+#    #+#             */
-/*   Updated: 2025/09/10 01:36:29 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/16 11:47:27 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_echo(t_cmd_node *node, int save_stdin, int save_stdout)
 
 	i = 1;
 	flag = 1;
-	if (node->argv[i] && !ft_strcmp(node->argv[i], "-n"))
+	while (node->argv[i] && !ft_strcmp(node->argv[i], "-n"))
 	{
 		flag = 0;
 		i++;

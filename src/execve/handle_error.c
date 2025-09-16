@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 08:44:59 by saan              #+#    #+#             */
-/*   Updated: 2025/09/14 15:18:28 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/16 12:24:06 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,10 @@ void	write_open_error(char *name)
 
 void	write_access_error(char *name, int err)
 {
-	ft_putstr_fd("sibal ",2);
 	write(2, "bash: ", 6);
 	write(2, name + 1, ft_strlen(name + 1));
 	write(2, ": ", 2);
-	write(2, strerror(errno), ft_strlen(strerror(errno)));
+	write(2, strerror(err), ft_strlen(strerror(err)));
 	write(2, "\n", 1);
 	if (err == ENOENT)
 	{
@@ -45,6 +44,15 @@ void	write_access_error(char *name, int err)
 		// write(2, "Not a directory\n", 16);
 		exit(126);
 	}
+}
+
+void	write_cmd_nf(char *name)
+{
+	// write(2, "bash: ", 6);
+	write(2, name + 1, ft_strlen(name + 1));
+	write(2, ": ", 2);
+	write(2, "Command not found\n", 18);
+	exit(127);
 }
 
 void	exit_with_perror(char *str)
