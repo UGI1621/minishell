@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 11:10:14 by saan              #+#    #+#             */
-/*   Updated: 2025/09/17 12:45:05 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/17 18:45:46 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	set_out_fd(t_cmd_node *c_node, t_lexer_node **l_node, int is_append)
 }
 
 void	set_heredoc_fd(t_cmd_node *c_node, t_lexer_node **l_node,
-		t_env_list *my_env)
+		t_env_list *my_env, int *heredoc_sigint)
 {
 	int		quote_flag;
 	int		status;
@@ -105,7 +105,7 @@ void	set_heredoc_fd(t_cmd_node *c_node, t_lexer_node **l_node,
 			c_node->heredoc_fd, quote_flag, my_env);
 	set_sigs_ign();
 	waitpid(pid, &status, 0);
-	set_heredoc_status(status);
+	set_heredoc_status(status, heredoc_sigint);
 	set_sigs();
 	c_node->is_use_heredoc = 1;
 	close(c_node->heredoc_fd);

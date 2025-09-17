@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 18:06:46 by saan              #+#    #+#             */
-/*   Updated: 2025/09/17 12:46:15 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/17 18:49:47 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*extend_res(char *s, t_env_list *my_env)
 	if (ft_strlen(s) == 1 && !ft_strcmp(s, "?"))
 	{
 		free(s);
-		return (ft_itoa(g_sigs.exit_code));
+		return (ft_itoa(g_exit_code));
 	}
 	temp = get_env(s, my_env);
 	if (!temp)

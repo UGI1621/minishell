@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 16:02:02 by saan              #+#    #+#             */
-/*   Updated: 2025/09/17 12:48:00 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/17 18:49:47 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	process_cmd_exe(t_cmd_list *list, t_env_list *my_env)
 	if (size == 1 && is_builtin(list->head))
 	{
 		free(pid);
-		g_sigs.exit_code = do_builtin_p(list, 1, my_env);
+		g_exit_code = do_builtin_p(list, 1, my_env);
 	}
 	else
 	{

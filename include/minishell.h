@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:19:24 by saan              #+#    #+#             */
-/*   Updated: 2025/09/17 18:06:42 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/17 18:50:24 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ typedef struct s_env_list
 typedef struct s_sigs
 {
 	int					heredoc_sigint;
-	unsigned char		exit_code;
+	unsigned char		g_exit_code;
 }						t_sigs;
 
 //								execve
@@ -121,7 +121,7 @@ int						b_open_outfiles(char **files, char **sigs);
 // handle_status.c
 void					set_status(int status);
 void					check_status(int status);
-void					set_heredoc_status(int status);
+void					set_heredoc_status(int status, int *heredoc_sigint);
 
 //								built-in
 int						ft_echo(t_cmd_node *node, int save_stdin,
@@ -154,7 +154,8 @@ void					heredoc_proc(char *delimiter, int heredoc_fd,
 
 // 								cmd_list
 // listing_cmd.c
-t_cmd_list				*listing_cmd(t_lexer_list *list, t_env_list *my_env);
+t_cmd_list				*listing_cmd(t_lexer_list *list, t_env_list *my_env,
+							int *heredoc_sigint);
 
 // quotting.c
 char					*extending(char *s, t_env_list *my_env);
@@ -180,7 +181,8 @@ void					set_in_fd(t_cmd_node *c_node, t_lexer_node **l_node);
 void					set_out_fd(t_cmd_node *c_node, t_lexer_node **l_node,
 							int is_append);
 void					set_heredoc_fd(t_cmd_node *c_node,
-							t_lexer_node **l_node, t_env_list *my_env);
+							t_lexer_node **l_node, t_env_list *my_env,
+							int *heredoc_sigint);
 
 //								cmd_quoting
 
@@ -275,6 +277,6 @@ void					init_cmd_node(t_cmd_node **node);
 int						is_invalid_line(char *line);
 int						is_invalid_env_naming_rule(char *str);
 
-extern t_sigs			g_sigs;
+extern int				g_exit_code;
 
 #endif

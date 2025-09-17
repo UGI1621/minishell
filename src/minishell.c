@@ -6,13 +6,13 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:30:30 by saan              #+#    #+#             */
-/*   Updated: 2025/09/17 13:06:07 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/17 18:51:08 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_sigs		g_sigs;
+int			g_exit_code;
 
 static char	*ft_readline(void)
 {
@@ -37,28 +37,37 @@ static char	*ft_readline(void)
 	return (line);
 }
 
+static int	pre_listing_cmd(char *line, t_lexer_list **lexing_list,
+		t_env_list *my_env)
+{
+	if (is_invalid_line(line))
+	{
+		free(line);
+		return (1);
+	}
+	*lexing_list = ft_lexing(line, my_env);
+	free(line);
+	if (!(*lexing_list))
+	{
+		g_exit_code = 2;
+		return (1);
+	}
+	return (0);
+}
+
 static void	lexing_listing(char *line, t_env_list *my_env)
 {
 	t_lexer_list	*lexing_list;
 	t_cmd_list		*cmd_list;
+	int				heredoc_sigint;
 
-	if (is_invalid_line(line))
-	{
-		free(line);
+	heredoc_sigint = 0;
+	if (pre_listing_cmd(line, &lexing_list, my_env))
 		return ;
-	}
-	lexing_list = ft_lexing(line, my_env);
-	free(line);
-	if (!lexing_list)
-	{
-		g_sigs.exit_code = 2;
-		return ;
-	}
-	cmd_list = listing_cmd(lexing_list, my_env);
+	cmd_list = listing_cmd(lexing_list, my_env, &heredoc_sigint);
 	free_lexer_list(lexing_list);
-	if (g_sigs.heredoc_sigint)
+	if (heredoc_sigint)
 	{
-		g_sigs.heredoc_sigint = 0;
 		free_cmd_list(cmd_list);
 		return ;
 	}
@@ -82,8 +91,7 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	if (ac != 1)
 		return (invalid_ac());
-	g_sigs.exit_code = 0;
-	g_sigs.heredoc_sigint = 0;
+	g_exit_code = 0;
 	set_sigs();
 	envp_to_env(&my_env, env);
 	while (1)
@@ -98,5 +106,5 @@ int	main(int ac, char **av, char **env)
 		lexing_listing(temp, my_env);
 	}
 	env_free(my_env);
-	return (g_sigs.exit_code);
+	return (g_exit_code);
 }

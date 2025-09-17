@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 16:07:22 by saan              #+#    #+#             */
-/*   Updated: 2025/09/17 12:52:47 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/17 18:49:47 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static void	write_extend(char *line, int hf, t_env_list *e)
 
 static void	print_warning(char *delimiter)
 {
-	if (g_sigs.exit_code == 130)
+	if (g_exit_code == 130)
 	{
 		set_sigs();
 		exit(130);

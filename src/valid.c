@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 17:39:53 by saan              #+#    #+#             */
-/*   Updated: 2025/09/17 13:05:59 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/17 18:49:47 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,12 @@ int	is_invalid_line(char *line)
 {
 	if (is_open_quote(line))
 	{
-		g_sigs.exit_code = 2;
+		g_exit_code = 2;
 		return (1);
 	}
 	if (is_bs_sc(line))
 	{
-		g_sigs.exit_code = 2;
+		g_exit_code = 2;
 		return (1);
 	}
 	return (0);

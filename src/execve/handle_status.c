@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 05:03:22 by saan              #+#    #+#             */
-/*   Updated: 2025/09/10 00:13:06 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/17 18:49:47 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,18 @@
 void	set_status(int status)
 {
 	if (WIFEXITED(status))
-		g_sigs.exit_code = WEXITSTATUS(status);
+		g_exit_code = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
-		g_sigs.exit_code = 128 + WTERMSIG(status);
+		g_exit_code = 128 + WTERMSIG(status);
 }
 
-void	set_heredoc_status(int status)
+void	set_heredoc_status(int status, int *heredoc_sigint)
 {
 	if (WIFEXITED(status))
 	{
-		g_sigs.exit_code = WEXITSTATUS(status);
+		g_exit_code = WEXITSTATUS(status);
 		if (WEXITSTATUS(status) == 130)
-			g_sigs.heredoc_sigint = 1;
+			*heredoc_sigint = 1;
 	}
 }
 
