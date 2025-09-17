@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 23:52:09 by saan              #+#    #+#             */
-/*   Updated: 2025/09/12 09:50:53 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/17 12:41:37 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ static int	ft_cd_home(int save_stdin, int save_stdout, t_env_list *my_env)
 		if (chdir(get_env("HOME", my_env)) == -1)
 		{
 			free(old);
-			return (print_error_path(ft_strdup(get_env("HOME", my_env)), save_stdin, save_stdout));
+			return (print_error_path(ft_strdup(get_env("HOME", my_env)),
+					save_stdin, save_stdout));
 		}
 		else
 		{
@@ -38,7 +39,8 @@ static int	ft_cd_home(int save_stdin, int save_stdout, t_env_list *my_env)
 	}
 }
 
-static int	ft_cd_path(t_cmd_node *node, int save_stdin, int save_stdout, t_env_list *my_env)
+static int	ft_cd_path(t_cmd_node *node, int save_stdin, int save_stdout,
+		t_env_list *my_env)
 {
 	char	*old;
 	char	*path;
@@ -79,7 +81,8 @@ static int	ft_cd_back(int save_stdin, int save_stdout, t_env_list *my_env)
 	if (chdir(get_env("OLDPWD", my_env)) == -1)
 	{
 		free(old);
-		return (print_error_path(ft_strdup(get_env("OLDPWD", my_env)), save_stdin, save_stdout));
+		return (print_error_path(ft_strdup(get_env("OLDPWD", my_env)),
+				save_stdin, save_stdout));
 	}
 	else
 	{
@@ -109,7 +112,7 @@ int	ft_cd(t_cmd_node *node, int save_stdin, int save_stdout, t_env_list *my_env)
 	{
 		if (!ft_strcmp(node->argv[1], "~"))
 			return (ft_cd_home(save_stdin, save_stdout, my_env));
-		else if (!ft_strcmp(node-> argv[1], "-"))
+		else if (!ft_strcmp(node->argv[1], "-"))
 			return (ft_cd_back(save_stdin, save_stdout, my_env));
 		else
 			return (ft_cd_path(node, save_stdin, save_stdout, my_env));

@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 12:48:42 by saan              #+#    #+#             */
-/*   Updated: 2025/09/08 15:36:34 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/17 12:44:05 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 
 char	*get_quotes_env_key(char *line, int *idx)
 {
-	int	start;
+	int		start;
 	char	*temp;
 
 	start = (*idx)++;
-	while (!is_wspace(line[(*idx)]) && !is_quote(line[(*idx)]) && line[(*idx)] != '$' && line[(*idx)] != '=')
+	while (!is_wspace(line[(*idx)]) && !is_quote(line[(*idx)])
+		&& line[(*idx)] != '$' && line[(*idx)] != '=')
 		(*idx)++;
 	temp = ft_substr(line, start, *idx - start);
 	(*idx)--;

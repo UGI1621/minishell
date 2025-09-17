@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 17:32:45 by saan              #+#    #+#             */
-/*   Updated: 2025/08/28 17:43:47 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/17 12:46:55 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 char	**env_to_envp(t_env_list *my_env)
 {
-	char	**res;
-	char	*temp;
+	char		**res;
+	char		*temp;
 	t_env_node	*node;
-	int	i;
+	int			i;
 
 	i = -1;
 	node = my_env->head;

@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 15:39:35 by saan              #+#    #+#             */
-/*   Updated: 2025/09/12 08:47:22 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/17 12:45:38 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ void	extending_lexer_list(t_lexer_list **list, t_env_list *my_env)
 		add_lexer_node(res, extending_env(node->str, my_env));
 		node = node->next;
 	}
-	// print_lexing_list(*list);
-	// print_lexing_list(res);
 	free_lexer_list((*list));
-	(*list)= res;
+	(*list) = res;
 }

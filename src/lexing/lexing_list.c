@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 02:22:29 by saan              #+#    #+#             */
-/*   Updated: 2025/09/17 12:25:45 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/17 12:53:34 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,11 @@ static int	is_invalid_lexer(t_lexer_list *res)
 	{
 		if (is_cutsign(node->str[0]))
 		{
-			// if (!node->next || is_cutsign(node->next->str[0]))
-			// 	return(invalid_token(res, node->str[0]));
-			if (node->str[0] != '|' && (!node->next || node->next->str[0] == '>' || node->next->str[0] == '<'))
-				return(invalid_token(res, node->str[0]));
+			if (node->str[0] != '|' && (!node->next || node->next->str[0] == '>'
+					|| node->next->str[0] == '<'))
+				return (invalid_token(res, node->str[0]));
 			if (node->str[0] == '|' && !node->next)
-				return(invalid_token(res, node->str[0]));
+				return (invalid_token(res, node->str[0]));
 		}
 		node = node->next;
 	}
@@ -61,9 +60,9 @@ t_lexer_list	*ft_lexing(char *line, t_env_list *my_env)
 
 	i = -1;
 	init_lexer_list(&res);
-	while(line[++i])
+	while (line[++i])
 	{
-		if(ft_lexing_proc(res, line, &i))
+		if (ft_lexing_proc(res, line, &i))
 		{
 			free_lexer_list(res);
 			return (NULL);
@@ -88,7 +87,7 @@ void	free_lexer_list(t_lexer_list *list)
 	t_lexer_node	*temp;
 
 	node = list->head;
-	while(node)
+	while (node)
 	{
 		temp = node->next;
 		free(node->str);

@@ -6,61 +6,13 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:30:30 by saan              #+#    #+#             */
-/*   Updated: 2025/09/17 12:39:15 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/17 13:06:07 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 t_sigs		g_sigs;
-
-void	print_lexing_list(t_lexer_list *list)
-{
-	t_lexer_node	*node;
-
-	node = list->head;
-	printf("node : ");
-	while (node)
-	{
-		printf("[%s]->", node->str);
-		node = node->next;
-	}
-	printf("\n");
-}
-
-void	print_cmd_list(t_cmd_list *list)
-{
-	t_cmd_node	*node;
-	int			i;
-
-	node = list->head;
-	printf("\nCMD NODES\n");
-	while (node)
-	{
-		printf("node info \n");
-		printf("node->argv : ");
-		i = -1;
-		while (node->argv && node->argv[++i])
-			printf("{%s} ", node->argv[i]);
-		i = -1;
-		printf("\nnode->infile : ");
-		while (node->infile && node->infile[++i])
-			printf("{%s} ", node->infile[i]);
-		printf("\nnode->in_fd : %d", node->in_fd);
-		i = -1;
-		printf("\nnode->outfile : ");
-		while (node->outfile && node->outfile[++i])
-			printf("{%s} ", node->outfile[i]);
-		i = -1;
-		printf("\nnode->out_sig : ");
-		while (node->out_sig && node->out_sig[++i])
-			printf("{%s} ", node->out_sig[i]);
-		printf("\nnode->out_fd : %d\n", node->out_fd);
-		printf("node->is_use_heredoc : %d\n", node->is_use_heredoc);
-		printf("pipe[0] : %d\npipe[1] : %d\n\n", node->pipe[0], node->pipe[1]);
-		node = node->next;
-	}
-}
 
 static char	*ft_readline(void)
 {
@@ -92,7 +44,7 @@ static void	lexing_listing(char *line, t_env_list *my_env)
 
 	if (is_invalid_line(line))
 	{
-		g_sigs.exit_code = 2;
+		free(line);
 		return ;
 	}
 	lexing_list = ft_lexing(line, my_env);

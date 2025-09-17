@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 04:47:49 by saan              #+#    #+#             */
-/*   Updated: 2025/09/12 10:41:03 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/17 12:53:57 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,5 @@ void	set_sigs_dfl(void)
 void	set_sigs_heredoc(void)
 {
 	set_sigint_handler_heredoc();
-	// set_sigint_handler();
 	set_sigquit_ign();
 }

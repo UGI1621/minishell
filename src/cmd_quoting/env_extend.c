@@ -6,13 +6,13 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 13:20:35 by saan              #+#    #+#             */
-/*   Updated: 2025/09/17 11:56:55 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/17 12:45:26 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static	char *get_extend(char *str, int *i, char quote, t_env_list *my_env)
+static char	*get_extend(char *str, int *i, char quote, t_env_list *my_env)
 {
 	char	*res;
 	int		start;
@@ -29,7 +29,8 @@ static	char *get_extend(char *str, int *i, char quote, t_env_list *my_env)
 	return (res);
 }
 
-static char	*get_extend_quote_line(char *str, int *i, char quote, t_env_list *my_env)
+static char	*get_extend_quote_line(char *str, int *i, char quote,
+		t_env_list *my_env)
 {
 	char	*res;
 
@@ -55,8 +56,8 @@ static char	*get_extend_quote_line(char *str, int *i, char quote, t_env_list *my
 
 static char	*get_extend_line(char *str, int *i, t_env_list *my_env)
 {
-	int		start;
-	int		end;
+	int	start;
+	int	end;
 
 	start = (*i) + 1;
 	while (str[++(*i)])
@@ -75,7 +76,7 @@ static char	*get_extend_line(char *str, int *i, t_env_list *my_env)
 
 char	*extending_env(char *str, t_env_list *my_env)
 {
-	int	i;
+	int		i;
 	char	*res;
 
 	i = 0;
@@ -83,7 +84,8 @@ char	*extending_env(char *str, t_env_list *my_env)
 	while (str[i])
 	{
 		if (is_quote(str[i]))
-			res = ft_strjoin_af(res, get_extend_quote_line(str, &i, str[i], my_env));
+			res = ft_strjoin_af(res, get_extend_quote_line(str, &i, str[i],
+						my_env));
 		else if (str[i] == '$')
 			res = ft_strjoin_af(res, get_extend_line(str, &i, my_env));
 		else

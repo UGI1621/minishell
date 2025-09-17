@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 16:07:08 by saan              #+#    #+#             */
-/*   Updated: 2025/09/12 10:35:35 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/17 12:42:25 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static char	*get_argv_key(char *str)
 	return (res);
 }
 
-static char *get_argv_val(char *str)
+static char	*get_argv_val(char *str)
 {
 	char	*ptr;
 	char	*temp;
@@ -75,19 +75,18 @@ static char *get_argv_val(char *str)
 	}
 }
 
-int	ft_export(t_cmd_node *node, int save_stdin, int save_stdout, t_env_list *my_env)
+int	ft_export(t_cmd_node *node, int save_stdin, int save_stdout,
+		t_env_list *my_env)
 {
-	int	i;
-	int	flag;
-	char *temp_key;
-	char *temp_val;
+	int		i;
+	int		flag;
+	char	*temp_key;
+	char	*temp_val;
 
 	flag = 0;
 	if (is_invalid_export(node->argv))
 		return (1);
 	i = 0;
-	// for (int k = 0; node->argv[k]; k++)
-    // 	printf("argv[%d] = [%s]\n", k, node->argv[k]);
 	while (node->argv[++i])
 	{
 		if (is_invalid_env_naming_rule(node->argv[i]))

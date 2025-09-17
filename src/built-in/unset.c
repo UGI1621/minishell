@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 05:33:28 by saan              #+#    #+#             */
-/*   Updated: 2025/09/04 09:22:34 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/17 12:42:33 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	is_env_val(char *key, t_env_list *my_env)
 	t_env_node	*node;
 
 	node = my_env->head;
-	while(node)
+	while (node)
 	{
 		if (!ft_strcmp(node->key, key))
 			return (1);
@@ -26,7 +26,8 @@ static int	is_env_val(char *key, t_env_list *my_env)
 	return (0);
 }
 
-int	ft_unset(t_cmd_node *node, int save_stdin, int save_stdout, t_env_list *my_env)
+int	ft_unset(t_cmd_node *node, int save_stdin, int save_stdout,
+		t_env_list *my_env)
 {
 	int	i;
 	int	flag;

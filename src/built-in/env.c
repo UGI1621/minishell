@@ -6,13 +6,14 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 05:45:38 by saan              #+#    #+#             */
-/*   Updated: 2025/09/04 01:43:38 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/17 12:41:49 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_env(t_cmd_node *node, t_env_list *my_env, int save_stdin, int save_stdout)
+int	ft_env(t_cmd_node *node, t_env_list *my_env, int save_stdin,
+		int save_stdout)
 {
 	t_env_node	*e_node;
 
@@ -23,7 +24,7 @@ int	ft_env(t_cmd_node *node, t_env_list *my_env, int save_stdin, int save_stdout
 		set_iofds(save_stdin, save_stdout);
 		return (1);
 	}
-	while(e_node)
+	while (e_node)
 	{
 		if (e_node->val && e_node->val[0])
 		{

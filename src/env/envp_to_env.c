@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 16:20:02 by saan              #+#    #+#             */
-/*   Updated: 2025/09/04 05:09:38 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/17 12:56:05 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	init_env_node(t_env_node *node, char *env)
 
 	i = -1;
 	node->prev = NULL;
-	while(env[++i])
+	while (env[++i])
 	{
 		if (env[i] == '=')
 		{
@@ -40,7 +40,7 @@ void	init_env_node(t_env_node *node, char *env)
 
 void	add_env_node(t_env_list *list, t_env_node *node)
 {
-	if(!list->head && !list->tail)
+	if (!list->head && !list->tail)
 	{
 		list->head = node;
 		list->tail = node;
@@ -53,21 +53,10 @@ void	add_env_node(t_env_list *list, t_env_node *node)
 	}
 }
 
-void	print_env_list(t_env_list *list)
-{
-	t_env_node *node = list->head;
-
-	while (node)
-	{
-		printf("%s=%s\n", node->key, node->val);
-		node = node->next;
-	}
-}
-
 void	envp_to_env(t_env_list **my_env, char **env)
 {
 	t_env_node	*node;
-	int	i;
+	int			i;
 
 	i = -1;
 	init_env_list(my_env);

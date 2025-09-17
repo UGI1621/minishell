@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 04:58:14 by saan              #+#    #+#             */
-/*   Updated: 2025/09/08 05:50:31 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/17 12:54:20 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	set_techo_on(void)
 
 void	set_techo_off(void)
 {
-	struct  termios	term;
+	struct termios	term;
 
 	tcgetattr(1, &term);
 	term.c_lflag &= ~(ECHOCTL);

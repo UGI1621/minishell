@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 04:02:38 by saan              #+#    #+#             */
-/*   Updated: 2025/09/12 09:46:37 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/17 12:46:26 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static char	*list_to_str(t_lexer_list *list)
 {
 	t_lexer_node	*node;
-	char	*str;
+	char			*str;
 
 	node = list->head;
 	str = ft_strdup("");
@@ -31,11 +31,11 @@ static char	*list_to_str(t_lexer_list *list)
 static char	*get_quotes(char *str, int *i)
 {
 	char	quote;
-	int	start;
+	int		start;
 
 	quote = str[(*i)];
 	start = ++(*i);
-	while(str[(*i)] && str[(*i)] != quote)
+	while (str[(*i)] && str[(*i)] != quote)
 		(*i)++;
 	return (ft_substr(str, start, (*i) - start));
 }
@@ -43,7 +43,7 @@ static char	*get_quotes(char *str, int *i)
 char	*remove_quotes(char *str)
 {
 	char	*res;
-	int	i;
+	int		i;
 
 	i = 0;
 	res = ft_strdup("");
@@ -54,7 +54,7 @@ char	*remove_quotes(char *str)
 		else
 			res = append_char(res, str[i]);
 		if (!str[i])
-			break;
+			break ;
 		i++;
 	}
 	free(str);
@@ -64,9 +64,9 @@ char	*remove_quotes(char *str)
 void	quotting_lexer_list(t_lexer_list **list)
 {
 	t_lexer_node	*node;
-	t_lexer_list *res;
-	char	*str;
-	int	i;
+	t_lexer_list	*res;
+	char			*str;
+	int				i;
 
 	str = list_to_str((*list));
 	i = -1;

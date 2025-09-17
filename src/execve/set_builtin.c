@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 15:43:14 by saan              #+#    #+#             */
-/*   Updated: 2025/09/17 12:23:27 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/17 12:48:49 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	builtin_set_fd(t_cmd_node *node)
 		node->in_fd = b_open_infiles(node->infile);
 		if (node->in_fd != -1)
 		{
-			dup2(node->in_fd , STDIN_FILENO);
+			dup2(node->in_fd, STDIN_FILENO);
 			close(node->in_fd);
 		}
 		else
@@ -41,7 +41,8 @@ int	builtin_set_fd(t_cmd_node *node)
 	return (0);
 }
 
-static	int	builtin_exe(t_cmd_node *node, int save_stdin, int save_stdout, t_env_list *my_env)
+static int	builtin_exe(t_cmd_node *node, int save_stdin, int save_stdout,
+		t_env_list *my_env)
 {
 	if (!ft_strcmp(node->argv[0], "echo"))
 		return (ft_echo(node, save_stdin, save_stdout));

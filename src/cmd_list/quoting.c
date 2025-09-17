@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 10:15:21 by saan              #+#    #+#             */
-/*   Updated: 2025/09/12 08:41:43 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/17 12:44:41 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ static char	*get_quotes(char *line, int *idx, int is_extend, t_env_list *my_env)
 	res = ft_strdup("");
 	while (line[++(*idx)] != quote)
 	{
-		if (line[(*idx)] == '$' && line[(*idx) + 1] != '$' && line[(*idx) + 1] != quote)
+		if (line[(*idx)] == '$' && line[(*idx) + 1] != '$' && line[(*idx)
+				+ 1] != quote)
 		{
 			temp = get_quotes_env_key(line, idx);
 			if (is_extend && ft_strchr(temp, '$'))
@@ -70,7 +71,8 @@ static char	*get_quotes(char *line, int *idx, int is_extend, t_env_list *my_env)
 			else
 				res = ft_strjoin_af(res, temp);
 		}
-		else if (line[(*idx)] == '$' && (line[(*idx) + 1] == '$' || line[(*idx)] == quote))
+		else if (line[(*idx)] == '$' && (line[(*idx) + 1] == '$'
+				|| line[(*idx)] == quote))
 			res = get_extra_sign(res, line, idx);
 		else
 			res = append_char(res, line[*idx]);
@@ -80,7 +82,7 @@ static char	*get_quotes(char *line, int *idx, int is_extend, t_env_list *my_env)
 
 static char	*get_words(char *line, int *idx, int is_extend, t_env_list *my_env)
 {
-	int	start;
+	int		start;
 	char	*temp;
 
 	if (line[*idx] == '$' && line[*idx + 1] == '$')
@@ -91,7 +93,8 @@ static char	*get_words(char *line, int *idx, int is_extend, t_env_list *my_env)
 	if (line[*idx] == '$' && !line[*idx + 1])
 		return (ft_strdup("$"));
 	start = (*idx)++;
-	while(line[*idx] && !is_quote(line[*idx]) && line[*idx] != '=' && line[*idx] != '$')
+	while (line[*idx] && !is_quote(line[*idx]) && line[*idx] != '='
+		&& line[*idx] != '$')
 		(*idx)++;
 	if (is_quote(line[*idx]) || line[*idx] == '=' || line[*idx] == '$')
 		(*idx)--;
@@ -104,7 +107,7 @@ static char	*get_words(char *line, int *idx, int is_extend, t_env_list *my_env)
 	return (temp);
 }
 
-char	*cal_quotes(char *line, int	is_extend, t_env_list *my_env)
+char	*cal_quotes(char *line, int is_extend, t_env_list *my_env)
 {
 	char	*res;
 	char	*temp;
@@ -112,7 +115,7 @@ char	*cal_quotes(char *line, int	is_extend, t_env_list *my_env)
 
 	i = -1;
 	res = ft_strdup("");
-	while(line[++i])
+	while (line[++i])
 	{
 		if (is_quote(line[i]))
 			temp = get_quotes(line, &i, is_extend, my_env);
@@ -121,7 +124,7 @@ char	*cal_quotes(char *line, int	is_extend, t_env_list *my_env)
 		else
 			temp = get_words(line, &i, is_extend, my_env);
 		res = ft_strjoin_af(res, temp);
-		if(!line[i])
+		if (!line[i])
 			break ;
 	}
 	free(line);

@@ -6,16 +6,17 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 17:41:54 by saan              #+#    #+#             */
-/*   Updated: 2025/09/17 12:22:53 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/17 12:42:07 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_exit_p(t_cmd_list *list, int save_stdin, int save_stdout, t_env_list *my_env)
+int	ft_exit_p(t_cmd_list *list, int save_stdin, int save_stdout,
+		t_env_list *my_env)
 {
-	int	i;
-	t_cmd_node *node;
+	int			i;
+	t_cmd_node	*node;
 
 	node = list->head;
 	i = 0;

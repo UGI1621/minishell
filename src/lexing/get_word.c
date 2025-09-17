@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 17:00:28 by saan              #+#    #+#             */
-/*   Updated: 2025/08/16 12:43:09 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/17 12:53:18 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 char	*append_char(char *str, char c)
 {
-	int	len;
+	int		len;
 	char	*res;
-	int	i;
+	int		i;
 
 	len = 0;
-	while(str && str[len])
+	while (str && str[len])
 		len++;
 	res = (char *)ft_calloc(len + 2, sizeof(char));
 	i = 0;

@@ -6,15 +6,15 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 16:02:02 by saan              #+#    #+#             */
-/*   Updated: 2025/09/17 12:35:16 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/17 12:48:00 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int		list_size(t_cmd_list *list)
+static int	list_size(t_cmd_list *list)
 {
-	t_cmd_node *node;
+	t_cmd_node	*node;
 	int			i;
 
 	i = 0;
@@ -61,8 +61,8 @@ static void	parent_process(t_cmd_node *node)
 
 static void	do_cmd(pid_t *pid, t_cmd_node *node, int size, t_env_list *my_env)
 {
-	int			i;
-	int			status;
+	int	i;
+	int	status;
 
 	i = -1;
 	while (++i < size)

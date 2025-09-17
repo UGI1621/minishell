@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 20:19:56 by saan              #+#    #+#             */
-/*   Updated: 2025/09/09 10:04:07 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/17 12:54:35 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	sigint_handler(int signum)
 {
 	(void)signum;
-
 	g_sigs.exit_code = 130;
 	write(STDOUT_FILENO, "\n", 1);
 	rl_on_new_line();
@@ -26,7 +25,6 @@ void	sigint_handler(int signum)
 void	sigint_handler_heredoc(int signum)
 {
 	(void)signum;
-
 	g_sigs.exit_code = 130;
 	write(STDOUT_FILENO, "\n", 1);
 	close(STDIN_FILENO);

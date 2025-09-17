@@ -1,1 +1,2 @@
-/home/saan/minishell
+$PWD
+p

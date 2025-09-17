@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 15:15:39 by saan              #+#    #+#             */
-/*   Updated: 2025/09/16 12:22:03 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/17 12:47:50 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*extract_cmd_name(char *cmd)
 static char	*access_absolut_paths(char *cmd)
 {
 	if (access(cmd, X_OK) == 0)
-		return(ft_strdup(cmd));
+		return (ft_strdup(cmd));
 	else
 		write_access_error(cmd, errno);
 	return (NULL);
@@ -31,14 +31,14 @@ static char	*access_absolut_paths(char *cmd)
 
 static char	*access_paths(char **paths, char *cmd)
 {
-	int	i;
+	int		i;
 	char	*temp;
 
 	i = -1;
 	while (paths[++i])
 	{
 		temp = ft_strjoin_af(ft_strdup(paths[i]), ft_strdup(cmd));
-		if(access(temp, X_OK) == 0)
+		if (access(temp, X_OK) == 0)
 			break ;
 		free(temp);
 		temp = NULL;

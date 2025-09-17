@@ -6,13 +6,14 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 12:12:54 by saan              #+#    #+#             */
-/*   Updated: 2025/09/17 12:20:03 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/17 12:42:49 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static	int	builtin_exe_p(t_cmd_list *list, int save_stdin, int save_stdout, t_env_list *my_env)
+static int	builtin_exe_p(t_cmd_list *list, int save_stdin, int save_stdout,
+		t_env_list *my_env)
 {
 	t_cmd_node	*node;
 

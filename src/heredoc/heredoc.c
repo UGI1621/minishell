@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 16:07:22 by saan              #+#    #+#             */
-/*   Updated: 2025/09/12 11:20:04 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/17 12:52:47 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ void	write_extra_sigs(char *line, int *i, int heredoc_fd)
 		(*i)++;
 }
 
-static void	write_extend(char *line, int heredoc_fd, t_env_list *my_env)
+static void	write_extend(char *line, int hf, t_env_list *e)
 {
-	int		i;
-	int		start;
+	int	i;
+	int	s;
 
 	i = 0;
 	while (line[i])
@@ -43,20 +43,21 @@ static void	write_extend(char *line, int heredoc_fd, t_env_list *my_env)
 		{
 			if (line[i + 1] == '$' || !line[i + 1])
 			{
-				write_extra_sigs(line, &i, heredoc_fd);
+				write_extra_sigs(line, &i, hf);
 				continue ;
 			}
-			start = i++;
-			while (line[i] && !is_wspace(line[i]) && !is_quote(line[i]) && line[i] != '$' && line[i] != '=')
+			s = i++;
+			while (line[i] && !is_wspace(line[i]) && !is_quote(line[i])
+				&& line[i] != '$' && line[i] != '=')
 				i++;
-			ft_putstr_fd(cal_quotes(ft_substr(line, start, i - start), 1, my_env), heredoc_fd);
+			ft_putstr_fd(cal_quotes(ft_substr(line, s, i - s), 1, e), hf);
 			i--;
 		}
 		else
-			write(heredoc_fd, &line[i], 1);
+			write(hf, &line[i], 1);
 		i++;
 	}
-	write(heredoc_fd, "\n", 1);
+	write(hf, "\n", 1);
 }
 
 static void	print_warning(char *delimiter)
@@ -66,12 +67,15 @@ static void	print_warning(char *delimiter)
 		set_sigs();
 		exit(130);
 	}
-	ft_putstr_fd("minishell: warning: here-document delimited by end-of-file (wanted `", 2);
+	ft_putstr_fd("minishell: warning: here-document ", 2);
+	ft_putstr_fd("delimited by end-of-file ", 2);
+	ft_putstr_fd("(wanted `", 2);
 	ft_putstr_fd(delimiter, 2);
 	ft_putendl_fd("')", 2);
 }
 
-void	heredoc_proc(char *delimiter, int heredoc_fd, int is_quote, t_env_list *my_env)
+void	heredoc_proc(char *delimiter, int heredoc_fd, int is_quote,
+		t_env_list *my_env)
 {
 	char	*line;
 
