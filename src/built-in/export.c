@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 16:07:08 by saan              #+#    #+#             */
-/*   Updated: 2025/09/17 12:42:25 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/17 17:55:29 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static char	*get_argv_key(char *str)
 	return (res);
 }
 
-static char	*get_argv_val(char *str)
+static char	*get_argv_val(char *str, int *set_flag)
 {
 	char	*ptr;
 	char	*temp;
@@ -66,10 +66,12 @@ static char	*get_argv_val(char *str)
 		else
 			res = ft_strdup(ptr);
 		free(temp);
+		*set_flag = 1;
 		return (res);
 	}
 	else
 	{
+		*set_flag = 0;
 		free(temp);
 		return (ft_strdup(""));
 	}
@@ -80,6 +82,7 @@ int	ft_export(t_cmd_node *node, int save_stdin, int save_stdout,
 {
 	int		i;
 	int		flag;
+	int		set_flag;
 	char	*temp_key;
 	char	*temp_val;
 
@@ -95,8 +98,8 @@ int	ft_export(t_cmd_node *node, int save_stdin, int save_stdout,
 			continue ;
 		}
 		temp_key = get_argv_key(node->argv[i]);
-		temp_val = get_argv_val(node->argv[i]);
-		set_env(temp_key, temp_val, my_env);
+		temp_val = get_argv_val(node->argv[i], &set_flag);
+		set_env(temp_key, temp_val, &set_flag, my_env);
 		free(temp_key);
 		free(temp_val);
 	}

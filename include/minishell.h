@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:19:24 by saan              #+#    #+#             */
-/*   Updated: 2025/09/17 12:56:21 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/17 18:04:46 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,7 +254,8 @@ char					**env_to_envp(t_env_list *my_env);
 // env_util.c
 void					del_env(char *key, t_env_list *my_env);
 char					*get_env(char *key, t_env_list *my_env);
-void					set_env(char *key, char *val, t_env_list *my_env);
+void					set_env(char *key, char *val, int *set_flag,
+							t_env_list *my_env);
 void					env_free(t_env_list *my_env);
 
 // 								root

@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 10:20:09 by saan              #+#    #+#             */
-/*   Updated: 2025/09/04 10:38:34 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/17 17:57:26 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 
 void	update_pwds(char *cur, char *old, t_env_list *my_env)
 {
-	set_env("OLDPWD", old, my_env);
-	set_env("PWD", cur, my_env);
+	int	set_flag;
+
+	set_flag = 1;
+	set_env("OLDPWD", old, &set_flag, my_env);
+	set_env("PWD", cur, &set_flag, my_env);
 	free(cur);
 	free(old);
 }
