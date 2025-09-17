@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 20:35:17 by saan              #+#    #+#             */
-/*   Updated: 2025/09/10 01:28:16 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/17 12:36:45 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	init_cmd_list(t_cmd_list **list)
 {
 	*list = (t_cmd_list *)ft_calloc(1, sizeof(t_cmd_list));
 	(*list)->head = NULL;
-	// (*list)->heredoc_fd = -1;
 	(*list)->tail = NULL;
 }
 

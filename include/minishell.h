@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:19:24 by saan              #+#    #+#             */
-/*   Updated: 2025/09/16 12:21:22 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/17 12:23:49 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,10 @@ void	set_node_fds(t_cmd_node *node);
 void	check_and_set_argv(t_cmd_node *node, t_env_list *my_env);
 
 // set_builtin.c
+int	builtin_set_fd(t_cmd_node *node);
 int	is_builtin(t_cmd_node *node);
 int	do_builtin(t_cmd_node *node, int is_p, t_env_list *my_env);
+int	do_builtin_p(t_cmd_list *list, int is_p, t_env_list *my_env);
 void	set_iofds(int s_stdin, int s_stdout);
 
 // util_builtin.c
@@ -125,6 +127,7 @@ int	ft_echo(t_cmd_node *node, int save_stdin, int save_stdout);
 int	ft_pwd(t_cmd_node *node, int save_stdin, int save_stdout);
 int	ft_env(t_cmd_node *node, t_env_list *my_env, int save_stdin, int save_stdout);
 int	ft_exit(t_cmd_node *node, int save_stdin, int save_stdout);
+int	ft_exit_p(t_cmd_list *list, int save_stdin, int save_stdout, t_env_list *my_env);
 int	ft_export(t_cmd_node *node, int save_stdin, int save_stdout, t_env_list *my_env);
 void	print_invalid_export(char *arg, int *flag);
 int	ft_unset(t_cmd_node *node, int save_stdin, int save_stdout, t_env_list *my_env);

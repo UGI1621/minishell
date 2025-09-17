@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 16:02:02 by saan              #+#    #+#             */
-/*   Updated: 2025/09/16 12:01:19 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/17 12:35:16 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,13 @@ void	process_cmd_exe(t_cmd_list *list, t_env_list *my_env)
 		return ;
 	pid = (pid_t *)ft_calloc(size, sizeof(pid_t));
 	if (size == 1 && is_builtin(list->head))
-		g_sigs.exit_code = do_builtin(list->head, 1, my_env);
+	{
+		free(pid);
+		g_sigs.exit_code = do_builtin_p(list, 1, my_env);
+	}
 	else
+	{
 		do_cmd(pid, list->head, size, my_env);
-	free(pid);
+		free(pid);
+	}
 }

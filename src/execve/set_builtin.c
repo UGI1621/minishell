@@ -6,13 +6,13 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 15:43:14 by saan              #+#    #+#             */
-/*   Updated: 2025/09/10 08:12:48 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/17 12:23:27 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	builtin_set_fd(t_cmd_node *node)
+int	builtin_set_fd(t_cmd_node *node)
 {
 	if (node->is_use_heredoc)
 		node->in_fd = open("heredoc_temp", O_RDONLY);
