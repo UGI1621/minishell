@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 13:20:35 by saan              #+#    #+#             */
-/*   Updated: 2025/09/12 08:32:48 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/17 11:56:55 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static	char *get_extend(char *str, int *i, char quote, t_env_list *my_env)
 		(*i)++;
 	if (quote == '\"')
 		res = extending(ft_substr(str, start + 1, --(*i) - start), my_env);
-	else if (quote == '\'')
+	else
 		res = ft_substr(str, start, --(*i) - start + 1);
 	return (res);
 }
