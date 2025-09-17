@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:19:24 by saan              #+#    #+#             */
-/*   Updated: 2025/09/17 18:04:46 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/17 18:06:42 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -274,8 +274,6 @@ void					init_cmd_node(t_cmd_node **node);
 // valid.c
 int						is_invalid_line(char *line);
 int						is_invalid_env_naming_rule(char *str);
-
-void					print_lexing_list(t_lexer_list *list);
 
 extern t_sigs			g_sigs;
 
