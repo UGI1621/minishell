@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 05:51:40 by saan              #+#    #+#             */
-/*   Updated: 2025/09/18 09:57:51 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/18 10:25:26 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,11 @@ void	del_env(char *key, t_env_list *my_env)
 				my_env->head = node->next;
 			if (node->next)
 				node->next->prev = node->prev;
+			else
+				my_env->tail = node->prev;
 			free(node->key);
-			free(node->val);
+			if (node->val)
+				free(node->val);
 			free(node);
 			break ;
 		}
@@ -49,6 +52,20 @@ char	*get_env(char *key, t_env_list *my_env)
 	}
 	return (NULL);
 }
+void	add_new_env(char *key, char *val, int *set_flag, t_env_list *my_env)
+{
+	t_env_node	*node;
+
+	node = (t_env_node *)ft_calloc(1, sizeof(t_env_node));
+	node->prev = NULL;
+	node->key = ft_strdup(key);
+	if (*set_flag)
+		node->val = ft_strdup(val);
+	else
+		node->val = NULL;
+	node->next = NULL;
+	add_env_node(my_env, node);
+}
 
 void	set_env(char *key, char *val, int *set_flag, t_env_list *my_env)
 {
@@ -61,21 +78,14 @@ void	set_env(char *key, char *val, int *set_flag, t_env_list *my_env)
 		{
 			if (!(*set_flag))
 				return ;
-			free(node->val);
+			if (node->val)
+				free(node->val);
 			node->val = ft_strdup(val);
 			return ;
 		}
 		node = node->next;
 	}
-	node = (t_env_node *)ft_calloc(1, sizeof(t_env_node));
-	node->prev = NULL;
-	node->key = ft_strdup(key);
-	if (*set_flag)
-		node->val = ft_strdup(val);
-	else
-		node->val = NULL;
-	node->next = NULL;
-	add_env_node(my_env, node);
+	add_new_env(key, val, set_flag, my_env);
 }
 
 void	env_free(t_env_list *my_env)
