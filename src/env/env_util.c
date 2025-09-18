@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 05:51:40 by saan              #+#    #+#             */
-/*   Updated: 2025/09/17 18:01:51 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/18 09:57:51 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,10 @@ void	set_env(char *key, char *val, int *set_flag, t_env_list *my_env)
 	node = (t_env_node *)ft_calloc(1, sizeof(t_env_node));
 	node->prev = NULL;
 	node->key = ft_strdup(key);
-	node->val = ft_strdup(val);
+	if (*set_flag)
+		node->val = ft_strdup(val);
+	else
+		node->val = NULL;
 	node->next = NULL;
 	add_env_node(my_env, node);
 }
