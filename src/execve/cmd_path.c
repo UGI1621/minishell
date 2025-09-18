@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 15:15:39 by saan              #+#    #+#             */
-/*   Updated: 2025/09/17 12:47:50 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/18 12:40:58 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,13 @@ void	check_and_set_argv(t_cmd_node *node, t_env_list *my_env)
 	char	*cmd;
 	char	*temp;
 	char	**paths;
+	DIR		*dir;
 
 	paths = ft_split(get_env("PATH", my_env), ':');
 	cmd = ft_strdup(node->argv[0]);
+	dir = opendir(cmd);
+	if (dir)
+		write_is_dir(dir, cmd);
 	if (!ft_strchr(cmd, '/'))
 	{
 		cmd = ft_strjoin_af(ft_strdup("/"), cmd);

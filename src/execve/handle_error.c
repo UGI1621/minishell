@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 08:44:59 by saan              #+#    #+#             */
-/*   Updated: 2025/09/17 12:48:22 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/18 12:42:26 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,17 @@ void	write_open_error(char *name)
 	write(2, strerror(errno), ft_strlen(strerror(errno)));
 	write(2, "\n", 1);
 	exit(1);
+}
+
+void	write_is_dir(DIR *dir, char *name)
+{
+	closedir(dir);
+	write(2, "bash: ", 6);
+	write(2, name, ft_strlen(name));
+	write(2, ": ", 2);
+	ft_putstr_fd("is a directory", 2);
+	write(2, "\n", 1);
+	exit(126);
 }
 
 void	write_access_error(char *name, int err)

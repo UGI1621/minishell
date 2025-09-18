@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:19:24 by saan              #+#    #+#             */
-/*   Updated: 2025/09/17 18:50:24 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/18 12:42:42 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include <sys/wait.h>
 # include <termios.h>
 # include <unistd.h>
+# include <dirent.h>
 
 typedef struct s_cmd_node
 {
@@ -93,6 +94,7 @@ void					process_cmd_exe(t_cmd_list *list, t_env_list *my_env);
 // handle_error.c
 void					exit_with_perror(char *str);
 void					write_open_error(char *name);
+void					write_is_dir(DIR *dir, char *name);
 void					write_access_error(char *name, int err);
 void					write_cmd_nf(char *name);
 
