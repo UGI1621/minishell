@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 17:41:54 by saan              #+#    #+#             */
-/*   Updated: 2025/09/18 15:45:03 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/18 15:59:21 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@ static void	write_need_digit(t_cmd_list *list, t_env_list *my_env, char *str)
 	ft_putstr_fd("minishell: exit: ", 2);
 	ft_putstr_fd(str, 2);
 	ft_putendl_fd(": numeric argument required", 2);
-	free_cmd_list(list);
-	env_free(my_env);
+	if (list)
+		free_cmd_list(list);
+	if (my_env)
+		env_free(my_env);
 	exit(2);
 }
 
@@ -90,6 +92,11 @@ int	ft_exit(t_cmd_node *node, int save_stdin, int save_stdout)
 	i = 0;
 	while (node->argv[i])
 		i++;
+	if (node->argv[1] && !is_only_digit(node->argv[1]))
+	{
+		set_iofds(save_stdin, save_stdout);
+		write_need_digit(NULL, NULL, node->argv[1]);
+	}
 	if (i >= 3)
 	{
 		ft_putendl_fd("minishell: exit: too many arguments", 2);
@@ -101,5 +108,6 @@ int	ft_exit(t_cmd_node *node, int save_stdin, int save_stdout)
 		set_iofds(save_stdin, save_stdout);
 		exit(ft_atoi(node->argv[1]));
 	}
+	exit(0);
 	return (0);
 }
