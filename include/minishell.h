@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:19:24 by saan              #+#    #+#             */
-/*   Updated: 2025/09/18 15:17:10 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/18 15:42:25 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ int						ft_exit(t_cmd_node *node, int save_stdin,
 							int save_stdout);
 int						ft_exit_p(t_cmd_list *list, int save_stdin,
 							int save_stdout, t_env_list *my_env);
+int						is_out_of_longlong(const char *s);
 int						ft_export(t_cmd_node *node, int save_stdin,
 							int save_stdout, t_env_list *my_env);
 void					print_invalid_export(char *arg, int *flag);

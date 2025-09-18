@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 17:41:54 by saan              #+#    #+#             */
-/*   Updated: 2025/09/18 15:27:03 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/18 15:45:03 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,10 @@ static int	is_only_digit(char *str)
 	int	i;
 
 	i = 0;
+	if (str[i] == '-' || str[i] == '+')
+		i++;
+	if (str[i] == '-' || str[i] == '+')
+		return (0);
 	while (str[i])
 	{
 		if (ft_isdigit(str[i]))
@@ -37,6 +41,8 @@ static int	is_only_digit(char *str)
 		else
 			return (0);
 	}
+	if (is_out_of_longlong(str))
+		return (0);
 	return (1);
 }
 
