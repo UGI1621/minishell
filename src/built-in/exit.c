@@ -6,11 +6,46 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 17:41:54 by saan              #+#    #+#             */
-/*   Updated: 2025/09/17 12:42:07 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/18 15:27:03 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	write_need_digit(t_cmd_list *list, t_env_list *my_env, char *str)
+{
+	ft_putstr_fd("minishell: exit: ", 2);
+	ft_putstr_fd(str, 2);
+	ft_putendl_fd(": numeric argument required", 2);
+	free_cmd_list(list);
+	env_free(my_env);
+	exit(2);
+}
+
+static int	is_only_digit(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (ft_isdigit(str[i]))
+		{
+			i++;
+			continue ;
+		}
+		else
+			return (0);
+	}
+	return (1);
+}
+
+static int	write_too_many(int sstdin, int sstdout)
+{
+	ft_putendl_fd("minishell: exit: too many arguments", 2);
+	set_iofds(sstdin, sstdout);
+	return (1);
+}
 
 int	ft_exit_p(t_cmd_list *list, int save_stdin, int save_stdout,
 		t_env_list *my_env)
@@ -20,14 +55,16 @@ int	ft_exit_p(t_cmd_list *list, int save_stdin, int save_stdout,
 
 	node = list->head;
 	i = 0;
+	ft_putendl_fd("exit", 1);
 	while (node->argv[i])
 		i++;
-	if (i >= 3)
+	if (node->argv[1] && !is_only_digit(node->argv[1]))
 	{
-		ft_putendl_fd("minishell: exit: too many arguments", 2);
 		set_iofds(save_stdin, save_stdout);
-		return (1);
+		write_need_digit(list, my_env, node->argv[1]);
 	}
+	if (i >= 3)
+		return (write_too_many(save_stdin, save_stdout));
 	if (i == 2)
 	{
 		set_iofds(save_stdin, save_stdout);
@@ -36,6 +73,7 @@ int	ft_exit_p(t_cmd_list *list, int save_stdin, int save_stdout,
 		env_free(my_env);
 		exit(i);
 	}
+	exit(0);
 	return (0);
 }
 

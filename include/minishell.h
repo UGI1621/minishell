@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:19:24 by saan              #+#    #+#             */
-/*   Updated: 2025/09/18 12:42:42 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/18 15:17:10 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,6 @@ typedef struct s_env_list
 	int					size;
 	t_env_node			*tail;
 }						t_env_list;
-
-typedef struct s_sigs
-{
-	int					heredoc_sigint;
-	unsigned char		g_exit_code;
-}						t_sigs;
 
 //								execve
 // exe_cmds.c
