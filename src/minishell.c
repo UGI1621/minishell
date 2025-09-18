@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:30:30 by saan              #+#    #+#             */
-/*   Updated: 2025/09/18 15:22:47 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/18 15:47:26 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,6 @@ static char	*ft_readline(void)
 		write(1, "exit\n", 5);
 		return (0);
 	}
-	// if (!ft_strcmp(line, "exit"))
-	// {
-	// 	ft_putendl_fd("exit", 1);
-	// 	free(line);
-	// 	rl_clear_history();
-	// 	return (0);
-	// }
 	if (ft_strlen(line) == 0)
 		return (line);
 	add_history(line);

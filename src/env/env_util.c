@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 05:51:40 by saan              #+#    #+#             */
-/*   Updated: 2025/09/18 10:25:26 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/18 15:48:29 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ char	*get_env(char *key, t_env_list *my_env)
 	}
 	return (NULL);
 }
+
 void	add_new_env(char *key, char *val, int *set_flag, t_env_list *my_env)
 {
 	t_env_node	*node;
