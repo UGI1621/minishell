@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:19:24 by saan              #+#    #+#             */
-/*   Updated: 2025/09/20 02:22:30 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/20 02:48:16 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # endif
 
 # include "libft.h"
+# include <dirent.h>
 # include <errno.h>
 # include <fcntl.h>
 # include <readline/history.h>
@@ -29,7 +30,6 @@
 # include <sys/wait.h>
 # include <termios.h>
 # include <unistd.h>
-# include <dirent.h>
 
 typedef struct s_cmd_node
 {
@@ -89,25 +89,32 @@ void					wait_and_status(pid_t *pid, int *status, int i);
 
 // handle_error.c
 void					exit_with_perror(char *str);
-void					write_open_error(char *name, t_cmd_list *list, t_env_list *my_env);
-void					write_is_dir(DIR *dir, char *name, t_cmd_list *list, t_env_list *my_env);
-void					write_access_error(char *name, t_cmd_list *list, t_env_list *my_env);
-void					write_cmd_nf(char *name, t_cmd_list *list, t_env_list *my_env);
+void					write_open_error(char *name, t_cmd_list *list,
+							t_env_list *my_env);
+void					write_is_dir(DIR *dir, char *name, t_cmd_list *list,
+							t_env_list *my_env);
+void					write_access_error(char *name, t_cmd_list *list,
+							t_env_list *my_env);
+void					write_cmd_nf(char *name, t_cmd_list *list,
+							t_env_list *my_env);
 
 // redirection.c
-int						open_infiles(t_cmd_node *node, t_cmd_list *list, t_env_list *my_env);
-int						open_outfiles(char **files, char **sigs, t_cmd_list *list, t_env_list *my_env);
-void					set_node_fds(t_cmd_node *node, t_cmd_list *list, t_env_list *my_env);
+int						open_infiles(t_cmd_node *node, t_cmd_list *list,
+							t_env_list *my_env);
+int						open_outfiles(char **files, char **sigs,
+							t_cmd_list *list, t_env_list *my_env);
+void					set_node_fds(t_cmd_node *node, t_cmd_list *list,
+							t_env_list *my_env);
 
 // cmd_path.c
-void					check_and_set_argv(t_cmd_node *node,
-							t_env_list *my_env, t_cmd_list *list);
+void					check_and_set_argv(t_cmd_node *node, t_env_list *my_env,
+							t_cmd_list *list);
 
 // set_builtin.c
 int						builtin_set_fd(t_cmd_node *node);
 int						is_builtin(t_cmd_node *node);
-int						do_builtin(t_cmd_node *node, int is_p,
-							t_cmd_list *list, t_env_list *my_env);
+int						do_builtin(t_cmd_node *node, int is_p, t_cmd_list *list,
+							t_env_list *my_env);
 int						do_builtin_p(t_cmd_list *list, int is_p,
 							t_env_list *my_env);
 void					set_iofds(int s_stdin, int s_stdout);
@@ -148,15 +155,16 @@ int						print_error_path(char *path, int save_stdin,
 
 // 								heredoc
 // heredoc.c
-void	heredoc_proc(char *delimiter, int heredoc_fd, int is_quote,
-		t_env_list *my_env);
+void					heredoc_proc(char *delimiter, int heredoc_fd,
+							int is_quote, t_env_list *my_env);
 
 // heredoc_util.c
 void					set_del_field(t_cmd_node *cn, t_lexer_node *ln);
 void					update_heredoc_field(t_cmd_node *cn, t_lexer_node **ln);
 
 // do_heredoc.c
-void	do_heredoc_process(t_cmd_list *list, t_env_list *my_env, int *heredoc_sigint);
+void					do_heredoc_process(t_cmd_list *list, t_env_list *my_env,
+							int *heredoc_sigint);
 
 // 								cmd_list
 // listing_cmd.c
@@ -177,16 +185,16 @@ int						is_heredoc_node(char *s);
 char					*ft_strjoin_af(char *s1, char *s2);
 
 // cmd_free.c
-void	free_cmd_list(t_cmd_list *list, char *str);
+void					free_cmd_list(t_cmd_list *list, char *str);
 void					free_cmd_field(t_cmd_node *node);
 void					open_error_proc(t_cmd_list *list);
 
 // setting_fds.c
 void					set_in_fd(t_cmd_node *c_node, t_lexer_node **l_node);
-void	set_in_sig(t_cmd_node *c_node, char *sig);
+void					set_in_sig(t_cmd_node *c_node, char *sig);
 void					set_out_fd(t_cmd_node *c_node, t_lexer_node **l_node,
 							int is_append);
-void			set_heredoc_fd(t_cmd_node *node, int *idx);
+void					set_heredoc_fd(t_cmd_node *node);
 
 //								cmd_quoting
 

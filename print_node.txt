@@ -1,0 +1,46 @@
+static void	print_cmd_node(t_cmd_list *list)
+{
+	t_cmd_node *node = list->head;
+	int	i = 0;
+	while (node)
+	{
+		printf("\nnode->argv : ");
+		i = 0;
+		while (node->argv[i])
+		{
+			printf("{%s} ", node->argv[i]);
+			i++;
+		}
+		printf("\nnode->infile : ");
+		i = 0;
+		while (node->infile[i])
+		{
+			printf("{%s} ", node->infile[i]);
+			i++;
+		}
+		printf("\nnode->in_sig : ");
+		i = 0;
+		while (node->in_sig[i])
+		{
+			printf("{%s} ", node->in_sig[i]);
+			i++;
+		}
+		printf("\nnode->outfile : ");
+		i = 0;
+		while (node->outfile[i])
+		{
+			printf("{%s} ", node->outfile[i]);
+			i++;
+		}
+		printf("\nnode->out_sig : ");
+		i = 0;
+		while (node->out_sig[i])
+		{
+			printf("{%s} ", node->out_sig[i]);
+			i++;
+		}
+		printf("\n");
+		printf("node->is_use_heredoc : %d\n", node->is_use_heredoc);
+		node = node->next;
+	}
+}

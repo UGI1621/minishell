@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 11:10:14 by saan              #+#    #+#             */
-/*   Updated: 2025/09/20 01:04:51 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/20 02:46:49 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void	set_out_fd(t_cmd_node *c_node, t_lexer_node **l_node, int is_append)
 	c_node->outfile = new;
 }
 
-void	set_heredoc_fd(t_cmd_node *node, int *idx)
+void	set_heredoc_fd(t_cmd_node *node)
 {
 	if (node->heredoc_fd != -1)
 		close(node->heredoc_fd);

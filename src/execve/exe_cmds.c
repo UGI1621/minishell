@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 16:02:02 by saan              #+#    #+#             */
-/*   Updated: 2025/09/20 02:02:27 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/20 02:49:29 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ static int	list_size(t_cmd_list *list)
 	return (i);
 }
 
-static void	child_process(t_cmd_node *node, pid_t *pid, t_env_list *my_env, t_cmd_list *list)
+static void	child_process(t_cmd_node *node, pid_t *pid, t_env_list *my_env,
+		t_cmd_list *list)
 {
 	char	**envp;
 
@@ -64,8 +65,8 @@ static void	parent_process(t_cmd_node *node)
 
 static void	do_cmd(pid_t *pid, t_cmd_list *list, int size, t_env_list *my_env)
 {
-	int	i;
-	int	status;
+	int			i;
+	int			status;
 	t_cmd_node	*node;
 
 	node = list->head;

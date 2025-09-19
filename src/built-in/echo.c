@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 15:40:15 by saan              #+#    #+#             */
-/*   Updated: 2025/09/19 18:04:42 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/20 02:48:28 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ static void	check_n_sig(t_cmd_node *node, int *i, int *flag)
 {
 	int	idx;
 
-	while (node->argv[(*i)] && node->argv[(*i)][0] == '-' && node->argv[(*i)][1] == 'n')
+	while (node->argv[(*i)] && node->argv[(*i)][0] == '-'
+		&& node->argv[(*i)][1] == 'n')
 	{
 		idx = 2;
 		while (node->argv[(*i)][idx] && node->argv[(*i)][idx] == 'n'

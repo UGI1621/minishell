@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 09:06:39 by saan              #+#    #+#             */
-/*   Updated: 2025/09/20 01:49:11 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/20 02:48:45 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int	open_infiles(t_cmd_node *node, t_cmd_list *list, t_env_list *my_env)
 	return (fd);
 }
 
-int	open_outfiles(char **files, char **sigs, t_cmd_list *list, t_env_list *my_env)
+int	open_outfiles(char **files, char **sigs, t_cmd_list *list,
+		t_env_list *my_env)
 {
 	int	i;
 	int	fd;

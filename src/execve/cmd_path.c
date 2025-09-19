@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 15:15:39 by saan              #+#    #+#             */
-/*   Updated: 2025/09/19 20:39:18 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/20 02:48:37 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ char	*extract_cmd_name(char *cmd)
 		return (ft_strdup(cmd));
 }
 
-static char	*access_absolut_paths(char *cmd, t_cmd_list *list, t_env_list *my_env, char **path)
+static char	*access_absolut_paths(char *cmd, t_cmd_list *list,
+		t_env_list *my_env, char **path)
 {
 	free_2ptr(path);
 	if (access(cmd, X_OK) == 0)
@@ -30,7 +31,8 @@ static char	*access_absolut_paths(char *cmd, t_cmd_list *list, t_env_list *my_en
 	return (NULL);
 }
 
-static char	*access_paths(char **paths, char *cmd, t_cmd_list *list, t_env_list *my_env)
+static char	*access_paths(char **paths, char *cmd, t_cmd_list *list,
+		t_env_list *my_env)
 {
 	int		i;
 	char	*temp;
@@ -52,7 +54,8 @@ static char	*access_paths(char **paths, char *cmd, t_cmd_list *list, t_env_list 
 	return (temp);
 }
 
-void	check_and_set_argv(t_cmd_node *node, t_env_list *my_env, t_cmd_list *list)
+void	check_and_set_argv(t_cmd_node *node, t_env_list *my_env,
+		t_cmd_list *list)
 {
 	char	*cmd;
 	char	*temp;
