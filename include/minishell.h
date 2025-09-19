@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:19:24 by saan              #+#    #+#             */
-/*   Updated: 2025/09/18 15:42:25 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/19 20:47:02 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,22 +84,23 @@ typedef struct s_env_list
 //								execve
 // exe_cmds.c
 void					process_cmd_exe(t_cmd_list *list, t_env_list *my_env);
+void					wait_and_status(pid_t *pid, int *status, int i);
 
 // handle_error.c
 void					exit_with_perror(char *str);
-void					write_open_error(char *name);
-void					write_is_dir(DIR *dir, char *name);
-void					write_access_error(char *name, int err);
-void					write_cmd_nf(char *name);
+void					write_open_error(char *name, t_cmd_list *list, t_env_list *my_env);
+void					write_is_dir(DIR *dir, char *name, t_cmd_list *list, t_env_list *my_env);
+void					write_access_error(char *name, t_cmd_list *list, t_env_list *my_env);
+void					write_cmd_nf(char *name, t_cmd_list *list, t_env_list *my_env);
 
 // redirection.c
-int						open_infiles(char **files);
-int						open_outfiles(char **files, char **sigs);
-void					set_node_fds(t_cmd_node *node);
+int						open_infiles(char **files, t_cmd_list *list, t_env_list *my_env);
+int						open_outfiles(char **files, char **sigs, t_cmd_list *list, t_env_list *my_env);
+void					set_node_fds(t_cmd_node *node, t_cmd_list *list, t_env_list *my_env);
 
 // cmd_path.c
 void					check_and_set_argv(t_cmd_node *node,
-							t_env_list *my_env);
+							t_env_list *my_env, t_cmd_list *list);
 
 // set_builtin.c
 int						builtin_set_fd(t_cmd_node *node);

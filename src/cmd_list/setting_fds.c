@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 11:10:14 by saan              #+#    #+#             */
-/*   Updated: 2025/09/17 18:45:46 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/19 21:03:31 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,11 @@ void	set_heredoc_fd(t_cmd_node *c_node, t_lexer_node **l_node,
 		quote_flag = 1;
 	pid = fork();
 	if (pid == 0)
+	{
 		heredoc_proc(remove_quotes(ft_strdup((*l_node)->str)),
 			c_node->heredoc_fd, quote_flag, my_env);
+			// free line
+	}
 	set_sigs_ign();
 	waitpid(pid, &status, 0);
 	set_heredoc_status(status, heredoc_sigint);

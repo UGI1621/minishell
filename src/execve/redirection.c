@@ -6,13 +6,13 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 09:06:39 by saan              #+#    #+#             */
-/*   Updated: 2025/09/17 12:48:36 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/19 20:46:42 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	open_infiles(char **files)
+int	open_infiles(char **files, t_cmd_list *list, t_env_list *my_env)
 {
 	int	i;
 	int	fd;
@@ -25,12 +25,12 @@ int	open_infiles(char **files)
 			close(fd);
 		fd = open(files[i], O_RDONLY);
 		if (fd == -1)
-			write_open_error(files[i]);
+			write_open_error(files[i], list, my_env);
 	}
 	return (fd);
 }
 
-int	open_outfiles(char **files, char **sigs)
+int	open_outfiles(char **files, char **sigs, t_cmd_list *list, t_env_list *my_env)
 {
 	int	i;
 	int	fd;
@@ -46,12 +46,12 @@ int	open_outfiles(char **files, char **sigs)
 		else
 			fd = open(files[i], O_RDWR | O_CREAT | O_APPEND, 0664);
 		if (fd == -1)
-			write_open_error(files[i]);
+			write_open_error(files[i], list, my_env);
 	}
 	return (fd);
 }
 
-void	set_node_fds(t_cmd_node *node)
+void	set_node_fds(t_cmd_node *node, t_cmd_list *list, t_env_list *my_env)
 {
 	if (node->prev)
 	{
@@ -66,10 +66,10 @@ void	set_node_fds(t_cmd_node *node)
 	if (node->is_use_heredoc)
 		node->in_fd = open("heredoc_temp", O_RDONLY);
 	else
-		node->in_fd = open_infiles(node->infile);
+		node->in_fd = open_infiles(node->infile, list, my_env);
 	if (node->in_fd != -1)
 		dup2(node->in_fd, STDIN_FILENO);
-	node->out_fd = open_outfiles(node->outfile, node->out_sig);
+	node->out_fd = open_outfiles(node->outfile, node->out_sig, list, my_env);
 	if (node->out_fd != -1)
 		dup2(node->out_fd, STDOUT_FILENO);
 }

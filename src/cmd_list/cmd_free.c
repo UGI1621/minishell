@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 15:02:05 by saan              #+#    #+#             */
-/*   Updated: 2025/09/17 12:43:08 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/19 20:50:10 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@ void	free_cmd_field(t_cmd_node *node)
 		free_2ptr(node->outfile);
 	if (node->out_sig)
 		free_2ptr(node->out_sig);
+	if (node->pipe[0] != -1)
+		close(node->pipe[0]);
+	if (node->pipe[1] != -1)
+		close(node->pipe[1]);
 }
 
 void	free_cmd_list(t_cmd_list *list)

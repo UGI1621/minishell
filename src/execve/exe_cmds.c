@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 16:02:02 by saan              #+#    #+#             */
-/*   Updated: 2025/09/17 18:49:47 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/19 20:43:39 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,23 @@ static int	list_size(t_cmd_list *list)
 	return (i);
 }
 
-static void	child_process(t_cmd_node *node, pid_t *pid, t_env_list *my_env)
+static void	child_process(t_cmd_node *node, pid_t *pid, t_env_list *my_env, t_cmd_list *list)
 {
 	char	**envp;
 
 	set_sigs_dfl();
-	envp = env_to_envp(my_env);
 	free(pid);
-	set_node_fds(node);
+	set_node_fds(node, list, my_env);
 	if (is_builtin(node))
 		exit(do_builtin(node, 0, my_env));
-	check_and_set_argv(node, my_env);
+	check_and_set_argv(node, my_env, list);
+	envp = env_to_envp(my_env);
 	if (execve(node->cmd_path, node->argv, envp) == -1)
 	{
 		perror(node->argv[0]);
+		free_2ptr(envp);
+		free_cmd_list(list);
+		env_free(my_env);
 		exit(errno);
 	}
 }
@@ -59,11 +62,13 @@ static void	parent_process(t_cmd_node *node)
 	}
 }
 
-static void	do_cmd(pid_t *pid, t_cmd_node *node, int size, t_env_list *my_env)
+static void	do_cmd(pid_t *pid, t_cmd_list *list, int size, t_env_list *my_env)
 {
 	int	i;
 	int	status;
+	t_cmd_node	*node;
 
+	node = list->head;
 	i = -1;
 	while (++i < size)
 	{
@@ -73,18 +78,13 @@ static void	do_cmd(pid_t *pid, t_cmd_node *node, int size, t_env_list *my_env)
 		if (pid[i] < 0)
 			exit_with_perror("fork");
 		if (pid[i] == 0)
-			child_process(node, pid, my_env);
+			child_process(node, pid, my_env, list);
 		parent_process(node);
 		node = node->next;
 	}
 	i = -1;
 	while (++i < size)
-	{
-		set_sigs_ign();
-		waitpid(pid[i], &status, 0);
-		set_sigs();
-		set_status(status);
-	}
+		wait_and_status(pid, &status, i);
 	check_status(status);
 }
 
@@ -104,7 +104,7 @@ void	process_cmd_exe(t_cmd_list *list, t_env_list *my_env)
 	}
 	else
 	{
-		do_cmd(pid, list->head, size, my_env);
+		do_cmd(pid, list, size, my_env);
 		free(pid);
 	}
 }
