@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 12:12:54 by saan              #+#    #+#             */
-/*   Updated: 2025/09/17 12:42:49 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/20 02:38:44 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	do_builtin_p(t_cmd_list *list, int is_p, t_env_list *my_env)
 {
 	int	save_stdin;
 	int	save_stdout;
+	int	exit_code;
 
 	save_stdin = dup(STDIN_FILENO);
 	save_stdout = dup(STDOUT_FILENO);
@@ -48,8 +49,11 @@ int	do_builtin_p(t_cmd_list *list, int is_p, t_env_list *my_env)
 		{
 			close(save_stdin);
 			close(save_stdout);
-			return (2);
+			return (1);
 		}
 	}
-	return (builtin_exe_p(list, save_stdin, save_stdout, my_env));
+	exit_code = builtin_exe_p(list, save_stdin, save_stdout, my_env);
+	close(save_stdin);
+	close(save_stdout);
+	return (exit_code);
 }

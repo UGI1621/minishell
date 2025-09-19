@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 15:43:14 by saan              #+#    #+#             */
-/*   Updated: 2025/09/17 12:48:49 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/20 02:38:45 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	builtin_set_fd(t_cmd_node *node)
 		node->in_fd = open("heredoc_temp", O_RDONLY);
 	else if (node->infile && node->infile[0])
 	{
-		node->in_fd = b_open_infiles(node->infile);
+		node->in_fd = b_open_infiles(node->infile, node->in_sig);
 		if (node->in_fd != -1)
 		{
 			dup2(node->in_fd, STDIN_FILENO);
@@ -88,10 +88,11 @@ void	set_iofds(int s_stdin, int s_stdout)
 	close(s_stdout);
 }
 
-int	do_builtin(t_cmd_node *node, int is_p, t_env_list *my_env)
+int	do_builtin(t_cmd_node *node, int is_p, t_cmd_list *list, t_env_list *my_env)
 {
 	int	save_stdin;
 	int	save_stdout;
+	int	exit_code;
 
 	save_stdin = dup(STDIN_FILENO);
 	save_stdout = dup(STDOUT_FILENO);
@@ -101,8 +102,13 @@ int	do_builtin(t_cmd_node *node, int is_p, t_env_list *my_env)
 		{
 			close(save_stdin);
 			close(save_stdout);
-			return (2);
+			return (1);
 		}
 	}
-	return (builtin_exe(node, save_stdin, save_stdout, my_env));
+	exit_code = builtin_exe(node, save_stdin, save_stdout, my_env);
+	free_cmd_list(list, NULL);
+	env_free(my_env);
+	close(save_stdin);
+	close(save_stdout);
+	return (exit_code);
 }

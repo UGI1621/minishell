@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 07:31:24 by saan              #+#    #+#             */
-/*   Updated: 2025/09/17 12:49:06 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/20 02:23:09 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	b_write_open_error(char *name)
 	write(2, "\n", 1);
 }
 
-int	b_open_infiles(char **files)
+int	b_open_infiles(char **files, char **in_sig)
 {
 	int	i;
 	int	fd;
@@ -30,6 +30,8 @@ int	b_open_infiles(char **files)
 	fd = -1;
 	while (files[++i])
 	{
+		if (!ft_strcmp(in_sig[i], "<<"))
+			continue ;
 		if (fd != -1)
 			close(fd);
 		fd = open(files[i], O_RDONLY);
