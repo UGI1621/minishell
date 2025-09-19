@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:19:24 by saan              #+#    #+#             */
-/*   Updated: 2025/09/19 20:47:02 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/20 01:49:52 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_cmd_node
 	char				*cmd_path;
 	char				**argv;
 	char				**infile;
+	char				**in_sig;
 	int					in_fd;
 	char				**outfile;
 	char				**out_sig;
@@ -94,7 +95,7 @@ void					write_access_error(char *name, t_cmd_list *list, t_env_list *my_env);
 void					write_cmd_nf(char *name, t_cmd_list *list, t_env_list *my_env);
 
 // redirection.c
-int						open_infiles(char **files, t_cmd_list *list, t_env_list *my_env);
+int						open_infiles(t_cmd_node *node, t_cmd_list *list, t_env_list *my_env);
 int						open_outfiles(char **files, char **sigs, t_cmd_list *list, t_env_list *my_env);
 void					set_node_fds(t_cmd_node *node, t_cmd_list *list, t_env_list *my_env);
 
@@ -147,13 +148,19 @@ int						print_error_path(char *path, int save_stdin,
 
 // 								heredoc
 // heredoc.c
-void					heredoc_proc(char *delimiter, int heredoc_fd,
-							int is_quote, t_env_list *my_env);
+void	heredoc_proc(char *delimiter, int heredoc_fd, int is_quote,
+		t_env_list *my_env);
+
+// heredoc_util.c
+void					set_del_field(t_cmd_node *cn, t_lexer_node *ln);
+void					update_heredoc_field(t_cmd_node *cn, t_lexer_node **ln);
+
+// do_heredoc.c
+void	do_heredoc_process(t_cmd_list *list, t_env_list *my_env, int *heredoc_sigint);
 
 // 								cmd_list
 // listing_cmd.c
-t_cmd_list				*listing_cmd(t_lexer_list *list, t_env_list *my_env,
-							int *heredoc_sigint);
+t_cmd_list				*listing_cmd(t_lexer_list *list);
 
 // quotting.c
 char					*extending(char *s, t_env_list *my_env);
@@ -170,17 +177,16 @@ int						is_heredoc_node(char *s);
 char					*ft_strjoin_af(char *s1, char *s2);
 
 // cmd_free.c
-void					free_cmd_list(t_cmd_list *list);
+void	free_cmd_list(t_cmd_list *list, char *str);
 void					free_cmd_field(t_cmd_node *node);
 void					open_error_proc(t_cmd_list *list);
 
 // setting_fds.c
 void					set_in_fd(t_cmd_node *c_node, t_lexer_node **l_node);
+void	set_in_sig(t_cmd_node *c_node, char *sig);
 void					set_out_fd(t_cmd_node *c_node, t_lexer_node **l_node,
 							int is_append);
-void					set_heredoc_fd(t_cmd_node *c_node,
-							t_lexer_node **l_node, t_env_list *my_env,
-							int *heredoc_sigint);
+void			set_heredoc_fd(t_cmd_node *node, int *idx);
 
 //								cmd_quoting
 

@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 15:19:22 by saan              #+#    #+#             */
-/*   Updated: 2025/09/17 18:51:19 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/19 23:12:09 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,23 +66,21 @@ static void	append_argv(t_cmd_node *c_node, t_lexer_node **l_node)
 	c_node->argv = new;
 }
 
-static void	setting_node(t_cmd_node *c_node, t_lexer_node **l_node,
-		t_env_list *my_env, int *heredoc_sigint)
+static void	setting_node(t_cmd_node *c_node, t_lexer_node **l_node)
 {
 	while (*l_node && ft_strcmp((*l_node)->str, "|"))
 	{
 		if (is_redir_node((*l_node)->str))
 			update_iofile(c_node, l_node);
 		else if (is_heredoc_node((*l_node)->str))
-			set_heredoc_fd(c_node, l_node, my_env, heredoc_sigint);
+			update_heredoc_field(c_node, l_node);
 		else
 			append_argv(c_node, l_node);
 		*l_node = (*l_node)->next;
 	}
 }
 
-t_cmd_list	*listing_cmd(t_lexer_list *list, t_env_list *my_env,
-		int *heredoc_sigint)
+t_cmd_list	*listing_cmd(t_lexer_list *list)
 {
 	t_cmd_list		*res;
 	t_cmd_node		*c_node;
@@ -93,7 +91,7 @@ t_cmd_list	*listing_cmd(t_lexer_list *list, t_env_list *my_env,
 	while (l_node)
 	{
 		init_cmd_node(&c_node);
-		setting_node(c_node, &l_node, my_env, heredoc_sigint);
+		setting_node(c_node, &l_node);
 		add_cmd_node(res, c_node);
 		if (!l_node)
 			break ;

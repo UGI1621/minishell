@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 20:35:17 by saan              #+#    #+#             */
-/*   Updated: 2025/09/17 12:36:45 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/19 23:49:05 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	init_cmd_node(t_cmd_node **node)
 	(*node)->argv[0] = NULL;
 	(*node)->infile = (char **)ft_calloc(1, sizeof(char *));
 	(*node)->infile[0] = NULL;
+	(*node)->in_sig = (char **)ft_calloc(1, sizeof(char *));
+	(*node)->in_sig[0] = NULL;
 	(*node)->in_fd = STDIN_FILENO;
 	(*node)->outfile = (char **)ft_calloc(1, sizeof(char *));
 	(*node)->outfile[0] = NULL;

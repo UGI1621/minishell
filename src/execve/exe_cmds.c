@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 16:02:02 by saan              #+#    #+#             */
-/*   Updated: 2025/09/19 20:43:39 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/20 01:36:32 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	child_process(t_cmd_node *node, pid_t *pid, t_env_list *my_env, t_cm
 	{
 		perror(node->argv[0]);
 		free_2ptr(envp);
-		free_cmd_list(list);
+		free_cmd_list(list, "heredoc_temp");
 		env_free(my_env);
 		exit(errno);
 	}

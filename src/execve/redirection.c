@@ -6,26 +6,28 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 09:06:39 by saan              #+#    #+#             */
-/*   Updated: 2025/09/19 20:46:42 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/20 01:49:11 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	open_infiles(char **files, t_cmd_list *list, t_env_list *my_env)
+int	open_infiles(t_cmd_node *node, t_cmd_list *list, t_env_list *my_env)
 {
 	int	i;
 	int	fd;
 
 	i = -1;
 	fd = -1;
-	while (files[++i])
+	while (node->infile[++i])
 	{
+		if (!ft_strcmp(node->in_sig[i], "<<"))
+			continue ;
 		if (fd != -1)
 			close(fd);
-		fd = open(files[i], O_RDONLY);
+		fd = open(node->infile[i], O_RDONLY);
 		if (fd == -1)
-			write_open_error(files[i], list, my_env);
+			write_open_error(node->infile[i], list, my_env);
 	}
 	return (fd);
 }
@@ -66,7 +68,7 @@ void	set_node_fds(t_cmd_node *node, t_cmd_list *list, t_env_list *my_env)
 	if (node->is_use_heredoc)
 		node->in_fd = open("heredoc_temp", O_RDONLY);
 	else
-		node->in_fd = open_infiles(node->infile, list, my_env);
+		node->in_fd = open_infiles(node, list, my_env);
 	if (node->in_fd != -1)
 		dup2(node->in_fd, STDIN_FILENO);
 	node->out_fd = open_outfiles(node->outfile, node->out_sig, list, my_env);

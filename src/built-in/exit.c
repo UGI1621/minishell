@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 17:41:54 by saan              #+#    #+#             */
-/*   Updated: 2025/09/19 20:52:51 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/20 01:36:19 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	write_need_digit(t_cmd_list *list, t_env_list *my_env, char *str)
 	ft_putstr_fd(str, 2);
 	ft_putendl_fd(": numeric argument required", 2);
 	if (list)
-		free_cmd_list(list);
+		free_cmd_list(list, NULL);
 	if (my_env)
 		env_free(my_env);
 	exit(2);
@@ -77,7 +77,7 @@ int	ft_exit_p(t_cmd_list *list, int save_stdin, int save_stdout,
 	{
 		set_iofds(save_stdin, save_stdout);
 		i = ft_atoi(node->argv[1]);
-		free_cmd_list(list);
+		free_cmd_list(list, NULL);
 		env_free(my_env);
 		exit(i);
 	}

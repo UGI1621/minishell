@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 15:02:05 by saan              #+#    #+#             */
-/*   Updated: 2025/09/19 20:50:10 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/20 01:35:19 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	free_cmd_field(t_cmd_node *node)
 		free_2ptr(node->argv);
 	if (node->infile)
 		free_2ptr(node->infile);
+	if (node->in_sig)
+		free_2ptr(node->in_sig);
 	if (node->outfile)
 		free_2ptr(node->outfile);
 	if (node->out_sig)
@@ -30,7 +32,7 @@ void	free_cmd_field(t_cmd_node *node)
 		close(node->pipe[1]);
 }
 
-void	free_cmd_list(t_cmd_list *list)
+void	free_cmd_list(t_cmd_list *list, char *str)
 {
 	t_cmd_node	*node;
 	t_cmd_node	*temp;
@@ -40,7 +42,8 @@ void	free_cmd_list(t_cmd_list *list)
 	node = list->head;
 	if (node && node->heredoc_fd != -1)
 		close(node->heredoc_fd);
-	unlink("heredoc_temp");
+	if (str)
+		unlink(str);
 	while (node)
 	{
 		free_cmd_field(node);

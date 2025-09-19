@@ -6,11 +6,33 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 11:10:14 by saan              #+#    #+#             */
-/*   Updated: 2025/09/19 21:03:31 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/20 01:04:51 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	set_in_sig(t_cmd_node *c_node, char *sig)
+{
+	int		len;
+	int		i;
+	char	**new;
+
+	len = 0;
+	while (c_node->in_sig && c_node->in_sig[len])
+		len++;
+	new = (char **)ft_calloc(len + 2, sizeof(char *));
+	i = 0;
+	while (c_node->in_sig && c_node->in_sig[i])
+	{
+		new[i] = ft_strdup(c_node->in_sig[i]);
+		++i;
+	}
+	new[i] = ft_strdup(sig);
+	new[i + 1] = NULL;
+	free_2ptr(c_node->in_sig);
+	c_node->in_sig = new;
+}
 
 void	set_in_fd(t_cmd_node *c_node, t_lexer_node **l_node)
 {
@@ -31,6 +53,7 @@ void	set_in_fd(t_cmd_node *c_node, t_lexer_node **l_node)
 	(*l_node) = (*l_node)->next;
 	new[i] = ft_strdup((*l_node)->str);
 	new[i + 1] = NULL;
+	set_in_sig(c_node, "<");
 	free_2ptr(c_node->infile);
 	c_node->infile = new;
 }
@@ -84,32 +107,10 @@ void	set_out_fd(t_cmd_node *c_node, t_lexer_node **l_node, int is_append)
 	c_node->outfile = new;
 }
 
-void	set_heredoc_fd(t_cmd_node *c_node, t_lexer_node **l_node,
-		t_env_list *my_env, int *heredoc_sigint)
+void	set_heredoc_fd(t_cmd_node *node, int *idx)
 {
-	int		quote_flag;
-	int		status;
-	pid_t	pid;
-
-	quote_flag = 0;
-	(*l_node) = (*l_node)->next;
-	if (c_node->heredoc_fd != -1)
-		close(c_node->heredoc_fd);
-	c_node->heredoc_fd = open("heredoc_temp", O_WRONLY | O_CREAT | O_TRUNC,
+	if (node->heredoc_fd != -1)
+		close(node->heredoc_fd);
+	node->heredoc_fd = open("heredoc_temp", O_WRONLY | O_CREAT | O_TRUNC,
 			0644);
-	if (ft_strchr((*l_node)->str, '\'') || ft_strchr((*l_node)->str, '\"'))
-		quote_flag = 1;
-	pid = fork();
-	if (pid == 0)
-	{
-		heredoc_proc(remove_quotes(ft_strdup((*l_node)->str)),
-			c_node->heredoc_fd, quote_flag, my_env);
-			// free line
-	}
-	set_sigs_ign();
-	waitpid(pid, &status, 0);
-	set_heredoc_status(status, heredoc_sigint);
-	set_sigs();
-	c_node->is_use_heredoc = 1;
-	close(c_node->heredoc_fd);
 }

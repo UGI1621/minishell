@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 08:44:59 by saan              #+#    #+#             */
-/*   Updated: 2025/09/19 20:45:36 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/20 01:37:22 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	write_open_error(char *name, t_cmd_list *list, t_env_list *my_env)
 	write(2, ": ", 2);
 	write(2, strerror(errno), ft_strlen(strerror(errno)));
 	write(2, "\n", 1);
-	free_cmd_list(list);
+	free_cmd_list(list, NULL);
 	env_free(my_env);
 	exit(1);
 }
@@ -32,7 +32,7 @@ void	write_is_dir(DIR *dir, char *name, t_cmd_list *list, t_env_list *my_env)
 	write(2, ": ", 2);
 	ft_putstr_fd("is a directory", 2);
 	write(2, "\n", 1);
-	free_cmd_list(list);
+	free_cmd_list(list, NULL);
 	env_free(my_env);
 	free(name);
 	exit(126);
@@ -46,7 +46,7 @@ void	write_access_error(char *name, t_cmd_list *list, t_env_list *my_env)
 	write(2, strerror(errno), ft_strlen(strerror(errno)));
 	write(2, "\n", 1);
 	free(name);
-	free_cmd_list(list);
+	free_cmd_list(list, NULL);
 	env_free(my_env);
 	if (errno == ENOENT)
 		exit(127);
@@ -62,7 +62,7 @@ void	write_cmd_nf(char *name, t_cmd_list *list, t_env_list *my_env)
 	write(2, ": ", 2);
 	write(2, "Command not found\n", 18);
 	free(name);
-	free_cmd_list(list);
+	free_cmd_list(list, NULL);
 	env_free(my_env);
 	exit(127);
 }

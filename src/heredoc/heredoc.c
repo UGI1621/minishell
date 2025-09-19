@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 16:07:22 by saan              #+#    #+#             */
-/*   Updated: 2025/09/17 18:49:47 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/20 01:08:33 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static void	print_warning(char *delimiter)
 	if (g_exit_code == 130)
 	{
 		set_sigs();
-		exit(130);
+		return ;
 	}
 	ft_putstr_fd("minishell: warning: here-document ", 2);
 	ft_putstr_fd("delimited by end-of-file ", 2);
@@ -100,5 +100,4 @@ void	heredoc_proc(char *delimiter, int heredoc_fd, int is_quote,
 		free(line);
 	}
 	set_sigs();
-	exit(EXIT_SUCCESS);
 }

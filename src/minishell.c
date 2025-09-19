@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:30:30 by saan              #+#    #+#             */
-/*   Updated: 2025/09/18 15:47:26 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/20 01:36:00 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,53 @@ static int	pre_listing_cmd(char *line, t_lexer_list **lexing_list,
 	return (0);
 }
 
+static void	print_cmd_node(t_cmd_list *list)
+{
+	t_cmd_node *node = list->head;
+	int	i = 0;
+	while (node)
+	{
+		printf("\nnode->argv : ");
+		i = 0;
+		while (node->argv[i])
+		{
+			printf("{%s} ", node->argv[i]);
+			i++;
+		}
+		printf("\nnode->infile : ");
+		i = 0;
+		while (node->infile[i])
+		{
+			printf("{%s} ", node->infile[i]);
+			i++;
+		}
+		printf("\nnode->in_sig : ");
+		i = 0;
+		while (node->in_sig[i])
+		{
+			printf("{%s} ", node->in_sig[i]);
+			i++;
+		}
+		printf("\nnode->outfile : ");
+		i = 0;
+		while (node->outfile[i])
+		{
+			printf("{%s} ", node->outfile[i]);
+			i++;
+		}
+		printf("\nnode->out_sig : ");
+		i = 0;
+		while (node->out_sig[i])
+		{
+			printf("{%s} ", node->out_sig[i]);
+			i++;
+		}
+		printf("\n");
+		printf("node->is_use_heredoc : %d\n", node->is_use_heredoc);
+		node = node->next;
+	}
+}
+
 static void	lexing_listing(char *line, t_env_list *my_env)
 {
 	t_lexer_list	*lexing_list;
@@ -57,15 +104,18 @@ static void	lexing_listing(char *line, t_env_list *my_env)
 	heredoc_sigint = 0;
 	if (pre_listing_cmd(line, &lexing_list, my_env))
 		return ;
-	cmd_list = listing_cmd(lexing_list, my_env, &heredoc_sigint);
+	cmd_list = listing_cmd(lexing_list);
 	free_lexer_list(lexing_list);
+	// print_cmd_node(cmd_list);
+	g_exit_code = 0;
+	do_heredoc_process(cmd_list, my_env, &heredoc_sigint);
 	if (heredoc_sigint)
 	{
-		free_cmd_list(cmd_list);
+		free_cmd_list(cmd_list, "heredoc_temp");
 		return ;
 	}
 	process_cmd_exe(cmd_list, my_env);
-	free_cmd_list(cmd_list);
+	free_cmd_list(cmd_list, "heredoc_temp");
 }
 
 int	invalid_ac(void)
