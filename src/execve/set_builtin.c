@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 15:43:14 by saan              #+#    #+#             */
-/*   Updated: 2025/09/20 02:38:45 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/20 21:32:58 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,9 @@ static int	builtin_exe(t_cmd_node *node, int save_stdin, int save_stdout,
 	else if (!ft_strcmp(node->argv[0], "unset"))
 		return (ft_unset(node, save_stdin, save_stdout, my_env));
 	else if (!ft_strcmp(node->argv[0], "exit"))
+	{
 		return (ft_exit(node, save_stdin, save_stdout));
+	}
 	return (1);
 }
 
