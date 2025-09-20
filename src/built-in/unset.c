@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 05:33:28 by saan              #+#    #+#             */
-/*   Updated: 2025/09/17 12:42:33 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/20 21:43:05 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ int	ft_unset(t_cmd_node *node, int save_stdin, int save_stdout,
 	i = 1;
 	while (node->argv[i])
 	{
-		if (is_invalid_env_naming_rule(node->argv[i]))
-			print_invalid_export(node->argv[i], &flag);
 		if (is_env_val(node->argv[i], my_env))
 			del_env(node->argv[i], my_env);
 		i++;

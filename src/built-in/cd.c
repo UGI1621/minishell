@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 23:52:09 by saan              #+#    #+#             */
-/*   Updated: 2025/09/20 02:16:04 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/20 22:09:51 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,6 @@ static int	ft_cd_home(int save_stdin, int save_stdout, t_env_list *my_env)
 	}
 }
 
-static int	write_permission(char *path)
-{
-	ft_putstr_fd("minishell: cd: ", 2);
-	ft_putstr_fd(path, 2);
-	ft_putendl_fd(": permission denied", 2);
-	free(path);
-	return (1);
-}
-
 static int	ft_cd_path(t_cmd_node *node, int save_stdin, int save_stdout,
 		t_env_list *my_env)
 {
@@ -61,13 +52,11 @@ static int	ft_cd_path(t_cmd_node *node, int save_stdin, int save_stdout,
 		set_iofds(save_stdin, save_stdout);
 		return (1);
 	}
-	if (access(path, X_OK) != 0)
-		return (write_permission(path));
 	old = getcwd(NULL, 0);
 	if (chdir(path) == -1)
 	{
 		free(old);
-		return (print_error_path(path, save_stdin, save_stdout));
+		return (is_invalid_path(path, save_stdin, save_stdout));
 	}
 	else
 	{

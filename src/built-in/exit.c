@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 17:41:54 by saan              #+#    #+#             */
-/*   Updated: 2025/09/20 21:37:45 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/20 23:14:43 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ int	ft_exit_p(t_cmd_list *list, int save_stdin, int save_stdout,
 		env_free(my_env);
 		exit(i);
 	}
-	return (0);
+	free_all_list(list, my_env, save_stdin, save_stdout);
+	exit(g_exit_code);
 }
 
 int	ft_exit(t_cmd_node *node, int save_stdin, int save_stdout)
