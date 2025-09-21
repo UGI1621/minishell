@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 17:39:53 by saan              #+#    #+#             */
-/*   Updated: 2025/09/17 18:49:47 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/21 17:04:15 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,16 @@ int	is_invalid_line(char *line)
 
 int	is_invalid_env_naming_rule(char *str)
 {
+	int	i;
+
+	i = 0;
+	while (str[++i] && str[i] != '=')
+	{
+		if (ft_isalpha(str[i]) || ft_isdigit(str[i]) || str[i] == '_')
+			continue ;
+		else
+			return (1);
+	}
 	if (str[0] == '_')
 		return (0);
 	if (!ft_isalpha(str[0]))

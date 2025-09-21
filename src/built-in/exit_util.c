@@ -6,13 +6,14 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/18 15:38:40 by saan              #+#    #+#             */
-/*   Updated: 2025/09/20 22:45:02 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/21 15:31:58 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_all_list(t_cmd_list *list, t_env_list *my_env, int save_stdin, int save_stdout)
+void	free_all_list(t_cmd_list *list, t_env_list *my_env, int save_stdin,
+		int save_stdout)
 {
 	set_iofds(save_stdin, save_stdout);
 	free_cmd_list(list, NULL);

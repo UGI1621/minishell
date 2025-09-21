@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 05:03:22 by saan              #+#    #+#             */
-/*   Updated: 2025/09/17 18:49:47 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/21 14:40:35 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,6 @@ void	check_status(int status)
 		if (WTERMSIG(status) == SIGINT)
 			ft_putstr_fd("\n", STDERR_FILENO);
 		else if (WTERMSIG(status) == SIGQUIT)
-			ft_putstr_fd("Quit: 3\n", STDERR_FILENO);
+			ft_putstr_fd("Quit: (core dumped)\n", STDERR_FILENO);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 22:23:38 by saan              #+#    #+#             */
-/*   Updated: 2025/09/20 02:48:52 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/21 15:32:51 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,16 @@ static void	do_heredoc(t_cmd_node *node, int *idx, t_cmd_list *list,
 		t_env_list *my_env)
 {
 	char	*del;
+	int		exit_code;
 
 	del = remove_quotes(ft_strdup(node->infile[(*idx)]));
-	heredoc_proc(del, node->heredoc_fd, is_got_quote(node->infile[(*idx)]),
-		my_env);
+	exit_code = heredoc_proc(del, node->heredoc_fd,
+			is_got_quote(node->infile[(*idx)]), my_env);
 	close(node->heredoc_fd);
 	free(del);
 	free_cmd_list(list, NULL);
 	env_free(my_env);
-	exit(g_exit_code);
+	exit(exit_code);
 }
 
 static void	parent_heredoc(t_cmd_node *node, pid_t pid, int *status,

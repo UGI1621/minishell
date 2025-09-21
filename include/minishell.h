@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 15:19:24 by saan              #+#    #+#             */
-/*   Updated: 2025/09/20 22:45:13 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/21 15:31:18 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@
 # include <signal.h>
 # include <stdio.h>
 # include <string.h>
+# include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
-# include <sys/stat.h>
 # include <termios.h>
 # include <unistd.h>
 
@@ -87,6 +87,7 @@ typedef struct s_env_list
 // exe_cmds.c
 void					process_cmd_exe(t_cmd_list *list, t_env_list *my_env);
 void					wait_and_status(pid_t *pid, int *status, int i);
+void					exit_no_argv(t_cmd_list *list, t_env_list *my_env);
 
 // handle_error.c
 void					exit_with_perror(char *str);
@@ -142,7 +143,8 @@ int						ft_exit_p(t_cmd_list *list, int save_stdin,
 							int save_stdout, t_env_list *my_env);
 int						is_out_of_longlong(const char *s);
 int						write_need_digit_nof(char *str);
-void	free_all_list(t_cmd_list *list, t_env_list *my_env, int save_stdin, int save_stdout);
+void					free_all_list(t_cmd_list *list, t_env_list *my_env,
+							int save_stdin, int save_stdout);
 int						ft_export(t_cmd_node *node, int save_stdin,
 							int save_stdout, t_env_list *my_env);
 void					print_invalid_export(char *arg, int *flag);
@@ -161,7 +163,7 @@ int						print_error_path(char *path, int save_stdin,
 
 // 								heredoc
 // heredoc.c
-void					heredoc_proc(char *delimiter, int heredoc_fd,
+int						heredoc_proc(char *delimiter, int heredoc_fd,
 							int is_quote, t_env_list *my_env);
 
 // heredoc_util.c

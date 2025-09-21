@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/13 16:07:22 by saan              #+#    #+#             */
-/*   Updated: 2025/09/20 01:08:33 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/21 15:08:02 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,21 +60,19 @@ static void	write_extend(char *line, int hf, t_env_list *e)
 	write(hf, "\n", 1);
 }
 
-static void	print_warning(char *delimiter)
+static int	print_warning(char *delimiter)
 {
 	if (g_exit_code == 130)
-	{
-		set_sigs();
-		return ;
-	}
+		return (130);
 	ft_putstr_fd("minishell: warning: here-document ", 2);
 	ft_putstr_fd("delimited by end-of-file ", 2);
 	ft_putstr_fd("(wanted `", 2);
 	ft_putstr_fd(delimiter, 2);
 	ft_putendl_fd("')", 2);
+	return (0);
 }
 
-void	heredoc_proc(char *delimiter, int heredoc_fd, int is_quote,
+int	heredoc_proc(char *delimiter, int heredoc_fd, int is_quote,
 		t_env_list *my_env)
 {
 	char	*line;
@@ -85,14 +83,11 @@ void	heredoc_proc(char *delimiter, int heredoc_fd, int is_quote,
 		line = readline("> ");
 		if (!line)
 		{
-			print_warning(delimiter);
+			return (print_warning(delimiter));
 			break ;
 		}
 		if (!ft_strcmp(line, delimiter))
-		{
-			free(line);
 			break ;
-		}
 		if (is_quote)
 			write_no_extend(line, heredoc_fd);
 		else
@@ -100,4 +95,5 @@ void	heredoc_proc(char *delimiter, int heredoc_fd, int is_quote,
 		free(line);
 	}
 	set_sigs();
+	return (0);
 }

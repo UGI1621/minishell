@@ -6,7 +6,7 @@
 /*   By: saan <saan@student.42gyeongsan.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 15:15:39 by saan              #+#    #+#             */
-/*   Updated: 2025/09/20 02:48:37 by saan             ###   ########.fr       */
+/*   Updated: 2025/09/21 15:32:40 by saan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,8 @@ char	*extract_cmd_name(char *cmd)
 }
 
 static char	*access_absolut_paths(char *cmd, t_cmd_list *list,
-		t_env_list *my_env, char **path)
+		t_env_list *my_env)
 {
-	free_2ptr(path);
 	if (access(cmd, X_OK) == 0)
 		return (ft_strdup(cmd));
 	else
@@ -54,6 +53,16 @@ static char	*access_paths(char **paths, char *cmd, t_cmd_list *list,
 	return (temp);
 }
 
+static char	**no_env_paths(void)
+{
+	char	**res;
+
+	res = (char **)ft_calloc(2, sizeof(char *));
+	res[0] = ft_strdup("");
+	res[1] = NULL;
+	return (res);
+}
+
 void	check_and_set_argv(t_cmd_node *node, t_env_list *my_env,
 		t_cmd_list *list)
 {
@@ -63,6 +72,8 @@ void	check_and_set_argv(t_cmd_node *node, t_env_list *my_env,
 	DIR		*dir;
 
 	paths = ft_split(get_env("PATH", my_env), ':');
+	if (!paths)
+		paths = no_env_paths();
 	cmd = ft_strdup(node->argv[0]);
 	dir = opendir(cmd);
 	if (dir)
@@ -76,7 +87,7 @@ void	check_and_set_argv(t_cmd_node *node, t_env_list *my_env,
 		temp = access_paths(paths, cmd, list, my_env);
 	}
 	else
-		temp = access_absolut_paths(cmd, list, my_env, paths);
+		temp = access_absolut_paths(cmd, list, my_env);
 	free_2ptr(paths);
 	free(cmd);
 	node->cmd_path = temp;
